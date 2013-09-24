@@ -31,8 +31,24 @@ public class Person2 {
 	 */
 	private String calc(String input) {
 	  //Person 2 put your implementation here
-	  return null;
+	  Shuffle temp = new Shuffle();
+	  temp.shuffle(input);
+	  return temp;
 	}
+
+    private void shuffle(String input){
+        List<Character> chars = new ArrayList<Character>();
+        for(char c:input.toCharArray()){
+            chars.add(c);
+        }
+        StringBuilder output = new StringBuilder(input.length());
+        while(chars.size()!=0){
+            int rand = (int)(Math.random()*chars.size());
+            output.append(chars.remove(rand));
+        }
+        System.out.println(output.toString());
+    }
+
 	/**
 	 * Return a string rep of this object
 	 * that varies with an input string
