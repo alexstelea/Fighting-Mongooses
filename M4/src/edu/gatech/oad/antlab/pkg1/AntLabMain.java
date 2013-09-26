@@ -59,7 +59,7 @@ import edu.gatech.oad.antlab.pkg2.*;
           + ant22.getMessage() + ant31.getMessage();
 		  //Person1 replace P1 with your name
 		  //and ggg000x with your gt num
-		  Person1 = new Person1("Kennon Bittick");
+		  Person1 p1 = new Person1("Kennon Bittick");
 		  toPrint += p1.toString("902685827");
 		  //Person2 replace P2 with your name
 		  //and ggg000x with your gt num
