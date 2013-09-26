@@ -8,6 +8,9 @@ package edu.gatech.oad.antlab.person;
  * @author Bob
  * @version 1.1
  */
+
+import java.util.*;
+
 public class Person2 {
     /** Holds the persons real name */
     private String name;
@@ -31,9 +34,8 @@ public class Person2 {
 	 */
 	private String calc(String input) {
 	  //Person 2 put your implementation here
-	  Shuffle temp = new Shuffle();
-	  temp.shuffle(input);
-	  return temp;
+	  shuffle(input);
+	  return input;
 	}
 
     private void shuffle(String input){
