@@ -5,7 +5,7 @@ package edu.gatech.oad.antlab.person;
  *  returns their name and a
  *  modified string 
  *  
- *  @author Bob
+ *  @author Jackson
  *  @version 1.1
  */
 public class Person4 {
@@ -29,10 +29,9 @@ public class Person4 {
      * @param input the string to be modified
      * @return the modified string
      */
-    private String calc(String input) {
-      //Person 4 put your implementation here
-      return null;
-    }
+  private String calc(String input) {
+    return input.substring(1,input.length()-1) + input.substring(0,1);
+  }
     
     /**
      * Return a string rep of this object
@@ -42,9 +41,9 @@ public class Person4 {
      * @return the string representing the 
      *         object
      */
-    public String toString(String input) {
-      return name + calc(input);
-    }
+  public String toString(String input) {
+    return name + calc(input);
+  }
 
 }
 
