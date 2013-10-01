@@ -7,7 +7,7 @@
         <property name="classes.dir" value="${build.dir}/classes"/>
         <property name="jar.dir" value="${build.dir}/jar"/>
         <property name="api.dir" value="apidoc"/>
-        <property name="main-class" value="build/edu/gatech/oad/antlab/pkg1/AntLabMain"/>
+        <property name="main-class" value="GameController"/>
     </target>
 
     <target name="prepare">
@@ -36,7 +36,7 @@
     <target name="jar" depends="compile">
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <manifest>
-                <attribute name="main-Class" value="Fighting Mongooses - MULE Game"/>
+                <attribute name="main-Class" value="${main-class}"/>
             </manifest>
         </jar>
     </target>
