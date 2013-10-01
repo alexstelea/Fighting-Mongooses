@@ -1,5 +1,5 @@
 <!-- Ant Fighting Mongooses Build -->
-<!-- build.xml -->
+<!-- kbittick3.xml -->
 
 <project name="AntLabRun" basedir="." default="all">
     <target name="init">

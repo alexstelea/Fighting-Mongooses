@@ -1,4 +1,3 @@
-package edu.gatech.oad.antlab.person;
 
 /**
  *  A simple class for person 2
@@ -34,11 +33,11 @@ public class Person2 {
 	 */
 	private String calc(String input) {
 	  //Person 2 put your implementation here
-	  shuffle(input);
-	  return input;
+	  String text = shuffle(input);
+	  return text;
 	}
 
-    private void shuffle(String input){
+    private String shuffle(String input){
         List<Character> chars = new ArrayList<Character>();
         for(char c:input.toCharArray()){
             chars.add(c);
@@ -48,7 +47,7 @@ public class Person2 {
             int rand = (int)(Math.random()*chars.size());
             output.append(chars.remove(rand));
         }
-        System.out.println(output.toString());
+        return output.toString();
     }
 
 	/**

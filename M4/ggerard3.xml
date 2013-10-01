@@ -1,0 +1,96 @@
+<!-- M4 -->
+<!-- build.xml -->
+
+<project name="M4" basedir="." default="main">
+	<!-- Init
+	Set up all your properties.  It is not necessary for this to be a cross-platform file.
+	-->
+	<target name="init">
+		<property name="src.dir" value="src"/>
+		<property name="build.dir" value="build"/>
+		<property name="classes.dir" value="${build.dir}/classes"/>
+		<property name="jar.dir" value="${build.dir}/jar"/>
+		<property name="javadoc.dir" value="apidoc"/>
+		<property name="main-class" value="edu/gatech/oad/antlab/pkg1/AntLabMain"/>
+	</target>
+
+	<!-- Clean 
+	This will remove any compiled classes and any JARs you created as well as any javadoc files (i.e. anything that would be created when the "all" task is run). ****Do NOT remove resources.jar that we provide, or any of your source code***
+	-->
+	<target name="clean" depends="init">
+		<delete dir="${build.dir}"/>
+		<delete dir="${jar.dir}"/>
+		<delete dir="${javadoc.dir}"/>
+	</target>
+
+	<!-- Prepare 
+	Make all the required directories.
+	-->
+  	<target name="prepare" depends="init">
+  		<mkdir dir="${classes.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${javadoc.dir}"/>
+    </target>
+
+    <!-- Compile 
+	This will compile all java classes in the 'src' directory tree to the 'build' directory.
+	-->
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}" 
+			   destdir="${classes.dir}"
+			   classpath="./lib/resources.jar"
+         	   debug="on"
+         	   includeantruntime="false">
+        </javac>
+	</target>
+
+	<!-- Javadoc
+	This will generate the javadoc documentation for all java classes in the 'src' directory and will be stored in the 'apidoc' directory
+	-->
+	<target name="javadoc" depends="compile">
+		<javadoc sourcepath="${src.dir}" 
+				 access="public"
+				 destdir="apidoc">
+
+			<fileset dir="${src.dir}">
+				<include name="**/*.java"/>
+			</fileset>
+
+			<bottom>
+				<![CDATA[ANT file by Geoving Gerard II]]>
+			</bottom>
+		</javadoc>
+	</target>
+
+	<!-- Jar 
+	This will package the compiled classes (excluding the resources.jar) as a JAR titled "AntLabRun.jar". The JAR must use a mainfest and should only include the compiled classes and the manifest. Your manifest file may be manually created or generated automatically by your ant task.
+	-->
+	<target name="jar" depends="compile">
+		<jar destfile="${jar.dir}/AntLabRun.jar" 
+			 basedir="${classes.dir}">
+
+			<manifest>
+				<attribute name="Main-Class"
+						   value="${main-class}"/>
+			  	<attribute name="Class-Path"
+			  			   value="../../lib/resources.jar"/>
+			</manifest>
+
+		</jar>
+	</target>
+
+	<!-- Run 
+	This will start program execution and run the jar file created in the 'jar' task above.  A simple print out with your team name and some computation results should occur if the program runs correctly and you wrote your code correctly.
+	-->
+	<target name="run" depends="jar">
+		<java jar="${jar.dir}/AntLabRun.jar" 
+			  fork="true"/>
+	</target>
+
+	<!-- All 
+	This should perform all of the above tasks (but NOT clean).
+	-->
+	<target name="all" depends="run, javadoc"/> 
+
+</project>
