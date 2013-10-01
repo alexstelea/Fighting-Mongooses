@@ -1,8 +1,5 @@
 <project name="AntLabRun" basedir="." default="main">	
 	<target name="init">
-		<path id="classpath">
-	    	<fileset dir="${lib.dir}" includes="**/*.jar"/>
-	    </path>
 		<property name="src.dir" value="src"/>
 		<property name="lib.dir" value="lib/"/>
 		<property name="api.dir" value="apidoc"/>
@@ -10,6 +7,9 @@
 		<property name="classes.dir" value="${build.dir}/classes"/>
 		<property name="jar.dir" value="${build.dir}/jar"/>
 		<property name="main-class" value="build/edu/gatech/oad/antlab/pkg1/AntLabMain"/>
+		<path id="classpath">
+	    	<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	    </path>
 	</target>
 		
 	<target name="prepare">
