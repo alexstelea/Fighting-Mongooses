@@ -13,9 +13,9 @@
 	</target>
 		
 	<target name="prepare">
-		<mkdir dir="$(classes.dir}"/>
-		<mkdir dir="$(jar.dir}"/>
-		<mkdir dir="$(build.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${jar.dir}"/>
+		<mkdir dir="${build.dir}"/>
 		<mkdir dir="apidoc"/>
 	</target>
 
