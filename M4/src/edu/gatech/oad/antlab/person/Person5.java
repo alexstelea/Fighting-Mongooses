@@ -30,8 +30,9 @@ public class Person5 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  //Person 5 put your implementation here
-	  return null;
+	  String first = input.substring(0,3);
+	  String rest = input.substring(3);
+	  return rest + first;
 	}
 	
 	/**
@@ -45,5 +46,11 @@ public class Person5 {
 	public String toString(String input) {
 	  return name + calc(input);
 	}
-
+	
+	public static void main(String[] args){
+	Person5 person = new Person5("Tyler");
+	System.out.println(person);
 }
+}
+
+
