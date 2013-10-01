@@ -1,5 +1,6 @@
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Player {
 
@@ -41,5 +42,89 @@ public class Player {
         this.name = name;
         this.race = race;
         this.color = color;
+        money = 0;
+        food = 0;
+        energy = 0;
+        smithore = 0;
+        mules = 0;
+        row = 0;
+        column = 0;
+        tiles = new ArrayList<Tile>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public int getSmithore() {
+        return smithore;
+    }
+
+    public int getMules() {
+        return mules;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public List<Tile> getTiles() {
+        return tiles;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public void setSmithore(int smithore) {
+        this.smithore = smithore;
+    }
+
+    public void setMules(int mules) {
+        this.mules = mules;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public void addTile(Tile tile) {
+        tiles.add(tile);
     }
 }
