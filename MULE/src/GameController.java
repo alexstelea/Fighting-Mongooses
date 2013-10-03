@@ -1,5 +1,4 @@
 public class GameController {
-
     /**
      * Main method of the MULE game
      * Initializes the environment and starts the game
@@ -11,7 +10,7 @@ public class GameController {
     public static void main(String[] args) {
         System.out.println("Main Method!");
     }
-}
+	
 	public static final int EASY_DIFFICULTY = 1;
 	public static final int MEDIUM_DIFFICULTY = 2;
 	public static final int HARD_DIFFICULTY = 3;
