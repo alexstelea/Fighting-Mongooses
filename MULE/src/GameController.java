@@ -9,6 +9,7 @@ public class GameController {
      */
     public static void main(String[] args) {
         System.out.println("Main Method!");
+        GameController game = new GameController();
     }
 	
 	public static final int EASY_DIFFICULTY = 1;
@@ -27,11 +28,11 @@ public class GameController {
 
 	private void showStartScreen() {
 		Save[] savedGames = getSavedGames();
-		Model model = new StartScreenModel();
+		StartScreenModel model = new StartScreenModel();
 		if(savedGames == null || savedGames.length == 0) {
-			model.setIsSavedGameAvailible(true);
+			model.setIsSavedGameAvailable(true);
 		}
-		renderer.drawStartScreen(model)
+		renderer.drawStartScreen(model);
 	}
 	
 	private void showLoadGameSavePartial(Save savedGame){
@@ -40,12 +41,13 @@ public class GameController {
 	
 	private void showLoadScreen(){
 		Save[] savedGames = getSavedGames();
-		Model model = new LoadScreenModel();
-		model.savedGames = savedGames;
+		LoadScreenModel model = new LoadScreenModel();
+		model.setSavedGames(savedGames);
 		renderer.drawLoadScreen(model);
 	}
 
 	private Save[] getSavedGames() {
+		return null;
 		//Query database for saved games
 	}
 

@@ -1,12 +1,12 @@
-public StartScreenModel extends Model {
+public class StartScreenModel extends Model {
 
-	private Boolean isSavedGameAvailable = False; 
+	private Boolean isSavedGameAvailable = false; 
 	
-	public getIsSavedGameAvailable() {
-		return isSavedGameAvailable;
+	public Boolean getIsSavedGameAvailable() {
+		return this.isSavedGameAvailable;
 	}
 	
-	public setIsSavedGameAvailable(Boolean isSavedGameAvailable) {
+	public void setIsSavedGameAvailable(Boolean isSavedGameAvailable) {
 		this.isSavedGameAvailable = isSavedGameAvailable;
 	}
 	
