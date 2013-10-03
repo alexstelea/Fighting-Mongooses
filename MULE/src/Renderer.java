@@ -18,6 +18,7 @@ public class Renderer implements MouseListener {
 	static final String setup = "Setup";
 	static final String map = "Map";
 	static final String player = "Player";
+	static final String mainScreen = "Main Screen";
 
 	private JPanel panel;
 
