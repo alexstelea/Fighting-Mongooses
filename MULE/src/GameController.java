@@ -1,6 +1,5 @@
 public class GameController {
 
-<<<<<<< Updated upstream
     /**
      * Main method of the MULE game
      * Initializes the environment and starts the game
@@ -13,8 +12,6 @@ public class GameController {
         System.out.println("Main Method!");
     }
 }
-
-=======
 	public static final int EASY_DIFFICULTY = 1;
 	public static final int MEDIUM_DIFFICULTY = 2;
 	public static final int HARD_DIFFICULTY = 3;
@@ -26,19 +23,30 @@ public class GameController {
 
 	public GameController() {
 		renderer = new Renderer();
-		SaveGame[] savedGames = getSavedGames();
-		Model startScreenModel = new StartScreenModel();
-		if(savedGames == null) {
-			startScreenModel.setIsSavedGameAvailible(true);
-		}
-		showStartScreen(startScreenModel);
+		showStartScreen();
 	}
 
-	private void showStartScreen(Model model) {
+	private void showStartScreen() {
+		Save[] savedGames = getSavedGames();
+		Model model = new StartScreenModel();
+		if(savedGames == null || savedGames.length == 0) {
+			model.setIsSavedGameAvailible(true);
+		}
 		renderer.drawStartScreen(model)
 	}
+	
+	private void showLoadGameSavePartial(Save savedGame){
+		
+	}
+	
+	private void showLoadScreen(){
+		Save[] savedGames = getSavedGames();
+		Model model = new LoadScreenModel();
+		model.savedGames = savedGames;
+		renderer.drawLoadScreen(model);
+	}
 
-	private SaveGame[] getSavedGames() {
+	private Save[] getSavedGames() {
 		//Query database for saved games
 	}
 
@@ -46,4 +54,3 @@ public class GameController {
 		return difficulty;
 	}
 }
->>>>>>> Stashed changes

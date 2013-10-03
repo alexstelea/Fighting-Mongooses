@@ -1,4 +1,4 @@
-public startScreenModel extends Model {
+public StartScreenModel extends Model {
 
 	private Boolean isSavedGameAvailable = False; 
 	
