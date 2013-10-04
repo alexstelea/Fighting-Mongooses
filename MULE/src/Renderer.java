@@ -3,23 +3,29 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.font.*;
 
+import javax.swing.*;
+import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Renderer implements MouseListener {
+public class Renderer implements MouseListener, ActionListener {
 
 	//instance variables
 	static final String start = "Start";
 	static final String setup = "Setup";
 	static final String map = "Map";
 	static final String player = "Player";
-	static final String mainScreen = "Main Screen";
-
+	//static final String mainScreen = "Main Screen";
+	final Font font1 = new Font("Candara", Font.PLAIN, 40);
 	private JPanel panel;
 
 	public Renderer() {
@@ -28,40 +34,37 @@ public class Renderer implements MouseListener {
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setResizable(false);
 	    frame.setMinimumSize(new Dimension(950, 600));
-	
+		
 	    initPaneCreation(frame.getContentPane());
 	
 	    frame.pack();
+	    frame.repaint();
+		frame.validate();
 	    frame.setVisible(true);
-
 	}
 
 	private void initPaneCreation(Container Pane){
 
-		Container pane = new Container();
+	    JPanel CardStart = new ImagePanel("/media/startscreen.png");
+	    JPanel CardSetup = new ImagePanel("/media/gamesetup.png");
+	    JPanel CardMap = new ImagePanel("/media/mapselection.png");
+	    JPanel CardPlayer = new ImagePanel("/media/playerselection.png");
 
-		// JPanel CardStart = new ImagePanel();
-	    // JPanel CardSetup = new SetupImagePanel();
-	    // JPanel CardMap = new MapImagePanel();
-	    // JPanel CardPlayer = new PlayerImagePanel();
-	    // JPanel CardMainScreen = ;
-
-	
 	    panel = new JPanel(new CardLayout());
-	    // panel.add(CardStart, start);
-	    // panel.add(CardSetup, setup);
-	    // panel.add(CardMap, map);
-	    // panel.add(CardPlayer, player);
-	    // panel.add(CardMainScreen, mainScreen);
+	    panel.add(CardStart, start);
+	    panel.add(CardSetup, setup);
+	    panel.add(CardMap, map);
+	    panel.add(CardPlayer, player);
+	    //panel.add(CardMainScreen, mainScreen);
 	
 	    Pane.add(panel, BorderLayout.CENTER);
 	
-	    // CardStart
-	    // CardStart.setLayout(null);
-	    // CardSetup.setLayout(null);
-	    // CardMap.setLayout(null);
-	    // CardPlayer.setLayout(null);
-	    // CardMainScreen.setLayout(null);
+	    //CardStart
+	    CardStart.setLayout(null);
+	    CardSetup.setLayout(null);
+	    CardMap.setLayout(null);
+	    CardPlayer.setLayout(null);
+	    //CardMainScreen.setLayout(null);
 	   
 	    //Quit
 	    JButton quit = new JButton("");
@@ -74,7 +77,7 @@ public class Renderer implements MouseListener {
 	    quit.setContentAreaFilled(false);
 	    quit.setBorderPainted(false);
 	    quit.setBounds(11, 536, 171, 40);
-	    // CardStart.add(quit);
+	    CardStart.add(quit);
 	    
 	    //Load
 	    JButton load = new JButton("");
@@ -91,7 +94,7 @@ public class Renderer implements MouseListener {
 	    load.setContentAreaFilled(false);
 	    load.setBorderPainted(false);
 	    load.setBounds(590, 536, 170, 40);
-	    // CardStart.add(load);
+	    CardStart.add(load);
 	    
 	    //NewGame
 	    JButton newGame = new JButton("");
@@ -105,7 +108,7 @@ public class Renderer implements MouseListener {
 	    newGame.setContentAreaFilled(false);
 	    newGame.setBorderPainted(false);
 	    newGame.setBounds(771, 536, 170, 40);
-	    // CardStart.add(newGame);
+	    CardStart.add(newGame);
 	    
 	    //Go back! (Setup Page)
 	    JButton goBack = new JButton("");
@@ -119,7 +122,7 @@ public class Renderer implements MouseListener {
 	    goBack.setContentAreaFilled(false);
 	    goBack.setBorderPainted(false);
 	    goBack.setBounds(11, 536, 170, 40);
-	    // CardSetup.add(goBack);
+	    CardSetup.add(goBack);
 	    
 	    //Okay! (Setup Page)
 	    JButton okay = new JButton("");
@@ -133,7 +136,7 @@ public class Renderer implements MouseListener {
 	    okay.setContentAreaFilled(false);
 	    okay.setBorderPainted(false);
 	    okay.setBounds(771, 536, 170, 40);
-	    // CardSetup.add(okay);
+	    CardSetup.add(okay);
 	    
 	    //Go back! (Map Page)
 	    JButton goBackMap = new JButton("");
@@ -147,7 +150,7 @@ public class Renderer implements MouseListener {
 	    goBackMap.setContentAreaFilled(false);
 	    goBackMap.setBorderPainted(false);
 	    goBackMap.setBounds(11, 536, 170, 40);
-	    // CardMap.add(goBackMap);
+	    CardMap.add(goBackMap);
 
 	   	//Okay! (Map Page)
 	    JButton okayMap = new JButton("");
@@ -161,7 +164,7 @@ public class Renderer implements MouseListener {
 	    okayMap.setContentAreaFilled(false);
 	    okayMap.setBorderPainted(false);
 	    okayMap.setBounds(771, 536, 170, 40);
-	    //CardMap.add(okayMap);
+	    CardMap.add(okayMap);
 
 	    //Go back! (Player Page)
 	    JButton goBackPlayer = new JButton("");
@@ -175,7 +178,21 @@ public class Renderer implements MouseListener {
 	    goBackPlayer.setContentAreaFilled(false);
 	    goBackPlayer.setBorderPainted(false);
 	    goBackPlayer.setBounds(11, 536, 170, 40);
-	    //CardPlayer.add(goBackPlayer);
+	    CardPlayer.add(goBackPlayer);
+
+	    //Name (Player Page)
+	    final JTextField name = new JTextField("", 10);
+	    name.setBounds(468, 536, 225, 38);
+	    name.setFont(font1);
+	    name.setHorizontalAlignment(JTextField.CENTER);
+	    name.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Enter pressed");
+				String playerName = name.getText();
+				System.out.println(playerName);
+			}
+	    });
+	    CardPlayer.add(name);
 
 	    //Okay! (Player Page)
 	    JButton okayPlayer = new JButton("");
@@ -193,7 +210,7 @@ public class Renderer implements MouseListener {
 	    okayPlayer.setContentAreaFilled(false);
 	    okayPlayer.setBorderPainted(false);
 	    okayPlayer.setBounds(771, 536, 170, 40);
-	    //CardPlayer.add(okayPlayer);
+	    CardPlayer.add(okayPlayer);
 	}
 	
 	public void drawStartScreen(StartScreenModel model){
@@ -249,11 +266,10 @@ public class Renderer implements MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
