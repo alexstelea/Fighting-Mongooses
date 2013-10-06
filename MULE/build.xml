@@ -49,7 +49,6 @@
     <target name="all" depends="init,prepare,compile,javadoc,jar,run"/>
 
     <target name="clean" depends="init">
-        <delete dir="${build.dir}"/>
         <delete dir="${api.dir}"/>
         <delete dir="${jar.dir}"/>
     </target>

@@ -32,7 +32,34 @@ public class GameController {
 		if(savedGames == null || savedGames.length == 0) {
 			model.setIsSavedGameAvailable(true);
 		}
-		renderer.drawStartScreen(model);
+        System.out.println("Entering intro screen");
+		String action = renderer.drawIntroScreen();
+        System.out.println("Done with intro screen");
+        if (action.equals("Quit"))
+        {
+            System.exit(0);
+        }
+        else if (action.equals("Load"))
+        {
+            System.out.println("Load");
+            System.exit(0);
+        }
+
+        // New Game
+        System.out.println("New");
+        renderer.drawDifficultyScreen();
+
+        String difficulty = action.substring(0, action.indexOf(':'));
+        action = action.substring(action.indexOf(':'));
+        int numPlayers = Integer.parseInt(action.substring(0, action.indexOf(':')));
+        action = action.substring(action.indexOf(':'));
+
+        if (action.equals("Back"))
+        {
+            System.exit(0);
+        }
+
+        System.out.println(action);
 	}
 	
 	private void showLoadGameSavePartial(Save savedGame){

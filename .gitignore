@@ -5,4 +5,4 @@
 *.war
 *.ear
 
-M4/apidoc/
+M4/apidoc/*.*
