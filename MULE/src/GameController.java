@@ -34,7 +34,7 @@ public class GameController {
 		}
         System.out.println("Entering intro screen");
 		String action = renderer.drawIntroScreen();
-        System.out.println("Done with intro screen");
+        System.out.println("Leaving intro screen");
         if (action.equals("Quit"))
         {
             System.exit(0);
@@ -47,7 +47,9 @@ public class GameController {
 
         // New Game
         System.out.println("New");
+        System.out.println("Entering difficulty screen");
         renderer.drawDifficultyScreen();
+        System.out.println("Leaving difficulty screen");
 
         String difficulty = action.substring(0, action.indexOf(':'));
         action = action.substring(action.indexOf(':'));

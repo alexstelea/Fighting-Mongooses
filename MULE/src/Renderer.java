@@ -29,7 +29,8 @@ public class Renderer implements MouseListener, ActionListener {
 	final Font font1 = new Font("Candara", Font.PLAIN, 30);
 	private JPanel panel;
     private Container Pane;
-    private String action;
+    private String action; // the information communicated back to GameController
+    private boolean readyToExit; // a boolean, tells each renderer method if it's ready to exit
 
 	public Renderer() {
 
@@ -63,6 +64,7 @@ public class Renderer implements MouseListener, ActionListener {
 	
 	    Pane.add(panel, BorderLayout.CENTER);
 
+        readyToExit = false;
         action = ""; // The action to be returned, determined by the button pressed
 	
         //CardStart
@@ -74,6 +76,8 @@ public class Renderer implements MouseListener, ActionListener {
 	    quit.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
                 action = "Quit";
+                readyToExit = true;
+                System.out.println(readyToExit);
 	        }
 	    });
 	    quit.setOpaque(false);
@@ -86,9 +90,9 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton load = new JButton("");
 	    load.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-	            //CardLayout cl = (CardLayout) (panel.getLayout());
-	            //cl.show(panel, Setup);
                 action = "Load";
+                readyToExit = true;
+                System.out.println(readyToExit);
 	        }
 	    });
 	    load.setOpaque(false);
@@ -101,9 +105,9 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton newGame = new JButton("");
 	    newGame.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-	            CardLayout cl = (CardLayout) (panel.getLayout());
-	            cl.show(panel, setup);
                 action = "New";
+                readyToExit = true;
+                System.out.println(readyToExit);
 	        }
 	    });
 	    newGame.setOpaque(false);
@@ -112,9 +116,11 @@ public class Renderer implements MouseListener, ActionListener {
 	    newGame.setBounds(771, 536, 170, 40);
 	    CardStart.add(newGame);
 
-        while (action.equals(""))
+        while (!readyToExit)
         {
+            System.out.println(readyToExit);
         }
+        panel.remove(CardStart);
         System.out.println("Action: " + action);
         return action;
 
@@ -124,8 +130,10 @@ public class Renderer implements MouseListener, ActionListener {
 	    JPanel CardSetup = new ImagePanel("/media/gamesetup.png");
 	    panel.add(CardSetup, setup);
 	    CardSetup.setLayout(null);
+	    Pane.add(panel, BorderLayout.CENTER);
 
         action = "Easy:1";
+        readyToExit = false;
 
     //Easy (Setup Page)
 	    JButton easy = new JButton("");
@@ -245,6 +253,7 @@ public class Renderer implements MouseListener, ActionListener {
 	    goBack.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
                 action += ":Back";
+                readyToExit = true;
                 System.out.println(action);
 	        }
 	    });
@@ -259,6 +268,8 @@ public class Renderer implements MouseListener, ActionListener {
 	    okay.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
                 action += ":Okay";
+                readyToExit = true;
+                System.out.println(action);
 	        }
 	    });
 	    okay.setOpaque(false);
@@ -267,7 +278,7 @@ public class Renderer implements MouseListener, ActionListener {
 	    okay.setBounds(771, 536, 170, 40);
 	    CardSetup.add(okay);
 
-        while (!action.contains("Okay") && !action.contains("Back"))
+        while (!readyToExit)
         {
         }
         return action;
