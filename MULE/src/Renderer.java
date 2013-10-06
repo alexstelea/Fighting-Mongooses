@@ -28,24 +28,27 @@ public class Renderer implements MouseListener, ActionListener {
 	//static final String mainScreen = "Main Screen";
 	final Font font1 = new Font("Candara", Font.PLAIN, 30);
 	private JPanel panel;
-    private Container Pane;
+    private JFrame frame;
     private String action; // the information communicated back to GameController
     private boolean readyToExit; // a boolean, tells each renderer method if it's ready to exit
 
 	public Renderer() {
 
-		JFrame frame = new JFrame("M.U.L.E.");
+		frame = new JFrame("M.U.L.E.");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setResizable(false);
 	    frame.setMinimumSize(new Dimension(950, 600));
 		
 	    //initPaneCreation(frame.getContentPane());
-        Pane = frame.getContentPane();
+
 	
 	    frame.pack();
 	    frame.repaint();
 		frame.validate();
 	    frame.setVisible(true);
+
+        panel = new JPanel(new CardLayout());
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
         action = "";
 	}
 
@@ -58,11 +61,8 @@ public class Renderer implements MouseListener, ActionListener {
 
     public String drawIntroScreen() {
 	    JPanel CardStart = new ImagePanel("/media/startscreen.png");
-	    panel = new JPanel(new CardLayout());
 	    panel.add(CardStart, start);
-	    //panel.add(CardMainScreen, mainScreen);
-	
-	    Pane.add(panel, BorderLayout.CENTER);
+        ((CardLayout)(panel.getLayout())).show(panel, start);
 
         readyToExit = false;
         action = ""; // The action to be returned, determined by the button pressed
@@ -118,9 +118,13 @@ public class Renderer implements MouseListener, ActionListener {
 
         while (!readyToExit)
         {
-            System.out.println(readyToExit);
+            try {
+                Thread.sleep(100); // find out why this is needed
+            }
+            catch (Exception e) {
+                continue;
+            }
         }
-        panel.remove(CardStart);
         System.out.println("Action: " + action);
         return action;
 
@@ -129,11 +133,12 @@ public class Renderer implements MouseListener, ActionListener {
     public String drawDifficultyScreen() {
 	    JPanel CardSetup = new ImagePanel("/media/gamesetup.png");
 	    panel.add(CardSetup, setup);
-	    CardSetup.setLayout(null);
-	    Pane.add(panel, BorderLayout.CENTER);
+        ((CardLayout)(panel.getLayout())).show(panel, setup);
 
         action = "Easy:1";
         readyToExit = false;
+	    CardSetup.setLayout(null);
+        frame.repaint();
 
     //Easy (Setup Page)
 	    JButton easy = new JButton("");
@@ -181,7 +186,7 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton p1 = new JButton("");
 	    p1.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-                action = action.substring(0, action.indexOf(':')) + "1";
+                action = action.substring(0, action.indexOf(':')) + ":1";
                 System.out.println(action);
 	        }
 	    });
@@ -195,7 +200,7 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton p2 = new JButton("");
 	    p2.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-                action = action.substring(0, action.indexOf(':')) + "2";
+                action = action.substring(0, action.indexOf(':')) + ":2";
                 System.out.println(action);
 	        }
 	    });
@@ -209,7 +214,7 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton p3 = new JButton("");
 	    p3.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-                action = action.substring(0, action.indexOf(':')) + "3";
+                action = action.substring(0, action.indexOf(':')) + ":3";
                 System.out.println(action);
 	        }
 	    });
@@ -223,7 +228,7 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton p4 = new JButton("");
 	    p4.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-                action = action.substring(0, action.indexOf(':')) + "4";
+                action = action.substring(0, action.indexOf(':')) + ":4";
                 System.out.println(action);
 	        }
 	    });
@@ -237,7 +242,7 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton p5 = new JButton("");
 	    p5.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-                action = action.substring(0, action.indexOf(':')) + "5";
+                action = action.substring(0, action.indexOf(':')) + ":5";
                 System.out.println(action);
 	        }
 	    });
@@ -280,16 +285,23 @@ public class Renderer implements MouseListener, ActionListener {
 
         while (!readyToExit)
         {
+            try {
+                Thread.sleep(100); // find out why this is needed
+            }
+            catch (Exception e) {
+                continue;
+            }
         }
         return action;
     }
 
-    public String mapSelectionScreen() {
+    public String drawMapSelectionScreen() {
     JPanel CardMap = new ImagePanel("/media/mapselection.png");
     panel.add(CardMap, map);
-    CardMap.setLayout(null);
+    ((CardLayout)(panel.getLayout())).show(panel, map);
 
-    action = "1:Okay";
+    action = "1:";
+    readyToExit = false;
 
 	//Map 1 (Map Page)
 	    JButton m1 = new JButton("Map 1");
@@ -365,8 +377,8 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton goBackMap = new JButton("");
 	    goBackMap.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-                action = action.substring(0, action.indexOf(':')) + "Back";
-                System.out.println(action);
+                action += "Back";
+                readyToExit = true;
 	        }
 	    });
 	    goBackMap.setOpaque(false);
@@ -379,8 +391,8 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton okayMap = new JButton("");
 	    okayMap.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-                action = action.substring(0, action.indexOf(':')) + "Okay";
-                System.out.println(action);
+                action += "Okay";
+                readyToExit = true;
 	        }
 	    });
 	    okayMap.setOpaque(false);
@@ -388,16 +400,28 @@ public class Renderer implements MouseListener, ActionListener {
 	    okayMap.setBorderPainted(false);
 	    okayMap.setBounds(771, 536, 170, 40);
 	    CardMap.add(okayMap);
+
+        while (!readyToExit)
+        {
+            try {
+                Thread.sleep(100); // find out why this is needed
+            }
+            catch (Exception e) {
+                continue;
+            }
+        }
         
         return action;
     }
 
-    public void drawCharacterSelectionScreen() {
+    public String drawCharacterSelectionScreen() {
 	    JPanel CardPlayer= new ImagePanel("/media/playerselection.png");
 	    panel.add(CardPlayer, player);
-        CardPlayer.setLayout(null);
+        ((CardLayout)(panel.getLayout())).show(panel, player);
 
-        action = "Human:Red:Okay";
+        action = "Human:Default:";
+        readyToExit = false;
+
 	    //Human (Player Page)
 	    JButton human = new JButton("");
 	    human.addMouseListener(new MouseAdapter() {
@@ -498,8 +522,8 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton goBackPlayer = new JButton("");
 	    goBackPlayer.addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-	            CardLayout cl = (CardLayout) (panel.getLayout());
-	            cl.show(panel, map);
+                action += "Back";
+                readyToExit = true;
 	        }
 	    });
 	    goBackPlayer.setOpaque(false);
@@ -535,11 +559,8 @@ public class Renderer implements MouseListener, ActionListener {
 	    JButton okayPlayer = new JButton("");
 	    okayPlayer .addMouseListener(new MouseAdapter() {
 	        public void mouseClicked(MouseEvent e) {
-	        	/*
-	            CardLayout cl = (CardLayout) (panel.getLayout());
-	            cl.show(panel, mainScreen);
-	        	 */
-	    	System.out.println("Okay!");
+                action += "Okay";
+                readyToExit = true;
 	        }
 	    });
 	    okayPlayer.setOpaque(false);
@@ -547,6 +568,17 @@ public class Renderer implements MouseListener, ActionListener {
 	    okayPlayer.setBorderPainted(false);
 	    okayPlayer.setBounds(771, 536, 170, 40);
 	    CardPlayer.add(okayPlayer);
+
+        while (!readyToExit)
+        {
+            try {
+                Thread.sleep(100); // find out why this is needed
+            }
+            catch (Exception e) {
+                continue;
+            }
+        }
+        return action;
 	}
 	
 	

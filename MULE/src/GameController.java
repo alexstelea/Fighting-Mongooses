@@ -32,9 +32,10 @@ public class GameController {
 		if(savedGames == null || savedGames.length == 0) {
 			model.setIsSavedGameAvailable(true);
 		}
-        System.out.println("Entering intro screen");
+
+        // Introduction Screen
 		String action = renderer.drawIntroScreen();
-        System.out.println("Leaving intro screen");
+
         if (action.equals("Quit"))
         {
             System.exit(0);
@@ -45,23 +46,44 @@ public class GameController {
             System.exit(0);
         }
 
-        // New Game
-        System.out.println("New");
-        System.out.println("Entering difficulty screen");
-        renderer.drawDifficultyScreen();
-        System.out.println("Leaving difficulty screen");
+        // Difficulty Screen
+        action = renderer.drawDifficultyScreen();
 
         String difficulty = action.substring(0, action.indexOf(':'));
-        action = action.substring(action.indexOf(':'));
+        action = action.substring(action.indexOf(':') + 1);
         int numPlayers = Integer.parseInt(action.substring(0, action.indexOf(':')));
-        action = action.substring(action.indexOf(':'));
+        System.out.println("Diffculty: " + difficulty + ", numPlayers: " + numPlayers);
+        action = action.substring(action.indexOf(':') + 1);
 
         if (action.equals("Back"))
         {
             System.exit(0);
         }
 
+        // Map Selection Screen
+        action = renderer.drawMapSelectionScreen();
         System.out.println(action);
+
+        int mapNum = Integer.parseInt(action.substring(0, action.indexOf(':')));
+        action = action.substring(action.indexOf(':') + 1);
+
+        if (action.equals("Back"))
+        {
+            System.exit(0);
+        }
+
+        // Character Selection Screen
+        try {
+            Thread.sleep(100); // find out why this is needed
+        }
+        catch (Exception e) {
+        }
+
+        action = renderer.drawCharacterSelectionScreen();
+        System.out.println("Done");
+        System.exit(0);
+
+
 	}
 	
 	private void showLoadGameSavePartial(Save savedGame){
