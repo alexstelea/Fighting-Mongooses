@@ -149,9 +149,8 @@ public class Renderer {
         JButton orangeButton = addButtonToPanel(panel, 710, 240, 130, 200, 3, "orange");
 
         JTextField nameBox = addTextToPanel(panel, 470, 522, 225, 38);
-        JLabel colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
 
-        blockForInputCharacter(panel, colors);
+        blockForInputCharacter(panel);
         exitSafely();
         states[2] = nameBox.getText();
         return states;
@@ -185,10 +184,11 @@ public class Renderer {
         }
     }
 
-    private void blockForInputCharacter(JPanel panel, JLabel colors) {
+    private void blockForInputCharacter(JPanel panel) {
         // wait for a button to be clicked
-        boolean waitingSafe = true; // used to avoid race condition
+        JLabel colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
         String oldState = states[1];
+        boolean waitingSafe = true; // used to avoid race condition
         while (waitingSafe) {
             if (!oldState.equals(states[1])) {
                 panel.remove(colors);
@@ -219,7 +219,7 @@ public class Renderer {
 
 
     private JButton addButtonToPanel(JPanel panel, int x, int y, int width, int height, 
-            final int stateNum, final String stateText) {
+        final int stateNum, final String stateText) {
         JButton button = new JButton();
         button.setBounds(x, y, width, height);
         panel.add(button);
