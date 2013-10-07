@@ -4,6 +4,8 @@
 *.jar
 *.war
 *.ear
+*.html
+*.css
 
 MULE/apidoc/*.*
 M4/apidoc/*.*
