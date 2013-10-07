@@ -32,14 +32,15 @@ public class GameController {
         boolean initializing = true;
 
         // variables we are collecting
-        String difficulty;
-        int numPlayers;
+        String difficulty = "";
+        int numPlayers = 1;
+        int map = 1;
 
         while(initializing) {
 
+            System.out.println("State: " + state);
             // Introduction Screen
             if (state.equals("intro")) {
-                System.out.println("State: " + state);
                 String action = renderer.drawIntroScreen()[0];
                 if (action.equals("quit")) {
                     state = "quit";
@@ -54,7 +55,6 @@ public class GameController {
 
             // Setup Screen
             else if (state.equals("setup")) {
-                System.out.println("State: " + state);
                String[] results = renderer.drawSetupScreen();
                String action = results[0];
                difficulty = results[1];
@@ -67,12 +67,29 @@ public class GameController {
                }
             }
 
+            // Map Screen
+            else if (state.equals("map")) {
+                String[] results = renderer.drawMapScreen();
+                String action = results[0];
+                map = Integer.parseInt(results[1]);
+                if (action.equals("okay")) {
+                    state = "player";
+                }
+                else {
+                    state = "setup";
+                }
+            }
+
+
             // quit state
             else {
                 System.out.println("State: " + state);
-                System.exit(0);
+                break;
             }
         }
+        System.out.println("Difficulty: " + difficulty);
+        System.out.println("NumPlayers: " + numPlayers);
+        System.out.println("Map: " + map);
 	}
 	
 	private void showLoadGameSavePartial(Save savedGame){

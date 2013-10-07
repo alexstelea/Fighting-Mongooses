@@ -95,6 +95,31 @@ public class Renderer {
         return states;
     }
 
+    public String[] drawMapScreen() {
+
+        // declare initial variables
+        String action = "";
+        states = new String[2];
+        states[0] = "okay";
+        states[1] = "1";
+        ImagePanel panel = new ImagePanel("/media/mapselection.png");
+        panel.setLayout(null);
+        changePanel(frame, panel);
+
+        // add buttons
+        JButton backButton = addButtonToPanel(panel, 11, 536, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(panel, 770, 537, 170, 40, 0, "okay");
+        JButton map1Button = addButtonToPanel(panel, 110, 157, 225, 122, 1, "1");
+        JButton map2Button = addButtonToPanel(panel, 365, 157, 225, 122, 1, "2");
+        JButton map3Button = addButtonToPanel(panel, 615, 157, 225, 122, 1, "3");
+        JButton map4Button = addButtonToPanel(panel, 235, 307, 225, 122, 1, "4");
+        JButton map5Button = addButtonToPanel(panel, 488, 307, 225, 122, 1, "5");
+
+        blockForInput();
+        exitSafely();
+        return states;
+    }
+
     public void drawLoadScreen(LoadScreenModel model) {
         return;
     }

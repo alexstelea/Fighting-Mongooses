@@ -6,6 +6,7 @@
 *.ear
 *.html
 *.css
+*.gif
 
 MULE/apidoc/*.*
 M4/apidoc/*.*
