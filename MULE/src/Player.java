@@ -37,14 +37,14 @@ public class Player {
             throw new IllegalArgumentException("Please ensure name is between 3 and 100 characters long");
         }
 
-        if (!(color.equals("Red") || color.equals("Blue") || color.equals("Pink") || color.equals("Green") ||
-            color.equals("Orange"))) {
-            throw new IllegalArgumentException("Invalid color");
+        if (!(color.equals("red") || color.equals("blue") || color.equals("pink") || color.equals("green") ||
+            color.equals("orange"))) {
+            throw new IllegalArgumentException("Invalid color: " + color);
         }
 
-        if (!(race.equals("Human") || race.equals("Flapper") || race.equals("Bonzoid") || race.equals("Ugaite") || 
-            race.equals("Buzzite"))) {
-            throw new IllegalArgumentException("Invalid race");
+        if (!(race.equals("human") || race.equals("elephant") || race.equals("frog") || race.equals("squirrel") || 
+            race.equals("cat"))) {
+            throw new IllegalArgumentException("Invalid race: " + race);
         }
 
         // set instance variables
@@ -60,6 +60,14 @@ public class Player {
         column = 0;
         tiles = new ArrayList<Tile>();
     }
+
+    /** 
+     * toString method for player
+     */
+     public String toString() {
+         return name + " is a " + color + " " + race + ".";
+     }
+
 
     /**
      * Getter method for the player's name

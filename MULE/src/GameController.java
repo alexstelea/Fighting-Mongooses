@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 public class GameController {
     /**
      * Main method of the MULE game
@@ -35,6 +38,7 @@ public class GameController {
         String difficulty = "";
         int numPlayers = 1;
         int map = 1;
+        ArrayList<Player> players = new ArrayList<Player>();
 
         while(initializing) {
 
@@ -80,6 +84,23 @@ public class GameController {
                 }
             }
 
+            // Character selection screen
+            else if (state.equals("player")) {
+                String[] results = renderer.drawCharacterScreen();
+                String action = results[0];
+                if (action.equals("back")) {
+                    state = "map";
+                }
+                else {
+                    players.add(new Player(results[2], results[1], results[3]));
+
+                    // only move on if we have all the players
+                    if (--numPlayers == 0) {
+                        state = "done";
+                    }
+                }
+            }
+
 
             // quit state
             else {
@@ -87,9 +108,14 @@ public class GameController {
                 break;
             }
         }
+        numPlayers = players.size();
         System.out.println("Difficulty: " + difficulty);
         System.out.println("NumPlayers: " + numPlayers);
         System.out.println("Map: " + map);
+        for (Player p : players) {
+            System.out.println(p);
+        }
+        System.exit(0);
 	}
 	
 	private void showLoadGameSavePartial(Save savedGame){

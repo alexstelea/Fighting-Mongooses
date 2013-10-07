@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import java.util.concurrent.locks.*;
+import java.util.ArrayList;
 
 public class Renderer {
 
@@ -79,8 +80,8 @@ public class Renderer {
         changePanel(frame, panel);
 
         // add buttons
-        JButton backButton = addButtonToPanel(panel, 11, 536, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(panel, 771, 536, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(panel, 771, 520, 170, 40, 0, "okay");
         JButton easyButton = addButtonToPanel(panel, 160, 163, 173, 28, 1, "easy");
         JButton mediumButton = addButtonToPanel(panel, 407, 163, 173, 28, 1, "medium");
         JButton hardButton = addButtonToPanel(panel, 716, 163, 173, 28, 1, "hard");
@@ -107,8 +108,8 @@ public class Renderer {
         changePanel(frame, panel);
 
         // add buttons
-        JButton backButton = addButtonToPanel(panel, 11, 536, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(panel, 770, 537, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(panel, 770, 520, 170, 40, 0, "okay");
         JButton map1Button = addButtonToPanel(panel, 110, 157, 225, 122, 1, "1");
         JButton map2Button = addButtonToPanel(panel, 365, 157, 225, 122, 1, "2");
         JButton map3Button = addButtonToPanel(panel, 615, 157, 225, 122, 1, "3");
@@ -117,6 +118,42 @@ public class Renderer {
 
         blockForInput();
         exitSafely();
+        return states;
+    }
+
+    public String[] drawCharacterScreen() {
+
+        // declare initial variables
+        String action = "";
+        states = new String[4];
+        states[0] = "okay";
+        states[1] = "human";
+        states[2] = "default";
+        states[3] = "red";
+        ImagePanel panel = new ImagePanel("/media/playerselection.png");
+        panel.setLayout(null);
+        changePanel(frame, panel);
+
+        // add buttons
+        JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(panel, 771, 520, 170, 40, 0, "okay");
+        JButton humanButton = addButtonToPanel(panel, 75, 78, 133, 115, 1, "human");
+        JButton elephantButton = addButtonToPanel(panel, 232, 78, 133, 115, 1, "elephant");
+        JButton squirrelButton = addButtonToPanel(panel, 413, 78, 133, 115, 1, "squirrel");
+        JButton frogButton = addButtonToPanel(panel, 593, 78, 133, 115, 1, "frog");
+        JButton catButton = addButtonToPanel(panel, 763, 78, 133, 115, 1, "cat");
+        JButton redButton = addButtonToPanel(panel, 70, 240, 130, 200, 3, "red");
+        JButton blueButton = addButtonToPanel(panel, 230, 240, 130, 200, 3, "blue");
+        JButton pinkButton = addButtonToPanel(panel, 390, 240, 130, 200, 3, "pink");
+        JButton greenButton = addButtonToPanel(panel, 550, 240, 130, 200, 3, "green");
+        JButton orangeButton = addButtonToPanel(panel, 710, 240, 130, 200, 3, "orange");
+
+        JTextField nameBox = addTextToPanel(panel, 470, 522, 225, 38);
+        JLabel colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
+
+        blockForInputCharacter(panel, colors);
+        exitSafely();
+        states[2] = nameBox.getText();
         return states;
     }
 
@@ -138,6 +175,28 @@ public class Renderer {
         // wait for a button to be clicked
         boolean waitingSafe = true; // used to avoid race condition
         while (waitingSafe) {
+            try {
+                lock.lock();
+                waitingSafe = waiting;
+            }
+            finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    private void blockForInputCharacter(JPanel panel, JLabel colors) {
+        // wait for a button to be clicked
+        boolean waitingSafe = true; // used to avoid race condition
+        String oldState = states[1];
+        while (waitingSafe) {
+            if (!oldState.equals(states[1])) {
+                panel.remove(colors);
+                colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
+                panel.repaint();
+                oldState = states[1];
+            }
+
             try {
                 lock.lock();
                 waitingSafe = waiting;
@@ -186,5 +245,40 @@ public class Renderer {
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
         return button;
+    }
+
+    private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
+        JTextField text = new JTextField("default");
+        text.setBounds(x, y, width, height);
+        DefaultCaret c = (DefaultCaret)text.getCaret();
+        c.setVisible(true);
+        c.setDot(0);
+        text.setFont(new Font("Candara", Font.PLAIN, 30));
+        text.setHorizontalAlignment(JTextField.LEFT);
+        text.setForeground(Color.WHITE);
+        text.setBackground(new Color(87, 51, 4));
+        text.setOpaque(false);
+        text.setCaretColor(Color.WHITE);
+        text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        panel.add(text);
+        return text;
+    }
+
+    private JLabel addLabelToPanel(JPanel panel, int x, int y, int width, int height, String image) {
+        BufferedImage img;
+        try {
+            img = ImageIO.read(getClass().getResourceAsStream(image));
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e);
+            return null;
+        }
+
+        ImageIcon icon = new ImageIcon(img);
+        JLabel label = new JLabel();
+        label.setIcon(icon);
+        label.setBounds(x, y, width, height);
+        panel.add(label);
+        return label;
     }
 }
