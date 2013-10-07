@@ -187,6 +187,7 @@ public class Renderer {
     private void blockForInputCharacter(JPanel panel) {
         // wait for a button to be clicked
         JLabel colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
+        panel.repaint();
         String oldState = states[1];
         boolean waitingSafe = true; // used to avoid race condition
         while (waitingSafe) {
