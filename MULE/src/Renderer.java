@@ -148,7 +148,7 @@ public class Renderer {
         JButton greenButton = addButtonToPanel(panel, 550, 240, 130, 200, 3, "green");
         JButton orangeButton = addButtonToPanel(panel, 710, 240, 130, 200, 3, "orange");
 
-        JTextField nameBox = addTextToPanel(panel, 470, 522, 225, 38);
+        JTextField nameBox = addTextToPanel(panel, 470, 535, 225, 38);
 
         blockForInputCharacter(panel);
         exitSafely();
@@ -249,7 +249,7 @@ public class Renderer {
     }
 
     private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
-        JTextField text = new JTextField("default");
+        JTextField text = new JTextField("Enter Name Here");
         text.setBounds(x, y, width, height);
         DefaultCaret c = (DefaultCaret)text.getCaret();
         c.setVisible(true);
