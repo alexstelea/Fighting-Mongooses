@@ -10,6 +10,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.*;
 import java.awt.font.*;
+import java.awt.image.BufferedImage;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import javax.swing.*;
 import javax.swing.JTextField;
@@ -17,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.text.DefaultCaret;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class Renderer implements MouseListener, ActionListener {
 
@@ -404,6 +412,7 @@ public class Renderer implements MouseListener, ActionListener {
         while (!readyToExit)
         {
             try {
+                System.out.println("Spinning: " + readyToExit);
                 Thread.sleep(100); // find out why this is needed
             }
             catch (Exception e) {
@@ -414,13 +423,34 @@ public class Renderer implements MouseListener, ActionListener {
         return action;
     }
 
+
     public String drawCharacterSelectionScreen() {
 	    JPanel CardPlayer= new ImagePanel("/media/playerselection.png");
 	    panel.add(CardPlayer, player);
         ((CardLayout)(panel.getLayout())).show(panel, player);
 
+        System.out.println("about to try");
         action = "Human:Default:";
         readyToExit = false;
+
+
+        BufferedImage img;
+        // display an image
+        try {
+            System.out.println(System.getProperty("user.dir"));
+            img = ImageIO.read(getClass().getResourceAsStream("/media/human.png"));
+
+        } 
+        catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
+        ImageIcon icon = new ImageIcon(img);
+        JLabel label = new JLabel();
+        label.setIcon(icon);
+        CardPlayer.add(label);
+        CardPlayer.add(label);
 
 	    //Human (Player Page)
 	    JButton human = new JButton("");
@@ -568,7 +598,8 @@ public class Renderer implements MouseListener, ActionListener {
 	    okayPlayer.setBorderPainted(false);
 	    okayPlayer.setBounds(771, 536, 170, 40);
 	    CardPlayer.add(okayPlayer);
-
+        
+        System.out.println("Almost to while loop with var: " + readyToExit);
         while (!readyToExit)
         {
             try {
@@ -578,6 +609,7 @@ public class Renderer implements MouseListener, ActionListener {
                 continue;
             }
         }
+        System.out.println("Done with while loop with var: " + readyToExit);
         return action;
 	}
 	

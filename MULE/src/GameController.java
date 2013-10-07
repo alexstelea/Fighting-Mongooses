@@ -81,7 +81,8 @@ public class GameController {
 
         action = renderer.drawCharacterSelectionScreen();
         System.out.println("Done");
-        System.exit(0);
+        while (true) {}
+        //System.exit(0);
 
 
 	}
