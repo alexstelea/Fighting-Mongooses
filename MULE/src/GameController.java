@@ -23,68 +23,56 @@ public class GameController {
 
 	public GameController() {
 		renderer = new Renderer();
-		showStartScreen();
+        startGame();
 	}
 
-	private void showStartScreen() {
-		Save[] savedGames = getSavedGames();
-		StartScreenModel model = new StartScreenModel();
-		if(savedGames == null || savedGames.length == 0) {
-			model.setIsSavedGameAvailable(true);
-		}
+	private void startGame() {
 
-        // Introduction Screen
-		String action = renderer.drawIntroScreen();
+        String state = "intro";
+        boolean initializing = true;
 
-        if (action.equals("Quit"))
-        {
-            System.exit(0);
+        // variables we are collecting
+        String difficulty;
+        int numPlayers;
+
+        while(initializing) {
+
+            // Introduction Screen
+            if (state.equals("intro")) {
+                System.out.println("State: " + state);
+                String action = renderer.drawIntroScreen()[0];
+                if (action.equals("quit")) {
+                    state = "quit";
+                }
+                else if (action.equals("load")) {
+                    state = "load";
+                }
+                else {
+                    state = "setup";
+                }
+            }
+
+            // Setup Screen
+            else if (state.equals("setup")) {
+                System.out.println("State: " + state);
+               String[] results = renderer.drawSetupScreen();
+               String action = results[0];
+               difficulty = results[1];
+               numPlayers = Integer.parseInt(results[2]);
+               if (action.equals("okay")) {
+                   state = "map";
+               }
+               else {
+                   state = "intro";
+               }
+            }
+
+            // quit state
+            else {
+                System.out.println("State: " + state);
+                System.exit(0);
+            }
         }
-        else if (action.equals("Load"))
-        {
-            System.out.println("Load");
-            System.exit(0);
-        }
-
-        // Difficulty Screen
-        action = renderer.drawDifficultyScreen();
-
-        String difficulty = action.substring(0, action.indexOf(':'));
-        action = action.substring(action.indexOf(':') + 1);
-        int numPlayers = Integer.parseInt(action.substring(0, action.indexOf(':')));
-        System.out.println("Diffculty: " + difficulty + ", numPlayers: " + numPlayers);
-        action = action.substring(action.indexOf(':') + 1);
-
-        if (action.equals("Back"))
-        {
-            System.exit(0);
-        }
-
-        // Map Selection Screen
-        action = renderer.drawMapSelectionScreen();
-        System.out.println(action);
-
-        int mapNum = Integer.parseInt(action.substring(0, action.indexOf(':')));
-        action = action.substring(action.indexOf(':') + 1);
-
-        if (action.equals("Back"))
-        {
-            System.exit(0);
-        }
-
-        // Character Selection Screen
-        try {
-            Thread.sleep(100); // find out why this is needed
-        }
-        catch (Exception e) {
-        }
-
-        action = renderer.drawCharacterSelectionScreen();
-        System.out.println("Done");
-        while (true) {}
-        //System.exit(0);
-
-
 	}
 	
 	private void showLoadGameSavePartial(Save savedGame){
