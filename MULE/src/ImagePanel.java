@@ -26,10 +26,6 @@ public class ImagePanel extends JPanel{
 
 		Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imageFile));
 
-		//java.net.URL imageURL = getClass().getResource(imageFile);
-		
-		//Image image = imageURL;
-
 		//draw image on the panel
 		super.paintComponent(g);
 
