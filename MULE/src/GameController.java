@@ -107,9 +107,16 @@ public class GameController {
 
                     // only move on if we have all the players
                     if (--numPlayers == 0) {
-                        state = "done";
+                        state = "game";
                     }
                 }
+            }
+
+
+            else if (state.equals("game")){
+                String[] results = renderer.drawMainGameScreen(map);
+
+
             }
 
             // quit state

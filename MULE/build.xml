@@ -45,8 +45,8 @@
         <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
         </java>
     </target>
-
-    <target name="all" depends="init,prepare,compile,javadoc,jar,run"/>
+    <!-- We removed the javadoc for faster builds -->
+    <target name="all" depends="init,prepare,compile,jar,run"/>
 
     <target name="clean" depends="init">
         <delete dir="${api.dir}"/>

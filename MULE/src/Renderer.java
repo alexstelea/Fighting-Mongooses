@@ -102,7 +102,7 @@ public class Renderer {
         String action = "";
         states = new String[2];
         states[0] = "okay";
-        states[1] = "1";
+        states[1] = "0";
         ImagePanel panel = new ImagePanel("/media/mapselection.png");
         panel.setLayout(null);
         changePanel(frame, panel);
@@ -120,7 +120,17 @@ public class Renderer {
         exitSafely();
         return states;
     }
+    public String[] drawMainGameScreen(int mapNumber) {
 
+        String action = "";
+
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        changePanel(frame, panel);
+        exitSafely();
+        return states;
+
+    }
     public String[] drawCharacterScreen() {
 
         // declare initial variables
@@ -164,7 +174,6 @@ public class Renderer {
     // helper methods
 
     private void changePanel(JFrame frame, JPanel panel) {
-        //frame.removeAll();
         frame.setContentPane(panel);
         frame.pack();
         frame.repaint();
@@ -184,7 +193,7 @@ public class Renderer {
         }
     }
 
-    private void blockForInputCharacter(JPanel panel) {
+    private JLabel blockForInputCharacter(JPanel panel) {
         // wait for a button to be clicked
         JLabel colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
         panel.repaint();
@@ -206,6 +215,7 @@ public class Renderer {
                 lock.unlock();
             }
         }
+        return colors;
     }
 
     private void exitSafely() {
