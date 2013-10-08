@@ -26,7 +26,7 @@ public class Player {
      * @param color The player's color.  Must be Red, Blue, Pink, Green, or Orange
      *
      */
-    public Player(String name, String race, String color, int getDifficulty) {
+    public Player(String name, String race, String color) {
 
         // sanity check on parameters
         if (name == null || race == null || color == null) {
@@ -46,6 +46,7 @@ public class Player {
             race.equals("cat"))) {
             throw new IllegalArgumentException("Invalid race: " + race);
         }
+        /*
         if (getDifficulty == 1){
             this.food = 8;
             this.energy = 4;
@@ -54,6 +55,8 @@ public class Player {
             this.food = 4;
             this.energy = 2;   
         }
+        */
+
         if (race.equals("human")) {
             this.money = 600;    
         }
@@ -63,7 +66,6 @@ public class Player {
         if ((race.equals("frog")) || (race.equals("squirrel")) || (race.equals("cat"))){
             this.money = 1000;
         }
-
 
         // set instance variables
         this.name = name;
