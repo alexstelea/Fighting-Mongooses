@@ -26,8 +26,13 @@ public class GameController {
 
 	public GameController() {
 		renderer = new Renderer();
-        startGame();
+        playGame();
 	}
+
+    private void playGame() {
+        startGame();
+        initializeMap();
+    }
 
 	private void startGame() {
 
@@ -107,11 +112,10 @@ public class GameController {
                 }
             }
 
-
             // quit state
             else {
                 System.out.println("State: " + state);
-                break;
+                initializing = false;
             }
         }
         numPlayers = players.size();
@@ -121,8 +125,11 @@ public class GameController {
         for (Player p : players) {
             System.out.println(p);
         }
-        System.exit(0);
 	}
+
+    private void initializeMap() {
+
+    }
 	
 	private void showLoadGameSavePartial(Save savedGame){
 		
