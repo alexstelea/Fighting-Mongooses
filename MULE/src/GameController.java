@@ -92,7 +92,13 @@ public class GameController {
                     state = "map";
                 }
                 else {
-                    players.add(new Player(results[2], results[1], results[3]));
+                    try {
+                        players.add(new Player(results[2], results[1], results[3]));
+                    }
+                    catch (Exception exception) {
+                        System.out.println(exception);
+                        continue;
+                    }
 
                     // only move on if we have all the players
                     if (--numPlayers == 0) {
