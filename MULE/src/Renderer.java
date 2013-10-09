@@ -73,7 +73,7 @@ public class Renderer {
         String action = "";
         states = new String[3];
         states[0] = "okay";
-        states[1] = "medium";
+        states[1] = "2";
         states[2] = "1";
         ImagePanel panel = new ImagePanel("/media/gamesetup.png");
         panel.setLayout(null);
@@ -82,9 +82,9 @@ public class Renderer {
         // add buttons
         JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
         JButton okayButton = addButtonToPanel(panel, 771, 520, 170, 40, 0, "okay");
-        JButton easyButton = addButtonToPanel(panel, 160, 163, 173, 28, 1, "easy");
-        JButton mediumButton = addButtonToPanel(panel, 407, 163, 173, 28, 1, "medium");
-        JButton hardButton = addButtonToPanel(panel, 716, 163, 173, 28, 1, "hard");
+        JButton easyButton = addButtonToPanel(panel, 160, 163, 173, 28, 1, "1");
+        JButton mediumButton = addButtonToPanel(panel, 407, 163, 173, 28, 1, "2");
+        JButton hardButton = addButtonToPanel(panel, 716, 163, 173, 28, 1, "3");
         JButton onePlayer = addButtonToPanel(panel, 191, 394, 14, 40, 2, "1");
         JButton twoPlayer = addButtonToPanel(panel, 329, 394, 14, 40, 2, "2");
         JButton threePlayer = addButtonToPanel(panel, 468, 394, 14, 40, 2, "3");
