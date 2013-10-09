@@ -40,7 +40,7 @@ public class GameController {
         boolean initializing = true;
 
         // variables we are collecting
-        String difficulty = "";
+        int difficulty = 0;
         int numPlayers = 1;
         int map = 1;
         ArrayList<Player> players = new ArrayList<Player>();
@@ -66,7 +66,7 @@ public class GameController {
             else if (state.equals("setup")) {
                String[] results = renderer.drawSetupScreen();
                String action = results[0];
-               difficulty = results[1];
+               difficulty = Integer.parseInt(results[1]);
                numPlayers = Integer.parseInt(results[2]);
                if (action.equals("okay")) {
                    state = "map";
@@ -98,7 +98,7 @@ public class GameController {
                 }
                 else {
                     try {
-                        players.add(new Player(results[2], results[1], results[3]));
+                        players.add(new Player(results[2], results[1], results[3], difficulty));
                     }
                     catch (Exception exception) {
                         System.out.println(exception);
