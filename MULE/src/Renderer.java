@@ -41,7 +41,7 @@ public class Renderer {
         frame = new JFrame("M.U.L.E.");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setMinimumSize(new Dimension(950, 600));
+        frame.setMinimumSize(new Dimension(950, 750));
         frame.setVisible(true);
         waiting = true;
         lock = new ReentrantLock();
