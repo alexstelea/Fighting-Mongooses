@@ -1,4 +1,4 @@
-public class RiverTile extends ResourceTile {
+public class RiverTile extends Tile {
 
     public RiverTile() {
         super("river");

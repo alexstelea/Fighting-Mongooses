@@ -1,4 +1,4 @@
-public class MountainTile extends ResourceTile {
+public class MountainTile extends Tile {
 
     private int mountainNum;
 

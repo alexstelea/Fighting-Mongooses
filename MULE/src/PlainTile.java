@@ -1,4 +1,4 @@
-public class PlainTile extends ResourceTile {
+public class PlainTile extends Tile {
 
     public PlainTile() {
         super("plain");
