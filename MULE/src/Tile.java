@@ -1,12 +1,18 @@
 public abstract class Tile {
 
     protected boolean hasMule;
-    protected int type;
     protected String owner;
+    protected String type;
 
-    public abstract int collectResources();
+    public Tile(String type) {
+        this.type = type;
+        hasMule = false;
+    }
+
+    public abstract void collectResources(Player player);
 
     public boolean addMule() {
+
         if (hasMule == true && owner != null) {
             System.out.println("Tile already has a MULE!");
             return false;
@@ -33,11 +39,15 @@ public abstract class Tile {
         return true;
     }
 
-    public int getType() {
-        return type;
-    }
-
     public String getOwner() {
         return owner;
+    }
+
+    public boolean hasMule() {
+        return hasMule;
+    }
+
+    public String getType() {
+        return type;
     }
 }

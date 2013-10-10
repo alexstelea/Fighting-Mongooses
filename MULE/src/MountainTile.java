@@ -1,12 +1,14 @@
 public class MountainTile extends Tile {
 
-    public MountainTile() {
-        boolean hasMule = false;
-        type = 1;
+    private int mountainNum;
+
+    public MountainTile(int mountainNum) {
+        super("mountain" + mountainNum);
+        this.mountainNum = mountainNum;
     }
 
-    public int collectResources() {
-        return 0;
+    public void collectResources(Player player) {
+        return;
     }
 }
 

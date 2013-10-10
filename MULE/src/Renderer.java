@@ -45,6 +45,7 @@ public class Renderer {
         frame.setVisible(true);
         waiting = true;
         lock = new ReentrantLock();
+        frame.setLayout(new FlowLayout());
     }
 
     public String[] drawIntroScreen() {
@@ -79,6 +80,9 @@ public class Renderer {
         panel.setLayout(null);
         changePanel(frame, panel, true);
 
+
+        ImagePanel panel2 = new ImagePanel("/media/bp0.png");
+        addPanel(frame, panel2);
 
         // add buttons
         JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
@@ -193,6 +197,7 @@ public class Renderer {
         frame.pack();
         frame.repaint();
     }
+
     private void blockForInput() {
         // wait for a button to be clicked
         boolean waitingSafe = true; // used to avoid race condition
