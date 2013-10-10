@@ -55,7 +55,7 @@ public class Renderer {
         states[0] = "new";
         ImagePanel panel = new ImagePanel("/media/startscreen.png");
         panel.setLayout(null);
-        changePanel(frame, panel);
+        changePanel(frame, panel, false);
 
         // add buttons
         JButton quitButton = addButtonToPanel(panel, 11, 520, 171, 40, 0, "quit");
@@ -77,7 +77,8 @@ public class Renderer {
         states[2] = "1";
         ImagePanel panel = new ImagePanel("/media/gamesetup.png");
         panel.setLayout(null);
-        changePanel(frame, panel);
+        changePanel(frame, panel, true);
+
 
         // add buttons
         JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
@@ -105,7 +106,7 @@ public class Renderer {
         states[1] = "0";
         ImagePanel panel = new ImagePanel("/media/mapselection.png");
         panel.setLayout(null);
-        changePanel(frame, panel);
+        changePanel(frame, panel, false);
 
         // add buttons
         JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
@@ -124,9 +125,9 @@ public class Renderer {
 
         String action = "";
 
-        JPanel panel = new JPanel();
+        ImagePanel panel = new ImagePanel("/media/map"+mapNumber+".png");
         panel.setLayout(null);
-        changePanel(frame, panel);
+        changePanel(frame, panel, false);
         exitSafely();
         return states;
 
@@ -142,7 +143,7 @@ public class Renderer {
         states[3] = "red";
         ImagePanel panel = new ImagePanel("/media/playerselection.png");
         panel.setLayout(null);
-        changePanel(frame, panel);
+        changePanel(frame, panel, true);
 
         // add buttons
         JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
@@ -173,12 +174,25 @@ public class Renderer {
 
     // helper methods
 
-    private void changePanel(JFrame frame, JPanel panel) {
-        frame.setContentPane(panel);
+    private void changePanel(JFrame frame, JPanel panel, Boolean showMenuBar) {
+        
+        JPanel mainFrame = new JPanel();
+        mainFrame.setSize(950, 700);
+        mainFrame.setLayout(new BorderLayout());
+        mainFrame.add(panel, BorderLayout.CENTER);
+
+
+        if (showMenuBar == true) {
+            ImagePanel menuBar = new ImagePanel("/media/bp0.png");
+            menuBar.setSize(950, 100);
+            mainFrame.add(menuBar, BorderLayout.SOUTH);
+        }
+
+
+        frame.setContentPane(mainFrame);
         frame.pack();
         frame.repaint();
     }
-
     private void blockForInput() {
         // wait for a button to be clicked
         boolean waitingSafe = true; // used to avoid race condition
