@@ -44,6 +44,7 @@ public class GameController {
         int numPlayers = 1;
         int map = 1;
         ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<String> takenColors = new ArrayList<String>();
 
         while(initializing) {
 
@@ -97,6 +98,12 @@ public class GameController {
                     state = "map";
                 }
                 else {
+                    if (takenColors.contains(results[3])) {
+                        System.out.println("That color is taken!");
+                        continue;
+                    }
+                    takenColors.add(results[3]);
+
                     try {
                         players.add(new Player(results[2], results[1], results[3], difficulty));
                     }
