@@ -35,6 +35,10 @@ public class Renderer {
     private boolean waiting;
     private String[] states; // keeps track of the state of the GUI
     private ReentrantLock lock;
+    protected static final int WIDTH = 9;
+    protected static final int HEIGHT = 5;
+    protected static final int TILE_SIZE = 100;
+    private JButton[] buttons = new JButton[WIDTH + HEIGHT];
 
     public Renderer() {
 
@@ -175,7 +179,17 @@ public class Renderer {
         return;
     }
 
-
+    /*
+    //(row*width+column)
+    private void mapCoordinates(){
+        for(int col = 0; col < WIDTH; col++){
+            for(int row = 0; row < HEIGHT; row++){
+            buttons[row * WIDTH + col] = addButtonToPanel(panel, 25 + 100 * col, 25 + 100 * HEIGHT, 100, 100, 1, "test");
+            }
+        }
+    }
+    */
+    
     // helper methods
 
     private void changePanel(JFrame frame, JPanel panel, Boolean showMenuBar) {
