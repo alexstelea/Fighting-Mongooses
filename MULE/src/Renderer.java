@@ -63,9 +63,9 @@ public class Renderer {
         changePanel(frame, panel, false);
 
         // add buttons
-        JButton quitButton = addButtonToPanel(panel, 11, 520, 171, 40, 0, "quit");
-        JButton loadButton = addButtonToPanel(panel, 590, 520, 171, 40, 0, "load");
-        JButton newButton = addButtonToPanel(panel, 771, 520, 171, 40, 0, "new");
+        JButton quitButton = addButtonToPanel(panel, 11, 678, 171, 42, 0, "quit");
+        JButton loadButton = addButtonToPanel(panel, 590, 678, 171, 42, 0, "load");
+        JButton newButton = addButtonToPanel(panel, 771, 678, 171, 42, 0, "new");
 
         blockForInput();
         exitSafely();
@@ -82,16 +82,11 @@ public class Renderer {
         states[2] = "1";
         ImagePanel panel = new ImagePanel("/media/gamesetup.png");
         panel.setLayout(null);
-        changePanel(frame, panel, true);
-
-
-        ImagePanel panel2 = new ImagePanel("/media/bp0.png");
-
-        changePanel(frame, panel2, true);
+        JPanel statusPanel = changePanel(frame, panel, true);
 
         // add buttons
-        JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(panel, 771, 520, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(statusPanel, 11, 0, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(statusPanel, 771, 0, 170, 40, 0, "okay");
         JButton easyButton = addButtonToPanel(panel, 160, 163, 173, 28, 1, "1");
         JButton mediumButton = addButtonToPanel(panel, 407, 163, 173, 28, 1, "2");
         JButton hardButton = addButtonToPanel(panel, 716, 163, 173, 28, 1, "3");
@@ -118,8 +113,8 @@ public class Renderer {
         changePanel(frame, panel, false);
 
         // add buttons
-        JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(panel, 770, 520, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(panel, 11, 678, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(panel, 770, 678, 170, 40, 0, "okay");
         JButton map1Button = addButtonToPanel(panel, 110, 157, 225, 122, 1, "1");
         JButton map2Button = addButtonToPanel(panel, 365, 157, 225, 122, 1, "2");
         JButton map3Button = addButtonToPanel(panel, 615, 157, 225, 122, 1, "3");
@@ -155,8 +150,8 @@ public class Renderer {
         changePanel(frame, panel, true);
 
         // add buttons
-        JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(panel, 771, 520, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(panel, 11, 678, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(panel, 771, 678, 170, 40, 0, "okay");
         JButton humanButton = addButtonToPanel(panel, 75, 78, 133, 115, 1, "human");
         JButton elephantButton = addButtonToPanel(panel, 232, 78, 133, 115, 1, "elephant");
         JButton squirrelButton = addButtonToPanel(panel, 413, 78, 133, 115, 1, "squirrel");
@@ -193,24 +188,40 @@ public class Renderer {
     
     // helper methods
 
-    private void changePanel(JFrame frame, JPanel panel, Boolean showMenuBar) {
+    private JPanel changePanel(JFrame frame, JPanel panel, Boolean showMenuBar) {
         
         JPanel mainFrame = new JPanel();
         mainFrame.setSize(950, 700);
         mainFrame.setLayout(new BorderLayout());
+        if (showMenuBar == true) {
+            
+            for (int i =0; i < 6; i ++){
+                ImagePanel playerBox = new ImagePanel("/media/p"+i+"0.png");
+                if (i == 0){
+                    playerBox.setPreferredSize(new Dimension(160,175));
+                }
+                else {
+                    playerBox.setPreferredSize(new Dimension(158,175));
+                }
+                mainFrame.add(playerBox, BorderLayout.PAGE_END);
+            }
+
+
+            ImagePanel menuBar = new ImagePanel("/media/bp0.png");
+            menuBar.setPreferredSize(new Dimension(950, 50));
+            mainFrame.add(menuBar, BorderLayout.PAGE_END);
+
+        }
         mainFrame.add(panel, BorderLayout.CENTER);
 
 
-        if (showMenuBar == true) {
-            ImagePanel menuBar = new ImagePanel("/media/bp0.png");
-            menuBar.setSize(950, 100);
-            mainFrame.add(menuBar, BorderLayout.SOUTH);
-        }
+        
 
 
         frame.setContentPane(mainFrame);
         frame.pack();
         frame.repaint();
+        return mainFrame;
     }
 
     private void blockForInput() {

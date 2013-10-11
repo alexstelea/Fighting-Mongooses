@@ -5,10 +5,6 @@ public class TownTile extends Tile {
     }
 
     public void collectResources(Player player) {
-        return;
-    }
-
-    public void collectResources(Player player) {
     	
     }
 
