@@ -1,6 +1,10 @@
 public class TownTile extends Tile {
 
-    public TownTile(String type) {
-        super(type);
+    public TownTile() {
+        super("town");
+    }
+
+    public void collectResources(Player player) {
+        return;
     }
 }
