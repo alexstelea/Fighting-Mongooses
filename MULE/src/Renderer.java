@@ -86,7 +86,8 @@ public class Renderer {
 
 
         ImagePanel panel2 = new ImagePanel("/media/bp0.png");
-        changePanel(frame, panel2, false);
+
+        changePanel(frame, panel2, true);
 
         // add buttons
         JButton backButton = addButtonToPanel(panel, 11, 520, 170, 40, 0, "back");
