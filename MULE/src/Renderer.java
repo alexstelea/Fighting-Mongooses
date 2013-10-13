@@ -52,6 +52,7 @@ public class Renderer {
         frame.setLayout(new FlowLayout());
     }
 
+    // States[0] - Action to perform: {"new", "load", "quit"}
     public String[] drawIntroScreen() {
         
         // declare initial variables
@@ -72,6 +73,9 @@ public class Renderer {
         return states;
     }
 
+    // States[0] - Action to perform: {"back", "okay"}
+    // States[1] - Difficulty: {"1", "2", "3"}
+    // States[2] - Number of Players: {"1", "2", "3", "4", "5"}
     public String[] drawSetupScreen() {
 
         // declare initial variables
@@ -101,6 +105,8 @@ public class Renderer {
         return states;
     }
 
+    // States[0] - Action to perform: {"new", "load", "quit"}
+    // States[1] - Map Number: {"1", "2", "3", "4", "5"}
     public String[] drawMapScreen() {
 
         // declare initial variables
@@ -136,6 +142,10 @@ public class Renderer {
         return states;
 
     }
+    // States[0] - Action to perform: {"new", "load", "quit"}
+    // States[1] - Race: {"human", "elephant", "squirrel", "frog", "cat"}
+    // States[2] - Player Name
+    // States[3] - Color: {"red", "blue", "pink", "green", "orange"}
     public String[] drawCharacterScreen() {
 
         // declare initial variables

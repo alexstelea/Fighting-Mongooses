@@ -10,5 +10,9 @@ public class MountainTile extends Tile {
     public void collectResources(Player player) {
         return;
     }
+
+    public String image() {
+        return "mount" + mountainNum + ".png";
+    }
 }
 

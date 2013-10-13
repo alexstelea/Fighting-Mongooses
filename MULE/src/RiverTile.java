@@ -7,5 +7,9 @@ public class RiverTile extends Tile {
     public void collectResources(Player player) {
         return;
     }
+
+    public String image() {
+        return null;
+    }
 }
 

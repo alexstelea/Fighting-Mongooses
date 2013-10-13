@@ -8,4 +8,7 @@ public class TownTile extends Tile {
     	
     }
 
+    public String image() {
+        return null;
+    }
 }
