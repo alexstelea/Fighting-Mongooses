@@ -26,6 +26,7 @@ public class GameController {
 
 	public GameController() {
 		renderer = new Renderer();
+        //renderer.drawTest();
         playGame();
 	}
 
@@ -66,7 +67,6 @@ public class GameController {
             // Setup Screen
             else if (state.equals("setup")) {
                String[] results = renderer.drawSetupScreen();
-               System.out.println("Received: " + results[0] + " and " + results[1]);
                String action = results[0];
                difficulty = Integer.parseInt(results[1]);
                numPlayers = Integer.parseInt(results[2]);

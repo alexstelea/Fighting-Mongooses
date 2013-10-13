@@ -46,27 +46,32 @@ public class Renderer {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setMinimumSize(new Dimension(950, 750));
+        frame.setPreferredSize(new Dimension(950, 750));
         frame.setVisible(true);
         waiting = true;
         lock = new ReentrantLock();
         frame.setLayout(new FlowLayout());
     }
 
-    // States[0] - Action to perform: {"new", "load", "quit"}
     public String[] drawIntroScreen() {
         
         // declare initial variables
         String action = "";
         states = new String[1];
         states[0] = "new";
+
         ImagePanel panel = new ImagePanel("/media/startscreen.png");
+        panel.setPreferredSize(new Dimension(950, 600));
         panel.setLayout(null);
-        changePanel(frame, panel, false);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        changePanel(frame, panels);
 
         // add buttons
-        JButton quitButton = addButtonToPanel(panel, 11, 678, 171, 42, 0, "quit");
-        JButton loadButton = addButtonToPanel(panel, 590, 678, 171, 42, 0, "load");
-        JButton newButton = addButtonToPanel(panel, 771, 678, 171, 42, 0, "new");
+        JButton quitButton = addButtonToPanel(panel, 11, 558, 171, 42, 0, "quit");
+        JButton loadButton = addButtonToPanel(panel, 590, 558, 171, 42, 0, "load");
+        JButton newButton = addButtonToPanel(panel, 771, 558, 171, 42, 0, "new");
 
         blockForInput();
         exitSafely();
@@ -84,21 +89,47 @@ public class Renderer {
         states[0] = "okay";
         states[1] = "2";
         states[2] = "1";
+
         ImagePanel panel = new ImagePanel("/media/gamesetup.png");
+        panel.setPreferredSize(new Dimension(950, 600));
         panel.setLayout(null);
-        JPanel statusPanel = changePanel(frame, panel, true);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+
+        for (int i = 0; i < 6; i++) {
+            ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
+            if (i == 0) {
+                playerBox.setPreferredSize(new Dimension(160, 175));
+            }
+            else {
+                playerBox.setPreferredSize(new Dimension(158, 175));
+            }
+            playerPanel.add(playerBox);
+        }
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        //panels.add(playerPanel);
+        panels.add(menuPanel);
+
+        changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(statusPanel, 11, 0, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(statusPanel, 771, 0, 170, 40, 0, "okay");
-        JButton easyButton = addButtonToPanel(panel, 160, 163, 173, 28, 1, "1");
-        JButton mediumButton = addButtonToPanel(panel, 407, 163, 173, 28, 1, "2");
-        JButton hardButton = addButtonToPanel(panel, 716, 163, 173, 28, 1, "3");
-        JButton onePlayer = addButtonToPanel(panel, 191, 394, 14, 40, 2, "1");
-        JButton twoPlayer = addButtonToPanel(panel, 329, 394, 14, 40, 2, "2");
-        JButton threePlayer = addButtonToPanel(panel, 468, 394, 14, 40, 2, "3");
-        JButton fourPlayer = addButtonToPanel(panel, 608, 394, 14, 40, 2, "4");
-        JButton fivePlayer = addButtonToPanel(panel, 749, 394, 14, 40, 2, "5");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 0, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 771, 0, 170, 40, 0, "okay");
+        JButton easyButton = addButtonToPanel(panel, 160, 193, 173, 28, 1, "1");
+        JButton mediumButton = addButtonToPanel(panel, 407, 193, 173, 38, 1, "2");
+        JButton hardButton = addButtonToPanel(panel, 716, 193, 173, 38, 1, "3");
+        JButton onePlayer = addButtonToPanel(panel, 191, 464, 24, 40, 2, "1");
+        JButton twoPlayer = addButtonToPanel(panel, 329, 464, 24, 40, 2, "2");
+        JButton threePlayer = addButtonToPanel(panel, 468, 464, 24, 40, 2, "3");
+        JButton fourPlayer = addButtonToPanel(panel, 608, 464, 24, 40, 2, "4");
+        JButton fivePlayer = addButtonToPanel(panel, 749, 464, 24, 40, 2, "5");
 
         blockForInput();
         exitSafely();
@@ -114,18 +145,43 @@ public class Renderer {
         states = new String[2];
         states[0] = "okay";
         states[1] = "0";
+
         ImagePanel panel = new ImagePanel("/media/mapselection.png");
-        panel.setLayout(null);
-        changePanel(frame, panel, false);
+        panel.setPreferredSize(new Dimension(950, 600));
+        panel.setLayout(null); 
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+
+        for (int i = 0; i < 6; i++) {
+            ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
+            if (i == 0) {
+                playerBox.setPreferredSize(new Dimension(160, 175));
+            }
+            else {
+                playerBox.setPreferredSize(new Dimension(158, 175));
+            }
+            playerPanel.add(playerBox);
+        }
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        //panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(panel, 11, 678, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(panel, 770, 678, 170, 40, 0, "okay");
-        JButton map1Button = addButtonToPanel(panel, 110, 157, 225, 122, 1, "1");
-        JButton map2Button = addButtonToPanel(panel, 365, 157, 225, 122, 1, "2");
-        JButton map3Button = addButtonToPanel(panel, 615, 157, 225, 122, 1, "3");
-        JButton map4Button = addButtonToPanel(panel, 235, 307, 225, 122, 1, "4");
-        JButton map5Button = addButtonToPanel(panel, 488, 307, 225, 122, 1, "5");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 0, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 770, 0, 170, 40, 0, "okay");
+        JButton map1Button = addButtonToPanel(panel, 110, 187, 225, 152, 1, "1");
+        JButton map2Button = addButtonToPanel(panel, 365, 187, 225, 152, 1, "2");
+        JButton map3Button = addButtonToPanel(panel, 615, 187, 225, 152, 1, "3");
+        JButton map4Button = addButtonToPanel(panel, 235, 357, 225, 152, 1, "4");
+        JButton map5Button = addButtonToPanel(panel, 488, 357, 225, 152, 1, "5");
 
         blockForInput();
         exitSafely();
@@ -137,7 +193,10 @@ public class Renderer {
 
         ImagePanel panel = new ImagePanel("/media/map"+mapNumber+".png");
         panel.setLayout(null);
-        changePanel(frame, panel, false);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        changePanel(frame, panels);
         exitSafely();
         return states;
 
@@ -155,23 +214,48 @@ public class Renderer {
         states[1] = "human";
         states[2] = "default";
         states[3] = "red";
+
         ImagePanel panel = new ImagePanel("/media/playerselection.png");
+        panel.setPreferredSize(new Dimension(950, 600));
         panel.setLayout(null);
-        changePanel(frame, panel, true);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+
+        for (int i = 0; i < 6; i++) {
+            ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
+            if (i == 0) {
+                playerBox.setPreferredSize(new Dimension(160, 175));
+            }
+            else {
+                playerBox.setPreferredSize(new Dimension(158, 175));
+            }
+            playerPanel.add(playerBox);
+        }
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        //panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(panel, 11, 678, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(panel, 771, 678, 170, 40, 0, "okay");
-        JButton humanButton = addButtonToPanel(panel, 75, 78, 133, 115, 1, "human");
-        JButton elephantButton = addButtonToPanel(panel, 232, 78, 133, 115, 1, "elephant");
-        JButton squirrelButton = addButtonToPanel(panel, 413, 78, 133, 115, 1, "squirrel");
-        JButton frogButton = addButtonToPanel(panel, 593, 78, 133, 115, 1, "frog");
-        JButton catButton = addButtonToPanel(panel, 763, 78, 133, 115, 1, "cat");
-        JButton redButton = addButtonToPanel(panel, 70, 240, 130, 200, 3, "red");
-        JButton blueButton = addButtonToPanel(panel, 230, 240, 130, 200, 3, "blue");
-        JButton pinkButton = addButtonToPanel(panel, 390, 240, 130, 200, 3, "pink");
-        JButton greenButton = addButtonToPanel(panel, 550, 240, 130, 200, 3, "green");
-        JButton orangeButton = addButtonToPanel(panel, 710, 240, 130, 200, 3, "orange");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 0, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 771, 0, 170, 40, 0, "okay");
+        JButton humanButton = addButtonToPanel(panel, 75, 98, 133, 115, 1, "human");
+        JButton elephantButton = addButtonToPanel(panel, 232, 98, 133, 115, 1, "elephant");
+        JButton squirrelButton = addButtonToPanel(panel, 413, 98, 133, 115, 1, "squirrel");
+        JButton frogButton = addButtonToPanel(panel, 593, 98, 133, 115, 1, "frog");
+        JButton catButton = addButtonToPanel(panel, 763, 98, 133, 115, 1, "cat");
+        JButton redButton = addButtonToPanel(panel, 100, 300, 130, 200, 3, "red");
+        JButton blueButton = addButtonToPanel(panel, 260, 300, 130, 200, 3, "blue");
+        JButton pinkButton = addButtonToPanel(panel, 420, 300, 130, 200, 3, "pink");
+        JButton greenButton = addButtonToPanel(panel, 580, 300, 130, 200, 3, "green");
+        JButton orangeButton = addButtonToPanel(panel, 740, 300, 130, 200, 3, "orange");
 
         JTextField nameBox = addTextToPanel(panel, 470, 535, 225, 38);
 
@@ -198,40 +282,14 @@ public class Renderer {
     
     // helper methods
 
-    private JPanel changePanel(JFrame frame, JPanel panel, Boolean showMenuBar) {
-        
-        JPanel mainFrame = new JPanel();
-        mainFrame.setSize(950, 700);
-        mainFrame.setLayout(new BorderLayout());
-        if (showMenuBar == true) {
-            
-            for (int i =0; i < 6; i ++){
-                ImagePanel playerBox = new ImagePanel("/media/p"+i+"0.png");
-                if (i == 0){
-                    playerBox.setPreferredSize(new Dimension(160,175));
-                }
-                else {
-                    playerBox.setPreferredSize(new Dimension(158,175));
-                }
-                mainFrame.add(playerBox, BorderLayout.PAGE_END);
-            }
-
-
-            ImagePanel menuBar = new ImagePanel("/media/bp0.png");
-            menuBar.setPreferredSize(new Dimension(950, 50));
-            mainFrame.add(menuBar, BorderLayout.PAGE_END);
-
+    private void changePanel(JFrame frame, ArrayList<JPanel> panels) {
+        frame.getContentPane().removeAll();        
+        for (JPanel panel : panels) {
+            frame.add(panel);
         }
-        mainFrame.add(panel, BorderLayout.CENTER);
-
-
-        
-
-
-        frame.setContentPane(mainFrame);
         frame.pack();
         frame.repaint();
-        return mainFrame;
+        return;
     }
 
     private void blockForInput() {
@@ -250,14 +308,14 @@ public class Renderer {
 
     private JLabel blockForInputCharacter(JPanel panel) {
         // wait for a button to be clicked
-        JLabel colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
+        JLabel colors = addLabelToPanel(panel, 70, 300, 804, 200, "/media/" + states[1] + ".png");
         panel.repaint();
         String oldState = states[1];
         boolean waitingSafe = true; // used to avoid race condition
         while (waitingSafe) {
             if (!oldState.equals(states[1])) {
                 panel.remove(colors);
-                colors = addLabelToPanel(panel, 70, 240, 804, 200, "/media/" + states[1] + ".png");
+                colors = addLabelToPanel(panel, 70, 300, 804, 200, "/media/" + states[1] + ".png");
                 panel.repaint();
                 oldState = states[1];
             }
@@ -293,6 +351,7 @@ public class Renderer {
         button.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 states[stateNum] = stateText; // set the new state
+                System.out.println(stateNum + " set to: " + stateText);
 
                 // safely set the value of waiting
                 if (stateNum == 0) {
@@ -307,9 +366,9 @@ public class Renderer {
             }
         });
 
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
+        //button.setOpaque(false);
+        //button.setContentAreaFilled(false);
+        //button.setBorderPainted(false);
         return button;
     }
 
