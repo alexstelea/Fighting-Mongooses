@@ -43,7 +43,7 @@ public class GameController {
         // variables we are collecting
         int difficulty = 0;
         int numPlayers = 1;
-        int map = 1;
+        Map map = null;
         ArrayList<Player> players = new ArrayList<Player>();
         ArrayList<String> takenColors = new ArrayList<String>();
 
@@ -82,7 +82,8 @@ public class GameController {
             else if (state.equals("map")) {
                 String[] results = renderer.drawMapScreen();
                 String action = results[0];
-                map = Integer.parseInt(results[1]);
+                map = new Map(Integer.parseInt(results[1]));
+                System.out.println("Map created with num " + Integer.parseInt(results[1]));
                 if (action.equals("okay")) {
                     state = "player";
                 }
@@ -123,8 +124,16 @@ public class GameController {
 
             else if (state.equals("game")){
                 String[] results = renderer.drawMainGameScreen(map);
+                int tileSelection = Integer.parseInt(results[0]);
+                if (map.getTiles()[tileSelection].getType().equals("town")) {
+                    state = "town";
+                }
+            }
 
-
+            else if (state.equals("town")) {
+                String[] results = renderer.drawTownScreen();
+                
+                state = "game";
             }
 
             // quit state
@@ -136,7 +145,7 @@ public class GameController {
         numPlayers = players.size();
         System.out.println("Difficulty: " + difficulty);
         System.out.println("NumPlayers: " + numPlayers);
-        System.out.println("Map: " + map);
+        System.out.println("Map: " + map.getMapNum());
         for (Player p : players) {
             System.out.println(p);
         }
