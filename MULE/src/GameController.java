@@ -22,28 +22,34 @@ public class GameController {
 
 	private int difficulty;
 	private Renderer renderer;
+    private int currPlayer;
+    private int numPlayers;
+    private Map map;
+    private String state;
 
 
 	public GameController() {
 		renderer = new Renderer();
-        //renderer.drawTest();
+        currPlayer = 0;
+        numPlayers = 1;
+        state = "";
         playGame();
 	}
 
     private void playGame() {
         startGame();
-        initializeMap();
+        landSelection();
+        mainGame();
     }
 
 	private void startGame() {
 
-        String state = "intro";
+        state = "intro";
         boolean initializing = true;
 
         // variables we are collecting
         int difficulty = 0;
-        int numPlayers = 1;
-        Map map = null;
+        map = null;
         ArrayList<Player> players = new ArrayList<Player>();
         ArrayList<String> takenColors = new ArrayList<String>();
 
@@ -122,26 +128,13 @@ public class GameController {
             }
 
 
-            else if (state.equals("game")){
-                String[] results = renderer.drawMainGameScreen(map);
-                int tileSelection = Integer.parseInt(results[0]);
-                if (map.getTiles()[tileSelection].getType().equals("town")) {
-                    state = "town";
-                }
-            }
-
-            else if (state.equals("town")) {
-                String[] results = renderer.drawTownScreen();
-                
-                state = "game";
-            }
-
             // quit state
             else {
                 System.out.println("State: " + state);
                 initializing = false;
             }
         }
+        System.out.println("Game initialization complete with paramaters:\n");
         numPlayers = players.size();
         System.out.println("Difficulty: " + difficulty);
         System.out.println("NumPlayers: " + numPlayers);
@@ -149,14 +142,61 @@ public class GameController {
         for (Player p : players) {
             System.out.println(p);
         }
+        System.out.println("Starting game...\n\n");
 	}
 
-    private void initializeMap() {
+    private void mainGame() {
+
+        boolean initializing = true;
+        renderer.startTimer();
+
+        while(initializing) {
+            if (state.equals("game")){
+                String[] results = renderer.drawMainGameScreen(map);
+
+                if (results[0].equals("time")) {
+                    System.out.println("Time's up, switching player");
+                    switchPlayer();
+                }
+                else {
+                    int tileSelection = Integer.parseInt(results[0]);
+                    if (map.getTiles()[tileSelection].getType().equals("town")) {
+                        state = "town";
+                    }
+                }
+
+            }
+
+            else if (state.equals("town")) {
+                String[] results = renderer.drawTownScreen();
+                if (results[0].equals("time")) {
+                    System.out.println("Time's up, switching player");
+                    switchPlayer();
+                }
+                else {
+                    state = "game";
+                }
+            }
+
+            else {
+                System.out.println("done");
+                initializing = false;
+            }
+        }
+    }
+
+    private void switchPlayer() {
+        currPlayer = (currPlayer + 1) % numPlayers;
+        renderer.restartTimer();
+        state = "game";
+    }
+
+    private void landSelection() {
 
     }
 	
 	private void showLoadGameSavePartial(Save savedGame){
-		
+
 	}
 	
 	private void showLoadScreen(){

@@ -39,6 +39,7 @@ public class Renderer {
     protected static final int HEIGHT = 5;
     protected static final int TILE_SIZE = 100;
     private JButton[] buttons = new JButton[WIDTH + HEIGHT];
+    private Timer timer;
 
     public Renderer() {
 
@@ -51,6 +52,7 @@ public class Renderer {
         waiting = true;
         lock = new ReentrantLock();
         frame.setLayout(new FlowLayout());
+        timer = createTimer(50000);
     }
 
     public String[] drawIntroScreen() {
@@ -254,7 +256,7 @@ public class Renderer {
 
     public String[] drawTownScreen() {
 
-        states = new String[1];
+        states = new String[2];
     
         ImagePanel panel = new ImagePanel("/media/town.png");
         panel.setPreferredSize(new Dimension(950, 525));
@@ -287,12 +289,15 @@ public class Renderer {
 
         blockForInput();
         exitSafely();
+        states[1] = "" + timer.getDelay();
         return states;
     }
 
+    // State[0] = {"town", "time"}
+    // State[1] = time left on timer
     public String[] drawMainGameScreen(Map map) {
 
-        states = new String[1];
+        states = new String[2];
 
         ImagePanel panel = new ImagePanel("/media/map"+map.getMapNum()+".png");
         panel.setPreferredSize(new Dimension(950, 525));
@@ -326,6 +331,7 @@ public class Renderer {
 
         blockForInput();
         exitSafely();
+        states[1] = "" + timer.getDelay();
         return states;
 
     }
@@ -436,6 +442,37 @@ public class Renderer {
         //button.setBorderPainted(false);
         return button;
     }
+
+    private Timer createTimer(int time) {
+        ActionListener timerListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                states[0] = "time";
+                try {
+                    lock.lock();
+                    waiting = false;
+                } 
+                finally {
+                    lock.unlock();
+                }
+            }
+        };
+        Timer timer = new Timer(time, timerListener);
+        timer.start();
+        return timer;
+    }
+
+    public void stopTimer() {
+        timer.stop();
+    }
+
+    public void startTimer() {
+        timer.start();
+    }
+
+    public void restartTimer() {
+        timer.restart();
+    }
+
 
     private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
         JTextField text = new JTextField("Enter Name Here");
