@@ -33,8 +33,8 @@ public class Player {
             throw new NullPointerException("One of the parameters in the Player constructor was null");
         }
 
-        if (name.length() <= 2 || name.length() > 100) {
-            throw new IllegalArgumentException("Please ensure name is between 3 and 100 characters long");
+        if (name.length() <= 2 || name.length() > 12) {
+            throw new IllegalArgumentException("Please ensure name is between 3 and 12 characters long");
         }
 
         if (!(color.equals("red") || color.equals("blue") || color.equals("pink") || color.equals("green") ||
@@ -70,9 +70,6 @@ public class Player {
         this.name = name;
         this.race = race;
         this.color = color;
-        money = 0;
-        food = 0;
-        energy = 0;
         smithore = 0;
         mules = 0;
         row = 0;

@@ -246,7 +246,7 @@ public class Renderer {
         JButton greenButton = addButtonToPanel(panel, 580, 250, 130, 200, 3, "green");
         JButton orangeButton = addButtonToPanel(panel, 740, 250, 130, 200, 3, "orange");
 
-        JTextField nameBox = addTextToPanel(panel, 470, 535, 225, 38);
+        JTextField nameBox = addTextToPanel(panel, 420, 480, 225, 38);
 
         blockForInputCharacter(panel);
         exitSafely();
@@ -254,7 +254,7 @@ public class Renderer {
         return states;
     }
 
-    public String[] drawTownScreen() {
+    public String[] drawTownScreen(ArrayList<Player> players, int currPlayer) {
 
         states = new String[2];
     
@@ -264,17 +264,9 @@ public class Renderer {
 
         JPanel playerPanel = new JPanel();
         playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
 
-        for (int i = 0; i < 6; i++) {
-            ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
-            if (i == 0) {
-                playerBox.setPreferredSize(new Dimension(160, 175));
-            }
-            else {
-                playerBox.setPreferredSize(new Dimension(158, 175));
-            }
-            playerPanel.add(playerBox);
-        }
+        drawGameStatus(players, playerPanel, currPlayer);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
@@ -295,7 +287,7 @@ public class Renderer {
 
     // State[0] = {"town", "time"}
     // State[1] = time left on timer
-    public String[] drawMainGameScreen(Map map) {
+    public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer) {
 
         states = new String[2];
 
@@ -305,17 +297,9 @@ public class Renderer {
 
         JPanel playerPanel = new JPanel();
         playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
 
-        for (int i = 0; i < 6; i++) {
-            ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
-            if (i == 0) {
-                playerBox.setPreferredSize(new Dimension(160, 175));
-            }
-            else {
-                playerBox.setPreferredSize(new Dimension(158, 175));
-            }
-            playerPanel.add(playerBox);
-        }
+        drawGameStatus(players, playerPanel, currPlayer);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
@@ -475,7 +459,7 @@ public class Renderer {
 
 
     private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
-        JTextField text = new JTextField("Enter Name Here");
+        JTextField text = new JTextField("Enter Name");
         text.setBounds(x, y, width, height);
         DefaultCaret c = (DefaultCaret)text.getCaret();
         c.setVisible(true);
@@ -507,5 +491,96 @@ public class Renderer {
         label.setBounds(x, y, width, height);
         panel.add(label);
         return label;
+    }
+
+    private void drawGameStatus(ArrayList<Player> players, JPanel panel, int currPlayer) {
+        System.out.println("Size: " + players.size());
+        for (int i = 0; i < players.size(); i++) {
+            drawPlayerStatus(players.get(i), i, panel);
+        }
+
+        // current player color
+        String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
+        BufferedImage colorImg;
+        try {
+            colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e);
+            return;
+        }
+
+        JLabel colorLabel = new JLabel();
+        ImageIcon colorIcon = new ImageIcon(colorImg);
+        colorLabel.setIcon(colorIcon);
+        colorLabel.setBounds(122, 128, 18, 18);
+        panel.add(colorLabel);
+
+        // create boxes for players
+        for (int i = 0; i < 6; i++) {
+            ImagePanel playerBox = new ImagePanel("/media/p" + i + "1.png");
+            if (i == 0) {
+                playerBox.setBounds(0, 0, 160, 175);
+            }
+            else {
+                playerBox.setBounds(160 * i - (i - 1) * 2, 0, 158, 175);
+            }
+            panel.add(playerBox);
+        }
+    }
+
+    private void drawPlayerStatus(Player player, int number, JPanel panel) {
+        int xBase = 0;
+        int yBase = 30;
+
+        // read in all images
+
+        // player name label
+        JLabel playerLabel = new JLabel(player.getName());
+        playerLabel.setBounds((xBase + 158 * (number + 1)) + 30, yBase, 100, 20);
+        panel.add(playerLabel);
+
+        // food label
+        JLabel foodLabel = new JLabel("" + player.getFood());
+        foodLabel.setBounds((xBase + 158 * (number + 1)) + 45, yBase + 23, 100, 20);
+        panel.add(foodLabel);
+
+        // energy label
+        JLabel energyLabel = new JLabel("" + player.getEnergy());
+        energyLabel.setBounds((xBase + 158 * (number + 1)) + 105, yBase + 23, 100, 20);
+        panel.add(energyLabel);
+
+        // smithore label
+        JLabel smithoreLabel = new JLabel("" + player.getSmithore());
+        smithoreLabel.setBounds((xBase + 158 * (number + 1)) + 45, yBase + 58, 100, 20);
+        panel.add(smithoreLabel);
+
+        // mule label
+        JLabel muleLabel = new JLabel("" + player.getMules());
+        muleLabel.setBounds((xBase + 158 * (number + 1)) + 107, yBase + 58, 100, 20);
+        panel.add(muleLabel);
+
+        // money label
+        JLabel moneyLabel = new JLabel("" + player.getMoney());
+        moneyLabel.setBounds((xBase + 158 * (number + 1) + 45), yBase + 95, 100, 20);
+        panel.add(moneyLabel);
+
+        // color label
+        String colorPrefix = player.getColor().substring(0, 1);
+        BufferedImage colorImg;
+        try {
+            colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e);
+            return;
+        }
+
+        JLabel colorLabel = new JLabel();
+        ImageIcon colorIcon = new ImageIcon(colorImg);
+        colorLabel.setIcon(colorIcon);
+        colorLabel.setBounds((xBase + 158 * (number + 1) + 124), yBase + 98, 18, 18);
+        panel.add(colorLabel);
+
     }
 }

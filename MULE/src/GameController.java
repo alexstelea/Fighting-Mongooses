@@ -26,6 +26,7 @@ public class GameController {
     private int numPlayers;
     private Map map;
     private String state;
+    private ArrayList<Player> players;
 
 
 	public GameController() {
@@ -33,6 +34,7 @@ public class GameController {
         currPlayer = 0;
         numPlayers = 1;
         state = "";
+        players = new ArrayList<Player>();
         playGame();
 	}
 
@@ -50,7 +52,6 @@ public class GameController {
         // variables we are collecting
         int difficulty = 0;
         map = null;
-        ArrayList<Player> players = new ArrayList<Player>();
         ArrayList<String> takenColors = new ArrayList<String>();
 
         while(initializing) {
@@ -110,10 +111,10 @@ public class GameController {
                         System.out.println("That color is taken!");
                         continue;
                     }
-                    takenColors.add(results[3]);
 
                     try {
                         players.add(new Player(results[2], results[1], results[3], difficulty));
+                        takenColors.add(results[3]);
                     }
                     catch (Exception exception) {
                         System.out.println(exception);
@@ -152,7 +153,7 @@ public class GameController {
 
         while(initializing) {
             if (state.equals("game")){
-                String[] results = renderer.drawMainGameScreen(map);
+                String[] results = renderer.drawMainGameScreen(map, players, currPlayer);
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
@@ -168,7 +169,7 @@ public class GameController {
             }
 
             else if (state.equals("town")) {
-                String[] results = renderer.drawTownScreen();
+                String[] results = renderer.drawTownScreen(players, currPlayer);
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
                     switchPlayer();
