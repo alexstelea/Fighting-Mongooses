@@ -52,7 +52,7 @@ public class Renderer {
         frame.setVisible(true);
         waiting = true;
         lock = new ReentrantLock();
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         timer = createTimer(50000);
     }
 
