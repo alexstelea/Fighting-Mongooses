@@ -153,19 +153,22 @@ public class GameController {
         while(initializing) {
             if (state.equals("game")){
                 String[] results = renderer.drawMainGameScreen(map, players, currPlayer);
-                int tileSelection = Integer.parseInt(results[0]);
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
                     switchPlayer();
                 }
-                else if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                else {
+
+                int tileSelection = Integer.parseInt(results[0]);
+                   if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         System.out.println("Not town");
                         //select land
                     }
-                else {
+                    else {
                         state = "town";
                     }
+                }
             }
 
             else if (state.equals("town")) {
