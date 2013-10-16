@@ -9,19 +9,40 @@ You may also buy property if any is available from the land office. The buying p
 */
 
 private Random rand = new Random();
+private int propertyPrice;
+private int buyingPrice;
 private int low = 0;
-private int high = 200;
-private int value = rand.nextInt(high-low) + low; 
-//random number between 10 (inclusive) and 100 (exclusive)
+private int shigh = 200;
+private int bhigh = 100;
+private int sellingRand = rand.nextInt(shigh-low);
+private int buyingRand = rand.nextInt(bhigh-low);
+private boolean isOwned;
 
-
-private int freeProperty;
-private int propertyPrice = 400 + value;
-
-	public LandOffice(){
-
-
+	public LandOffice(int getRoundNumber){
+		if(getRoundNumber <= 2){
+			this.propertyPrice = 0;
+		}
+		if(getRoundNumber > 2){
+			this.propertyPrice  = 300 + (getRoundNumber * buyingRand);
+		}
 	}
+
+/**
+ * Setter method for the buying property price
+ * @param propertyPrice The new property price
+ */
+public void setBuyingPrice(int buyingPrice) {
+    this.buyingPrice = buyingPrice;
+}
+
+/**
+ * Setter method for the property price
+ * @param propertyPrice The new property price
+ */
+public void setPropertyPrice(int propertyPrice) {
+    this.propertyPrice = propertyPrice;
+}
+
 
 
 }

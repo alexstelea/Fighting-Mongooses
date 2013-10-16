@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.text.DefaultCaret;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
 
 import java.util.concurrent.locks.*;
 import java.util.ArrayList;
@@ -63,17 +64,23 @@ public class Renderer {
         states[0] = "new";
 
         ImagePanel panel = new ImagePanel("/media/startscreen.png");
-        panel.setPreferredSize(new Dimension(950, 600));
+        panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bss.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
+        panels.add(menuPanel);
+
         changePanel(frame, panels);
 
         // add buttons
-        JButton quitButton = addButtonToPanel(panel, 11, 558, 171, 42, 0, "quit");
-        JButton loadButton = addButtonToPanel(panel, 590, 558, 171, 42, 0, "load");
-        JButton newButton = addButtonToPanel(panel, 771, 558, 171, 42, 0, "new");
+        JButton quitButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "quit");
+        JButton loadButton = addButtonToPanel(menuPanel, 590, 7, 171, 40, 0, "load");
+        JButton newButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "new");
 
         blockForInput();
         exitSafely();
@@ -122,16 +129,16 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(menuPanel, 11, 0, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 771, 0, 170, 40, 0, "okay");
-        JButton easyButton = addButtonToPanel(panel, 160, 163, 173, 38, 1, "1");
-        JButton mediumButton = addButtonToPanel(panel, 407, 163, 173, 38, 1, "2");
-        JButton hardButton = addButtonToPanel(panel, 716, 163, 173, 38, 1, "3");
-        JButton onePlayer = addButtonToPanel(panel, 191, 404, 24, 40, 2, "1");
-        JButton twoPlayer = addButtonToPanel(panel, 329, 404, 24, 40, 2, "2");
-        JButton threePlayer = addButtonToPanel(panel, 468, 404, 24, 40, 2, "3");
-        JButton fourPlayer = addButtonToPanel(panel, 608, 404, 24, 40, 2, "4");
-        JButton fivePlayer = addButtonToPanel(panel, 749, 404, 24, 40, 2, "5");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "okay");
+        JButton easyButton = addButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
+        JButton mediumButton = addButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
+        JButton hardButton = addButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
+        JButton onePlayer = addButtonToPanel(panel, 185, 404, 24, 40, 2, "1");
+        JButton twoPlayer = addButtonToPanel(panel, 325, 404, 24, 40, 2, "2");
+        JButton threePlayer = addButtonToPanel(panel, 465, 404, 24, 40, 2, "3");
+        JButton fourPlayer = addButtonToPanel(panel, 605, 404, 24, 40, 2, "4");
+        JButton fivePlayer = addButtonToPanel(panel, 745, 404, 24, 40, 2, "5");
 
         blockForInput();
         exitSafely();
@@ -177,13 +184,13 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(menuPanel, 11, 0, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 770, 0, 170, 40, 0, "okay");
-        JButton map1Button = addButtonToPanel(panel, 110, 157, 225, 132, 1, "1");
-        JButton map2Button = addButtonToPanel(panel, 365, 157, 225, 132, 1, "2");
-        JButton map3Button = addButtonToPanel(panel, 615, 157, 225, 132, 1, "3");
-        JButton map4Button = addButtonToPanel(panel, 235, 310, 225, 132, 1, "4");
-        JButton map5Button = addButtonToPanel(panel, 488, 310, 225, 132, 1, "5");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
+        JButton map1Button = addButtonToPanel(panel, 110, 162, 224, 126, 1, "1");
+        JButton map2Button = addButtonToPanel(panel, 365, 162, 224, 126, 1, "2");
+        JButton map3Button = addButtonToPanel(panel, 617, 162, 224, 126, 1, "3");
+        JButton map4Button = addButtonToPanel(panel, 235, 317, 224, 126, 1, "4");
+        JButton map5Button = addButtonToPanel(panel, 490, 317, 224, 126, 1, "5");
 
         blockForInput();
         exitSafely();
@@ -233,18 +240,18 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(menuPanel, 11, 0, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 771, 0, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 771, 7, 170, 40, 0, "okay");
         JButton humanButton = addButtonToPanel(panel, 75, 78, 133, 115, 1, "human");
         JButton elephantButton = addButtonToPanel(panel, 232, 78, 133, 115, 1, "elephant");
-        JButton squirrelButton = addButtonToPanel(panel, 413, 78, 133, 115, 1, "squirrel");
-        JButton frogButton = addButtonToPanel(panel, 593, 78, 133, 115, 1, "frog");
-        JButton catButton = addButtonToPanel(panel, 763, 78, 133, 115, 1, "cat");
-        JButton redButton = addButtonToPanel(panel, 100, 250, 130, 200, 3, "red");
+        JButton squirrelButton = addButtonToPanel(panel, 413, 78, 123, 115, 1, "squirrel");
+        JButton frogButton = addButtonToPanel(panel, 593, 78, 98, 115, 1, "frog");
+        JButton catButton = addButtonToPanel(panel, 763, 78, 98, 115, 1, "cat");
+        JButton redButton = addButtonToPanel(panel, 92, 250, 130, 200, 3, "red");
         JButton blueButton = addButtonToPanel(panel, 260, 250, 130, 200, 3, "blue");
-        JButton pinkButton = addButtonToPanel(panel, 420, 250, 130, 200, 3, "pink");
-        JButton greenButton = addButtonToPanel(panel, 580, 250, 130, 200, 3, "green");
-        JButton orangeButton = addButtonToPanel(panel, 740, 250, 130, 200, 3, "orange");
+        JButton pinkButton = addButtonToPanel(panel, 427, 250, 130, 200, 3, "pink");
+        JButton greenButton = addButtonToPanel(panel, 587, 250, 130, 200, 3, "green");
+        JButton orangeButton = addButtonToPanel(panel, 750, 250, 130, 200, 3, "orange");
 
         JTextField nameBox = addTextToPanel(panel, 420, 480, 225, 38);
 
@@ -276,7 +283,7 @@ public class Renderer {
         // buttons
         addButtonToPanel(panel, 60, 60, 200, 400, 0, "assay");
         addButtonToPanel(panel, 260, 60, 250, 400, 0, "store");
-        addButtonToPanel(panel, 510, 60, 210, 400, 0, "third"); // what is this building?
+        addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub"); 
 
         blockForInput();
@@ -301,6 +308,7 @@ public class Renderer {
 
         drawGameStatus(players, playerPanel, currPlayer);
 
+
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
         panels.add(playerPanel);
@@ -323,17 +331,6 @@ public class Renderer {
     public void drawLoadScreen(LoadScreenModel model) {
         return;
     }
-
-    /*
-    //(row*width+column)
-    private void mapCoordinates(){
-        for(int col = 0; col < WIDTH; col++){
-            for(int row = 0; row < HEIGHT; row++){
-            buttons[row * WIDTH + col] = addButtonToPanel(panel, 25 + 100 * col, 25 + 100 * HEIGHT, 100, 100, 1, "test");
-            }
-        }
-    }
-    */
     
     // helper methods
 
@@ -396,19 +393,23 @@ public class Renderer {
         }
     }
 
-
     private JButton addButtonToPanel(JPanel panel, int x, int y, int width, int height, 
         final int stateNum, final String stateText) {
-        JButton button = new JButton();
+        final JButton button = new JButton();
         button.setBounds(x, y, width, height);
         panel.add(button);
+        final Color red = new Color (224, 39, 37);
+        Color blue = new Color (16, 126, 177);
+        Color green = new Color (34, 152, 67);
+        Color pink = new Color (207, 24, 101);
+        Color orange = new Color (236, 81, 7);
+
+        button.setBorder(BorderFactory.createLineBorder(red, 2));
 
         button.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 states[stateNum] = stateText; // set the new state
                 System.out.println(stateNum + " set to: " + stateText);
-
-                // safely set the value of waiting
                 if (stateNum == 0) {
                     try {
                         lock.lock();
@@ -421,9 +422,9 @@ public class Renderer {
             }
         });
 
-        //button.setOpaque(false);
-        //button.setContentAreaFilled(false);
-        //button.setBorderPainted(false);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
         return button;
     }
 
@@ -459,7 +460,12 @@ public class Renderer {
 
 
     private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
-        JTextField text = new JTextField("Enter Name");
+        final JTextField text = new JTextField("Enter Name");
+        text.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e){
+                text.setText("");
+            }
+        });
         text.setBounds(x, y, width, height);
         DefaultCaret c = (DefaultCaret)text.getCaret();
         c.setVisible(true);
@@ -491,6 +497,26 @@ public class Renderer {
         label.setBounds(x, y, width, height);
         panel.add(label);
         return label;
+    }
+
+    private void drawTileSelect(Map map, ArrayList<Player> players, int currPlayer, JPanel panel, int x, 
+        int y, int width, int height){
+        // color label
+        String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
+        BufferedImage colorImg;
+        try {
+            colorImg = ImageIO.read(getClass().getResourceAsStream("/media/tileselect" + colorPrefix + ".png"));
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e);
+            return;
+        }
+
+        JLabel tileSelect = new JLabel();
+        ImageIcon colorIcon = new ImageIcon(colorImg);
+        tileSelect.setIcon(colorIcon);
+        tileSelect.setBounds(x, y, width, height);
+        panel.add(tileSelect);
     }
 
     private void drawGameStatus(ArrayList<Player> players, JPanel panel, int currPlayer) {
@@ -581,6 +607,5 @@ public class Renderer {
         colorLabel.setIcon(colorIcon);
         colorLabel.setBounds((xBase + 158 * (number + 1) + 124), yBase + 98, 18, 18);
         panel.add(colorLabel);
-
     }
 }

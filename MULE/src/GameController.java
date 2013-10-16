@@ -21,13 +21,13 @@ public class GameController {
 	public static final int DIFFICULTY_NOT_SET = 0;
 
 	private int difficulty;
+    private int roundNumber;
 	private Renderer renderer;
     private int currPlayer;
     private int numPlayers;
     private Map map;
     private String state;
     private ArrayList<Player> players;
-
 
 	public GameController() {
 		renderer = new Renderer();
@@ -128,7 +128,6 @@ public class GameController {
                 }
             }
 
-
             // quit state
             else {
                 System.out.println("State: " + state);
@@ -154,18 +153,19 @@ public class GameController {
         while(initializing) {
             if (state.equals("game")){
                 String[] results = renderer.drawMainGameScreen(map, players, currPlayer);
+                int tileSelection = Integer.parseInt(results[0]);
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
                     switchPlayer();
                 }
+                else if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                        System.out.println("Not town");
+                        //select land
+                    }
                 else {
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (map.getTiles()[tileSelection].getType().equals("town")) {
                         state = "town";
                     }
-                }
-
             }
 
             else if (state.equals("town")) {
@@ -193,6 +193,9 @@ public class GameController {
     }
 
     private void landSelection() {
+        LandOffice landOffice = new LandOffice(roundNumber);
+        //renderer.drawTileSelect(map, players, currPlayer, );
+        //state = 'game';
 
     }
 	
@@ -215,4 +218,8 @@ public class GameController {
 	public int getDifficulty() {
 		return difficulty;
 	}
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
 }
