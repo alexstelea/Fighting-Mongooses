@@ -164,7 +164,7 @@ public class GameController {
                 int tileSelection = Integer.parseInt(results[0]);
                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         System.out.println("Not town");
-                        //select land
+                        landSelection();
                     }
                     else {
                         state = "town";

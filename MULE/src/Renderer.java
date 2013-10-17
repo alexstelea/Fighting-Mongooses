@@ -445,7 +445,6 @@ public class Renderer {
             }
         };
         Timer timer = new Timer(time, timerListener);
-        timer.start();
         return timer;
     }
 

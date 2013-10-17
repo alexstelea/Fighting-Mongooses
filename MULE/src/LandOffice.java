@@ -16,7 +16,6 @@ private int shigh = 200;
 private int bhigh = 100;
 private int sellingRand = rand.nextInt(shigh-low);
 private int buyingRand = rand.nextInt(bhigh-low);
-private boolean isOwned;
 
 	public LandOffice(int getRoundNumber){
 		if(getRoundNumber <= 2){
