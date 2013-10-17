@@ -47,8 +47,8 @@ public class Renderer {
         frame = new JFrame("M.U.L.E.");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setMinimumSize(new Dimension(950, 750));
-        frame.setPreferredSize(new Dimension(950, 750));
+        frame.setMinimumSize(new Dimension(950, 770));
+        frame.setPreferredSize(new Dimension(950, 770));
         frame.setVisible(true);
         waiting = true;
         lock = new ReentrantLock();
@@ -64,7 +64,7 @@ public class Renderer {
         states[0] = "new";
 
         ImagePanel panel = new ImagePanel("/media/startscreen.png");
-        panel.setPreferredSize(new Dimension(950, 680));
+        panel.setPreferredSize(new Dimension(950, 700));
         panel.setLayout(null);
 
         ImagePanel menuPanel = new ImagePanel("/media/bss.png");
@@ -105,7 +105,7 @@ public class Renderer {
 
         JPanel playerPanel = new JPanel();
         playerPanel.setPreferredSize(new Dimension(950, 175));
-
+        playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         for (int i = 0; i < 6; i++) {
             ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
             if (i == 0) {
@@ -123,7 +123,7 @@ public class Renderer {
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
-        //panels.add(playerPanel);
+        panels.add(playerPanel);
         panels.add(menuPanel);
 
         changePanel(frame, panels);
@@ -161,7 +161,7 @@ public class Renderer {
 
         JPanel playerPanel = new JPanel();
         playerPanel.setPreferredSize(new Dimension(950, 175));
-
+        playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         for (int i = 0; i < 6; i++) {
             ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
             if (i == 0) {
@@ -179,7 +179,7 @@ public class Renderer {
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
-        //panels.add(playerPanel);
+        panels.add(playerPanel);
         panels.add(menuPanel);
         changePanel(frame, panels);
 
@@ -196,6 +196,8 @@ public class Renderer {
         exitSafely();
         return states;
     }
+
+    // REFACTOR THIS BIT TO MAKE PANELS MORE STATIC -ALex
 
     // States[0] - Action to perform: {"new", "load", "quit"}
     // States[1] - Race: {"human", "elephant", "squirrel", "frog", "cat"}
@@ -215,9 +217,10 @@ public class Renderer {
         panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null);
 
+
         JPanel playerPanel = new JPanel();
         playerPanel.setPreferredSize(new Dimension(950, 175));
-
+        playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         for (int i = 0; i < 6; i++) {
             ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
             if (i == 0) {
@@ -235,7 +238,7 @@ public class Renderer {
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
-        //panels.add(playerPanel);
+        panels.add(playerPanel);
         panels.add(menuPanel);
         changePanel(frame, panels);
 
