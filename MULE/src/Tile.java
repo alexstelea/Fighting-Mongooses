@@ -1,7 +1,7 @@
 public abstract class Tile {
 
     protected boolean hasMule;
-    protected String owner;
+    protected Player owner;
     protected String type;
 
     public Tile(String type) {
@@ -33,7 +33,7 @@ public abstract class Tile {
         return true;
     }
 
-    public boolean buyProperty(String owner) {
+    public boolean buyProperty(Player owner) {
         if (this.owner != null) {
             System.out.println("This property is already owned!");
             return false;
@@ -42,7 +42,7 @@ public abstract class Tile {
         return true;
     }
 
-    public String getOwner() {
+    public Player getOwner() {
         return owner;
     }
 
