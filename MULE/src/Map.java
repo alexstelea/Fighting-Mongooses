@@ -87,9 +87,8 @@ public class Map {
         tiles[coordToLinear(row, column)] = tile;
     }
 
-    public Player getOwnerOfTile(int row, int column) {
-        int coord = coordToLinear(row, column);
-        return tiles[coord].getOwner();
+    public Player getOwnerOfTile(int index) {
+        return tiles[index].getOwner();
     }
 
     private int coordToLinear(int row, int column) {
