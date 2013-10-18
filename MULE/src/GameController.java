@@ -128,9 +128,14 @@ public class GameController {
                 }
             }
 
+            else if (state.equals("game")) {
+                initializing = false;
+            }
+
             // quit state
             else {
                 System.out.println("State: " + state);
+                System.exit(0);
                 initializing = false;
             }
         }
