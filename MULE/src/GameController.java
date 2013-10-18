@@ -21,7 +21,7 @@ public class GameController {
 	public static final int DIFFICULTY_NOT_SET = 0;
 
 	private int difficulty;
-    private int roundNumber;
+    private int roundNumber = 3;
 	private Renderer renderer;
     private int currPlayer;
     private int numPlayers;
@@ -40,7 +40,7 @@ public class GameController {
 
     private void playGame() {
         startGame();
-        landSelection();
+        //landSelection();
         mainGame();
     }
 
@@ -196,10 +196,24 @@ public class GameController {
     }
 
     private void landSelection() {
-        LandOffice landOffice = new LandOffice(roundNumber);
-        //renderer.drawTileSelect(map, players, currPlayer, );
-        //state = 'game';
+        //state = ;
+        System.out.println(currPlayer);
+        int playerValue = (int)players.get(currPlayer).getMoney();
+        System.out.println("Amount of $ player has: " + playerValue);
+        LandOffice landOffice = new LandOffice(roundNumber, currPlayer);
+        landOffice.buyProperty(players, currPlayer, map);
+        System.out.println(currPlayer + " bought land");
+        System.out.println("Property Price: " + landOffice.getPropertyPrice());
+        System.out.println("Amount of $ player has left: " + playerValue);
 
+        switchPlayer();
+        System.out.println(currPlayer);
+        /*
+        if (--numPlayers == 0) {
+                        state = "game";
+                    }
+        */
+        //state = 'game';
     }
 	
 	private void showLoadGameSavePartial(Save savedGame){

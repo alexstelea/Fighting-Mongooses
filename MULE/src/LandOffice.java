@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.ArrayList;
 
 public class LandOffice{
 /*
@@ -16,8 +17,9 @@ private int shigh = 200;
 private int bhigh = 100;
 private int sellingRand = rand.nextInt(shigh-low);
 private int buyingRand = rand.nextInt(bhigh-low);
+private int playerValue;
 
-	public LandOffice(int getRoundNumber){
+	public LandOffice(int getRoundNumber, int currPlayer){
 		if(getRoundNumber <= 2){
 			this.propertyPrice = 0;
 		}
@@ -26,9 +28,32 @@ private int buyingRand = rand.nextInt(bhigh-low);
 		}
 	}
 
+public void buyProperty(ArrayList<Player> players, int currPlayer, Map map){
+	playerValue = (int)players.get(currPlayer).getMoney();
+	if((playerValue - propertyPrice) >= 0){
+		players.get(currPlayer).setMoney(playerValue - propertyPrice);
+		players.get(currPlayer).addTile();
+	}
+	else{
+		System.out.println("Player does not have sufficient funds.");
+	}
+	
+}
+
 /**
- * Setter method for the buying property price
- * @param propertyPrice The new property price
+ * Subtracts land cost from player's money
+ * @param players ArrayList contaning all players
+ * @param currPlayer The current player
+ */
+public void sellingProperty(ArrayList<Player> players, int currPlayer){
+	playerValue = (int)players.get(currPlayer).getMoney();
+	players.get(currPlayer).setMoney(playerValue + buyingPrice);
+}
+
+/**
+ * Adds land cost to player's money
+ * @param players ArrayList contaning all players
+ * @param currPlayer The current player
  */
 public void setBuyingPrice(int buyingPrice) {
     this.buyingPrice = buyingPrice;
@@ -42,6 +67,13 @@ public void setPropertyPrice(int propertyPrice) {
     this.propertyPrice = propertyPrice;
 }
 
+/**
+ * Getter method for the property price
+ * @param propertyPrice Property price
+ */
+public int getPropertyPrice() {
+    return this.propertyPrice;
+}
 
 
 }

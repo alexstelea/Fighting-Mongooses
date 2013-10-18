@@ -26,6 +26,7 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
+import javax.swing.BorderFactory;
 
 import java.util.concurrent.locks.*;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class Renderer {
         states[0] = "new";
 
         ImagePanel panel = new ImagePanel("/media/startscreen.png");
-        panel.setPreferredSize(new Dimension(950, 680));
+        panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null);
 
         ImagePanel menuPanel = new ImagePanel("/media/bss.png");
@@ -398,17 +399,19 @@ public class Renderer {
         final JButton button = new JButton();
         button.setBounds(x, y, width, height);
         panel.add(button);
-        final Color red = new Color (224, 39, 37);
-        Color blue = new Color (16, 126, 177);
-        Color green = new Color (34, 152, 67);
-        Color pink = new Color (207, 24, 101);
-        Color orange = new Color (236, 81, 7);
+        //String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
 
-        button.setBorder(BorderFactory.createLineBorder(red, 2));
+        final Color r = new Color (224, 39, 37);
+        final Color b = new Color (16, 126, 177);
+        final Color g = new Color (34, 152, 67);
+        final Color p = new Color (207, 24, 101);
+        final Color o = new Color (236, 81, 7);
+        button.setBorder(BorderFactory.createLineBorder(r, 2));
 
         button.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 states[stateNum] = stateText; // set the new state
+
                 System.out.println(stateNum + " set to: " + stateText);
                 if (stateNum == 0) {
                     try {
@@ -499,24 +502,16 @@ public class Renderer {
         return label;
     }
 
-    private void drawTileSelect(Map map, ArrayList<Player> players, int currPlayer, JPanel panel, int x, 
-        int y, int width, int height){
+    private void drawTileSelect(Map map, ArrayList<Player> players, int currPlayer, JPanel panel){
         // color label
         String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
-        BufferedImage colorImg;
-        try {
-            colorImg = ImageIO.read(getClass().getResourceAsStream("/media/tileselect" + colorPrefix + ".png"));
-        }
-        catch (Exception e) {
-            System.out.println("Caught: " + e);
-            return;
-        }
 
-        JLabel tileSelect = new JLabel();
-        ImageIcon colorIcon = new ImageIcon(colorImg);
-        tileSelect.setIcon(colorIcon);
-        tileSelect.setBounds(x, y, width, height);
-        panel.add(tileSelect);
+        final Color r = new Color (224, 39, 37);
+        final Color b = new Color (16, 126, 177);
+        final Color g = new Color (34, 152, 67);
+        final Color p = new Color (207, 24, 101);
+        final Color o = new Color (236, 81, 7);
+        //buttons.setBorder(BorderFactory.createLineBorder(colorPrefix, 2));
     }
 
     private void drawGameStatus(ArrayList<Player> players, JPanel panel, int currPlayer) {
