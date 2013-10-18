@@ -65,11 +65,7 @@ public class Renderer {
         states[0] = "new";
 
         ImagePanel panel = new ImagePanel("/media/startscreen.png");
-<<<<<<< HEAD
         panel.setPreferredSize(new Dimension(950, 525));
-=======
-        panel.setPreferredSize(new Dimension(950, 700));
->>>>>>> 72367ce3cdeace97b70c06e5f2df19e0c077eeb2
         panel.setLayout(null);
 
         ImagePanel menuPanel = new ImagePanel("/media/bss.png");
