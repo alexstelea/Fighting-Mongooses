@@ -91,6 +91,10 @@ public class Map {
         return tiles[index].getOwner();
     }
 
+    public void setOwnerOfTile(int index, Player player) {
+        tiles[index].buyProperty(player);
+    }
+
     private int coordToLinear(int row, int column) {
         return row * WIDTH + column;
     }
