@@ -168,7 +168,7 @@ public class GameController {
                 int tileSelection = Integer.parseInt(results[0]);
                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         System.out.println("Not town");
-                        landSelection();
+                        landSelection(tileSelection, map);
                     }
                     else {
                         state = "town";
@@ -200,13 +200,13 @@ public class GameController {
         state = "game";
     }
 
-    private void landSelection() {
+    private void landSelection(int tileSelection, Map map) {
         //state = ;
         System.out.println(currPlayer);
         int playerValue = (int)players.get(currPlayer).getMoney();
         System.out.println("Amount of $ player has: " + playerValue);
         LandOffice landOffice = new LandOffice(roundNumber, currPlayer);
-        landOffice.buyProperty(players, currPlayer, map);
+        landOffice.buyProperty(tileSelection, players, currPlayer, map);
         System.out.println(currPlayer + " bought land");
         System.out.println("Property Price: " + landOffice.getPropertyPrice());
         System.out.println("Amount of $ player has left: " + playerValue);
