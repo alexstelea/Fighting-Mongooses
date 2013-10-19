@@ -200,22 +200,19 @@ public class GameController {
         state = "game";
     }
 
+    /**
+     * landSelection takes land clicked and assigns it to currPlayer
+     * @param tileSelection The tile current player selected
+     * @param map Used to set owner of tile to currPlayer
+     */
     private void landSelection(int tileSelection, Map map) {
         if(map.getOwnerOfTile(tileSelection) != null){
             System.out.println("Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection));
         }
         else{
-            System.out.println("Current player is: " + players.get(currPlayer));
-            int playerValue = (int)players.get(currPlayer).getMoney();
-            System.out.println("Amount of $ player has: " + playerValue);
             LandOffice landOffice = new LandOffice(roundNumber, currPlayer);
             landOffice.buyProperty(tileSelection, players, currPlayer, map);
-            System.out.println(players.get(currPlayer)+ " has bought land");
-            System.out.println("Property Price: " + landOffice.getPropertyPrice());
-            playerValue = (int)players.get(currPlayer).getMoney();
-            System.out.println(players.get(currPlayer) + " has " + playerValue + " left.");
             switchPlayer();
-            System.out.println(players.get(currPlayer) + " is the current player.");
         }
     }
 	

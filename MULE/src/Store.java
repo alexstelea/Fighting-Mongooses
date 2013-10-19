@@ -1,19 +1,24 @@
+import java.util.ArrayList;
 
-public class Store {
-/***
-In town, there is a store that you can purchase things from. The store has a limited quantity of things, 
-and will run out unless players sell products to the store. MULE's are produced by ore, so if no one sells 
-ore to the store, then no mules can be produced after the initial amount are sold.
-
-To buy something, the player enters the store during their turn and is presented with a menu of items to 
-buy. The player may buy whatever they like subject to them having enough money to purchase the item. If you 
-have a mule, you cannot buy another until you emplace the one you have.
-
-When a Mule is purchased, it must also be configured, so the following fees are added to the base price.
-So an energy mule would cost 100 + 50 = 150.
+/**
+ * Store allows player to purchase things. The store has a limited 
+ * quantity of things, and will run out unless players sell products 
+ * to the store. MULE's are produced by ore, so if no one sells 
+ * ore to the store, then no mules can be produced after the initial 
+ * amount are sold.
+ * 
+ * To buy something, the player enters the store during their turn 
+ * and is presented with a menu of items to buy. The player may buy 
+ * whatever they like subject to them having enough money to purchase 
+ * the item. If you have a mule, you cannot buy another until you 
+ * emplace the one you have.
+ *
+ * When a Mule is purchased, it must also be configured, so the following fees are added to the base price.
+ * So an energy mule would cost 100 + 50 = 150.
 */
 
-	//instance variables
+public class Store {
+
 	private int foodQuantity;
 	private int energyQuantity;
 	private	int smithoreQuantity;
@@ -31,7 +36,12 @@ So an energy mule would cost 100 + 50 = 150.
 	private	int smithoreFee = 75;
 	private	int crystiteFee = 100;
 
+    private int costOfPurchases;
 
+    /**
+     * Store sets initial quanitity based on difficulty
+     * @param getDifficulty gets current game difficulty
+     */
 	public Store(int getDifficulty){
 		if (getDifficulty == 1) {
 			this.foodQuantity = 16;
@@ -48,6 +58,21 @@ So an energy mule would cost 100 + 50 = 150.
 			this.mulesQuantity = 14;
 		}
 	}
+
+    /**
+     * Player purchases. Subtracts purchase from player's money.
+     * @param players ArrayList contaning all players
+     * @param currPlayer The current player
+     */
+    private void purchaseItem(ArrayList<Player> players, int currPlayer){
+        int playerValue = (int)players.get(currPlayer).getMoney();
+        if((playerValue - costOfPurchases) > 0){
+            players.get(currPlayer).setMoney(playerValue - costOfPurchases);
+        }
+        else{
+            System.out.println("Do not have sufficient funds");
+        }
+    }
 
     /**
      * Getter method for the store's food quantity
