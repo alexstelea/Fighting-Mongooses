@@ -31,8 +31,8 @@ private int playerValue;
 public void buyProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
 	playerValue = (int)players.get(currPlayer).getMoney();
 	if((playerValue - propertyPrice) >= 0){
-		players.get(currPlayer).setMoney(playerValue - propertyPrice);
-		map.setOwnerOfTile(tileSelection, players.get(currPlayer));
+			players.get(currPlayer).setMoney(playerValue - propertyPrice);
+			map.setOwnerOfTile(tileSelection, players.get(currPlayer));
 	}
 	else{
 		System.out.println("Player does not have sufficient funds.");
@@ -45,9 +45,10 @@ public void buyProperty(int tileSelection, ArrayList<Player> players, int currPl
  * @param players ArrayList contaning all players
  * @param currPlayer The current player
  */
-public void sellingProperty(ArrayList<Player> players, int currPlayer){
+public void sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
 	playerValue = (int)players.get(currPlayer).getMoney();
 	players.get(currPlayer).setMoney(playerValue + buyingPrice);
+	map.setOwnerOfTile(tileSelection, null);
 }
 
 /**
