@@ -21,7 +21,7 @@ public class GameController {
 	public static final int DIFFICULTY_NOT_SET = 0;
 
 	private int difficulty;
-    private int roundNumber = 3;
+    private int roundNumber = 1;
 	private Renderer renderer;
     private int currPlayer;
     private int numPlayers;
@@ -195,6 +195,9 @@ public class GameController {
     }
 
     private void switchPlayer() {
+        if(currPlayer == (numPlayers-1)){
+            this.roundNumber++;
+        }
         currPlayer = (currPlayer + 1) % numPlayers;
         renderer.restartTimer();
         state = "game";

@@ -238,7 +238,6 @@ public class Renderer {
             playerPanel.add(playerBox);
         }
 
-
         ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
