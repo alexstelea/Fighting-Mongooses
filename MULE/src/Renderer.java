@@ -65,7 +65,7 @@ public class Renderer {
         states[0] = "new";
 
         ImagePanel panel = new ImagePanel("/media/startscreen.png");
-        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setPreferredSize(new Dimension(950, 700));
         panel.setLayout(null);
 
         ImagePanel menuPanel = new ImagePanel("/media/bss.png");
@@ -122,12 +122,17 @@ public class Renderer {
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
+
+
+        //drawGameStatus(players, playerPanel, currPlayer);
+
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
         panels.add(playerPanel);
         panels.add(menuPanel);
 
         changePanel(frame, panels);
+
 
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "back");
@@ -233,6 +238,7 @@ public class Renderer {
             playerPanel.add(playerBox);
         }
 
+
         ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
@@ -279,9 +285,14 @@ public class Renderer {
 
         drawGameStatus(players, playerPanel, currPlayer);
 
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
         panels.add(playerPanel);
+        panels.add(menuPanel);
         changePanel(frame, panels);
 
         // buttons
@@ -312,10 +323,14 @@ public class Renderer {
 
         drawGameStatus(players, playerPanel, currPlayer);
 
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
         panels.add(playerPanel);
+        panels.add(menuPanel);
         changePanel(frame, panels);
 
         JButton[] buttons = new JButton[Map.WIDTH * Map.HEIGHT];
