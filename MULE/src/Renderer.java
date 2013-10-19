@@ -418,15 +418,6 @@ public class Renderer {
         final JButton button = new JButton();
         button.setBounds(x, y, width, height);
         panel.add(button);
-        //String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
-
-        final Color r = new Color (224, 39, 37);
-        final Color b = new Color (16, 126, 177);
-        final Color g = new Color (34, 152, 67);
-        final Color p = new Color (207, 24, 101);
-        final Color o = new Color (236, 81, 7);
-        button.setBorder(BorderFactory.createLineBorder(r, 2));
-
         button.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 states[stateNum] = stateText; // set the new state
@@ -518,18 +509,6 @@ public class Renderer {
         label.setBounds(x, y, width, height);
         panel.add(label);
         return label;
-    }
-
-    private void drawTileSelect(Map map, ArrayList<Player> players, int currPlayer, JPanel panel){
-        // color label
-        String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
-
-        final Color r = new Color (224, 39, 37);
-        final Color b = new Color (16, 126, 177);
-        final Color g = new Color (34, 152, 67);
-        final Color p = new Color (207, 24, 101);
-        final Color o = new Color (236, 81, 7);
-        //buttons.setBorder(BorderFactory.createLineBorder(colorPrefix, 2));
     }
 
     private void drawGameStatus(ArrayList<Player> players, JPanel panel, int currPlayer) {
