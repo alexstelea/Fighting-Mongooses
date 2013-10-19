@@ -321,6 +321,7 @@ public class Renderer {
         playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(null);
 
+        drawPlayerFlags(map, panel);
         drawGameStatus(players, playerPanel, currPlayer);
 
         ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
@@ -620,4 +621,36 @@ public class Renderer {
         colorLabel.setBounds((xBase + 158 * (number + 1) + 124), yBase + 98, 18, 18);
         panel.add(colorLabel);
     }
+
+    private void drawPlayerFlags(Map map, JPanel panel) {
+        for (int i = 0; i < Map.HEIGHT; i++) {
+            for (int j = 0; j < Map.WIDTH; j++) {
+                Player owner = map.getOwnerOfTile(i * Map.WIDTH + j);
+                if (owner != null) {
+                    drawPlayerFlag(i, j, owner, panel);
+                }
+            }
+        }
+    }
+
+    private void drawPlayerFlag(int row, int column, Player player, JPanel panel) {
+        System.out.println("Drawing at location " + row + ", " + column);
+        BufferedImage flagImg;
+        String colorPrefix = player.getColor().substring(0, 1);
+
+        try {
+            flagImg = ImageIO.read(getClass().getResourceAsStream("/media/flag" + colorPrefix + ".png"));
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e);
+            return;
+        }
+
+        JLabel flagLabel = new JLabel();
+        ImageIcon flagIcon = new ImageIcon(flagImg); 
+        flagLabel.setIcon(flagIcon);
+        flagLabel.setBounds(25 + column * 100, 25 + row * 100, 100, 100);
+        panel.add(flagLabel);
+    }
+
 }
