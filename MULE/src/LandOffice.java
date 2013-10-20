@@ -15,24 +15,20 @@ import java.util.ArrayList;
 public class LandOffice{
 
 	private Random rand = new Random();
-	private int sellingRand = rand.nextInt(200);
 	private int buyingRand = rand.nextInt(100);
-
 	private int playerValue;
 	private int buyingPrice;
-	private int sellingPrice = 400 + sellingRand;
 
 	/**
 	 * Land office sets buying price
 	 * @param getRoundNumber gets current round number
-	 * @param currPlayer gets current player
 	 */
-	public LandOffice(int getRoundNumber, int currPlayer){
+	public LandOffice(int getRoundNumber){
 		if(getRoundNumber < 3){
 			this.buyingPrice = 0;
 		}
 		if(getRoundNumber > 2){
-			this.buyingPrice = 300 + (getRoundNumber * buyingRand);
+			this.buyingPrice = 300 + (getRoundNumber * buyingRand);;
 		}
 	}
 
@@ -44,6 +40,10 @@ public class LandOffice{
 	 * @param map Used to set owner of tile to currPlayer
 	 */
 	public void buyProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
+
+		System.out.println("BuyingRand: " + buyingRand);
+		System.out.println("Buying Price: " + buyingRand);
+
 		playerValue = (int)players.get(currPlayer).getMoney();
 		if((playerValue - buyingPrice) >= 0){
 				players.get(currPlayer).setMoney(playerValue - buyingPrice);
@@ -62,6 +62,8 @@ public class LandOffice{
 	 * @param map Used to set owner of tile to currPlayer
 	 */
 	public void sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
+		int sellingRand = rand.nextInt(200);
+		int sellingPrice = 400 + sellingRand;
 		playerValue = (int)players.get(currPlayer).getMoney();
 		players.get(currPlayer).setMoney(playerValue + sellingPrice);
 		map.setOwnerOfTile(tileSelection, null);

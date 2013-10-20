@@ -224,7 +224,7 @@ public class GameController {
             System.out.println("Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection));
         }
         else{
-            LandOffice landOffice = new LandOffice(roundNumber, currPlayer);
+            LandOffice landOffice = new LandOffice(roundNumber);
             landOffice.buyProperty(tileSelection, players, currPlayer, map);
             //stopTime = System.currentTimeMillis();
             switchPlayer();
