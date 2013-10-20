@@ -65,6 +65,8 @@ public class LandOffice{
 		playerValue = (int)players.get(currPlayer).getMoney();
 		players.get(currPlayer).setMoney(playerValue + sellingPrice);
 		map.setOwnerOfTile(tileSelection, null);
-		//implement code to remove MULE from tile if MULE is on tile
+		if(map.getTiles()[tileSelection].hasMule = true){
+			map.getTiles()[tileSelection].removeMule();
+		}
 	}
 }

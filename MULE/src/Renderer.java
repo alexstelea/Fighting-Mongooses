@@ -122,8 +122,6 @@ public class Renderer {
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
-
-
         //drawGameStatus(players, playerPanel, currPlayer);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
@@ -132,7 +130,6 @@ public class Renderer {
         panels.add(menuPanel);
 
         changePanel(frame, panels);
-
 
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "back");
@@ -344,7 +341,6 @@ public class Renderer {
         exitSafely();
         states[1] = "" + timer.getDelay();
         return states;
-
     }
 
     public void drawLoadScreen(LoadScreenModel model) {
