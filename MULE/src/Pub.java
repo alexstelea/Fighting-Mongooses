@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 /**
  * Pub is where a player can gamble, a way to get a money bonus for unused time in their turn. 
- * The formula is: Money Bonus = Round Bonus * random between 0 and Time Bonus.
+ * The formula is: Money Bonus = Round Bonus * random between 0 and Time Bonus. [---error?]
  *
  * The Round Bonus is given by:
  * Round 1	2  3  4	  5	  6   7	  8	  9	  10  11  12
@@ -23,38 +23,38 @@ public class Pub{
 	private Random rand = new Random();
 	private int roundBonus;
 	private int timeBonus;
-	private int bonusRand = rand.nextInt(timeBonus);
-	private int moneyBonus = roundBonus * bonusRand;
-
+	
 	/**
 	 * Pub sets roundBonus and timeBonus
 	 * @param getRoundNumber gets current round number
 	 * @param time gets current time
 	 */
-	public Pub(int getRoundNumber, int time){
+	public Pub(int getRoundNumber, int timeRemaining){
+
 		if(getRoundNumber < 4){
-			roundBonus = 50;
+			this.roundBonus = 50;
 		}
-		if((getRoundNumber > 3) && (getRoundNumber < 8)){
-			roundBonus = 100;
+		else if((getRoundNumber > 3) && (getRoundNumber < 8)){
+			this.roundBonus = 100;
 		}
-		if((getRoundNumber > 7) && (getRoundNumber < 12)){
-			roundBonus = 150;
+		else if((getRoundNumber > 7) && (getRoundNumber < 12)){
+			this.roundBonus = 150;
 		}
-		if(getRoundNumber > 11){
-			roundBonus = 200;
+		else if(getRoundNumber > 11){
+			this.roundBonus = 200;
 		}
-		if((time >= 37) && (time <= 50)){
-			timeBonus = 200;
+
+		if((timeRemaining > 37) && (timeRemaining < 51)){
+			this.timeBonus = 200;
 		}
-		if((time >= 25) && (time <= 36)){
-			timeBonus = 150;
+		else if((timeRemaining > 25) && (timeRemaining < 37)){
+			this.timeBonus = 150;
 		}
-		if((time >= 12) && (time <= 24)){
-			timeBonus = 100;
+		else if((timeRemaining > 12) && (timeRemaining < 25)){
+			this.timeBonus = 100;
 		}
-		if((time >= 0) && (time <= 11)){
-			timeBonus = 50;
+		else if((timeRemaining > 0) && (timeRemaining < 12)){
+			this.timeBonus = 50;
 		}
 	}
 
@@ -63,10 +63,17 @@ public class Pub{
 	 * @param players ArrayList contaning all players
 	 * @param currPlayer The current player
 	 */
-	private void gamble(ArrayList<Player> players, int currPlayer){
+	public void gamble(ArrayList<Player> players, int currPlayer){
+		int bonusRand = rand.nextInt(timeBonus);
 		int playerValue = (int)players.get(currPlayer).getMoney();
+		int moneyBonus = roundBonus + bonusRand;
 		if(moneyBonus < 251){
 			players.get(currPlayer).setMoney(playerValue + moneyBonus);
+			int newPlayerValue = (int)players.get(currPlayer).getMoney();
+			System.out.println("Player made " + (newPlayerValue - playerValue) + " dollars gambling.");
+		}
+		else{
+			System.out.println("Money bonus exceeds 250");
 		}
 	}
 

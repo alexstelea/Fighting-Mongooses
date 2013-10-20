@@ -28,6 +28,9 @@ public class GameController {
     private Map map;
     private String state;
     private ArrayList<Player> players;
+    private long startTime;
+    private long stopTime;
+    private Integer elapsedTime;
 
 	public GameController() {
 		renderer = new Renderer();
@@ -154,6 +157,7 @@ public class GameController {
 
         boolean initializing = true;
         renderer.startTimer();
+        startTime = System.currentTimeMillis();
 
         while(initializing) {
             if (state.equals("game")){
@@ -163,11 +167,10 @@ public class GameController {
                     System.out.println("Time's up, switching player");
                     switchPlayer();
                 }
-                else {
 
-                int tileSelection = Integer.parseInt(results[0]);
-                   if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        System.out.println("Not town");
+                else {
+                    int tileSelection = Integer.parseInt(results[0]);
+                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         landSelection(tileSelection, map);
                     }
                     else {
@@ -178,13 +181,20 @@ public class GameController {
 
             else if (state.equals("town")) {
                 String[] results = renderer.drawTownScreen(players, currPlayer);
+
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
                     switchPlayer();
                 }
-                else {
-                    state = "game";
-                }
+
+                else{
+                    if (results[0].equals("pub")){
+                        pub();
+                    }
+                    else {
+                        state = "game";
+                    }
+                } 
             }
 
             else {
@@ -200,6 +210,7 @@ public class GameController {
         }
         currPlayer = (currPlayer + 1) % numPlayers;
         renderer.restartTimer();
+        startTime = System.currentTimeMillis();
         state = "game";
     }
 
@@ -215,10 +226,26 @@ public class GameController {
         else{
             LandOffice landOffice = new LandOffice(roundNumber, currPlayer);
             landOffice.buyProperty(tileSelection, players, currPlayer, map);
+            //stopTime = System.currentTimeMillis();
             switchPlayer();
         }
     }
-	
+
+    /**
+     * pub allows currPlayer to gamble and make more $$$$.
+     */
+    private void pub(){
+        stopTime = System.currentTimeMillis();
+        Integer elapsedTime = ((int)(long)(stopTime - startTime))/1000;
+        int timeRemaining = 50 - elapsedTime;
+        System.out.println("Elapsed time was " + elapsedTime + " seconds.");
+        System.out.println("Player had " + timeRemaining + " seconds remaining.");
+
+        Pub pub = new Pub(roundNumber, timeRemaining);
+        pub.gamble(players, currPlayer);
+        switchPlayer();
+    }
+
 	private void showLoadGameSavePartial(Save savedGame){
 
 	}
@@ -229,16 +256,30 @@ public class GameController {
 		model.setSavedGames(savedGames);
 		renderer.drawLoadScreen(model);
 	}
-
+    /**
+     * Getter method for the game save
+     *
+     * @return null
+     */
 	private Save[] getSavedGames() {
 		return null;
 		//Query database for saved games
 	}
 
+    /**
+     * Getter method for the game's difficulty setting
+     *
+     * @return Game's difficulty setting
+     */
 	public int getDifficulty() {
 		return difficulty;
 	}
 
+    /**
+     * Getter method for current round
+     *
+     * @return Game's current round
+     */
     public int getRoundNumber() {
         return roundNumber;
     }

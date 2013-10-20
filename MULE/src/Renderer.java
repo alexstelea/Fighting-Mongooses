@@ -469,7 +469,6 @@ public class Renderer {
         timer.restart();
     }
 
-
     private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
         final JTextField text = new JTextField("Enter Name");
         text.addMouseListener(new MouseAdapter(){
