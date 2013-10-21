@@ -318,6 +318,7 @@ public class Renderer {
         playerPanel.setLayout(null);
 
         drawPlayerFlags(map, panel);
+        drawTerrain(map, panel);
         drawGameStatus(players, playerPanel, currPlayer);
         
 
@@ -628,6 +629,18 @@ public class Renderer {
         }
     }
 
+    private void drawTerrain(Map map, JPanel panel) {
+        for (int i = 0; i < Map.HEIGHT; i++) {
+            for (int j = 0; j < Map.WIDTH; j++) {
+                String type = map.getTileType(i * Map.WIDTH + j);
+                if (type.length() == 9 && type.substring(0, 8).equals("mountain"))
+                {
+                    drawMountain(i, j, type.substring(8, 9), panel);
+                }
+            }
+        }
+    }
+
     private void drawSelectedState(int x, int y, JPanel panel) {
         System.out.println("Drawing at location " + x + ", " + y);
         BufferedImage flagImg;
@@ -671,6 +684,24 @@ public class Renderer {
         flagLabel.setIcon(flagIcon);
         flagLabel.setBounds(25 + column * 100, 25 + row * 100, 100, 100);
         panel.add(flagLabel);
+    }
+
+    private void drawMountain(int row, int column, String type, JPanel panel) {
+        BufferedImage mountImg;
+
+        try {
+            mountImg = ImageIO.read(getClass().getResourceAsStream("/media/mount" + type + ".png"));
+        }
+        catch (Exception e) {
+            System.out.println("Caught" + e);
+            return;
+        }
+
+        JLabel mountLabel = new JLabel();
+        ImageIcon mountIcon =  new ImageIcon(mountImg);
+        mountLabel.setIcon(mountIcon);
+        mountLabel.setBounds(25 + column * 100, 25 + row * 100, 100, 100);
+        panel.add(mountLabel);
     }
 
 /*

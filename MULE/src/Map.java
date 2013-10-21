@@ -95,6 +95,10 @@ public class Map {
         tiles[index].buyProperty(player);
     }
 
+    public String getTileType(int index) {
+        return tiles[index].getType();
+    }
+
     private int coordToLinear(int row, int column) {
         return row * WIDTH + column;
     }
