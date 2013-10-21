@@ -42,6 +42,7 @@ public class Renderer {
     protected static final int TILE_SIZE = 100;
     private JButton[] buttons = new JButton[WIDTH + HEIGHT];
     private Timer timer;
+    private boolean isSelectedButton = false;
 
     public Renderer() {
 
@@ -130,13 +131,12 @@ public class Renderer {
         panels.add(menuPanel);
 
         changePanel(frame, panels);
-
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "back");
         JButton okayButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "okay");
-        JButton easyButton = addButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
-        JButton mediumButton = addButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
-        JButton hardButton = addButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
+        JButton easyButton = addInteractiveButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
+        JButton mediumButton = addInteractiveButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
+        JButton hardButton = addInteractiveButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
         JButton onePlayer = addButtonToPanel(panel, 185, 404, 24, 40, 2, "1");
         JButton twoPlayer = addButtonToPanel(panel, 325, 404, 24, 40, 2, "2");
         JButton threePlayer = addButtonToPanel(panel, 465, 404, 24, 40, 2, "3");
@@ -411,6 +411,25 @@ public class Renderer {
         }
     }
 
+    private JButton addInteractiveButtonToPanel(final JPanel panel, final int x, final int y, int width, int height, final int stateNum, final String stateText) {
+        final JButton button = new JButton();
+        button.setBounds(x, y, width, height);
+        panel.add(button);
+
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("CLicked");
+                drawSelectedState(x, y + 50 , panel);
+            }
+        });
+
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        return button;
+    }
+
+
     private JButton addButtonToPanel(JPanel panel, int x, int y, int width, int height, 
         final int stateNum, final String stateText) {
         final JButton button = new JButton();
@@ -607,6 +626,31 @@ public class Renderer {
                 }
             }
         }
+    }
+
+    private void drawSelectedState(int x, int y, JPanel panel) {
+        System.out.println("Drawing at location " + x + ", " + y);
+        BufferedImage flagImg;
+
+        try {
+            flagImg = ImageIO.read(getClass().getResourceAsStream("/media/flagr.png"));
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e);
+            return;
+        }
+
+        JLabel flagLabel = new JLabel();
+        ImageIcon flagIcon = new ImageIcon(flagImg); 
+        flagLabel.setIcon(flagIcon);
+        flagLabel.setBounds( x, y, 100, 100);
+        panel.add(flagLabel);
+        // if (isSelectedButton == true) {
+        //     panel.remove(flagLabel);
+        // }
+        // isSelectedButton = true;
+        frame.repaint();
+
     }
 
     private void drawPlayerFlag(int row, int column, Player player, JPanel panel) {
