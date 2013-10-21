@@ -319,10 +319,13 @@ public class Renderer {
 
         drawPlayerFlags(map, panel);
         drawGameStatus(players, playerPanel, currPlayer);
+        
 
         ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
+
+        //JTextField timeLeft = drawTime(menuPanel, timeRemaining, 11, 7, 171, 40);
 
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
@@ -625,5 +628,21 @@ public class Renderer {
         flagLabel.setBounds(25 + column * 100, 25 + row * 100, 100, 100);
         panel.add(flagLabel);
     }
+
+/*
+    private JTextField drawTime(JPanel panel, int timeRemaining, int x, int y, int width, int height) {
+        JTextField text2 = new JTextField("Time Remaining: " + timeRemaining);
+        text2.setBounds(x, y, width, height);
+        text2.setFont(new Font("Candara", Font.PLAIN, 20));
+        text2.setHorizontalAlignment(JTextField.LEFT);
+        text2.setForeground(Color.WHITE);
+        text2.setBackground(new Color(87, 51, 4));
+        text2.setOpaque(false);
+        text2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        panel.add(text2);
+        panel.repaint();
+        return text2;
+    }
+*/
 
 }

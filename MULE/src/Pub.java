@@ -73,7 +73,9 @@ public class Pub{
 			System.out.println("Player made " + (newPlayerValue - playerValue) + " dollars gambling.");
 		}
 		else{
+			System.out.println("Money bonus: " + moneyBonus);
 			System.out.println("Money bonus exceeds 250");
+			players.get(currPlayer).setMoney(playerValue + 250);
 		}
 	}
 

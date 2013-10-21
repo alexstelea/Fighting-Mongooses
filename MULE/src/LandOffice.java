@@ -42,7 +42,7 @@ public class LandOffice{
 	public void buyProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
 
 		System.out.println("BuyingRand: " + buyingRand);
-		System.out.println("Buying Price: " + buyingRand);
+		System.out.println("Buying Price: " + buyingPrice);
 
 		playerValue = (int)players.get(currPlayer).getMoney();
 		if((playerValue - buyingPrice) >= 0){
