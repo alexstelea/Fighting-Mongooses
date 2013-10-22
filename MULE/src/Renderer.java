@@ -42,7 +42,7 @@ public class Renderer {
     protected static final int TILE_SIZE = 100;
     private JButton[] buttons = new JButton[WIDTH + HEIGHT];
     private Timer timer;
-    private boolean isSelectedButton = false;
+    private boolean isSelectedButtonCreated = false;
 
     public Renderer() {
 
@@ -129,21 +129,21 @@ public class Renderer {
         panels.add(panel);
         panels.add(playerPanel);
         panels.add(menuPanel);
-
         changePanel(frame, panels);
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "back");
         JButton okayButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "okay");
-        JButton easyButton = addInteractiveButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
-        JButton mediumButton = addInteractiveButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
-        JButton hardButton = addInteractiveButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
+        
+        JButton easyButton = addButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
+        JButton mediumButton = addButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
+        JButton hardButton = addButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
         JButton onePlayer = addButtonToPanel(panel, 185, 404, 24, 40, 2, "1");
         JButton twoPlayer = addButtonToPanel(panel, 325, 404, 24, 40, 2, "2");
         JButton threePlayer = addButtonToPanel(panel, 465, 404, 24, 40, 2, "3");
         JButton fourPlayer = addButtonToPanel(panel, 605, 404, 24, 40, 2, "4");
         JButton fivePlayer = addButtonToPanel(panel, 745, 404, 24, 40, 2, "5");
 
-        blockForInput();
+        blockForSetupScreen(panel);
         exitSafely();
         return states;
     }
@@ -376,6 +376,31 @@ public class Renderer {
             }
         }
     }
+    private void blockForSetupScreen(JPanel panel){
+
+        JLabel colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*280 + 170, 170, 804, 200, "/media/uparrow.png");
+        panel.repaint();
+        String oldState = states[1];
+        boolean waitingSafe = true; // used to avoid race condition
+        while (waitingSafe) {
+            if (!oldState.equals(states[1])) {
+                panel.remove(colors);
+                colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*280 + 170 , 170, 804, 200, "/media/uparrow.png");
+                panel.repaint();
+                oldState = states[1];
+            }
+
+            try {
+                lock.lock();
+                waitingSafe = waiting;
+            }
+            finally {
+                lock.unlock();
+            }
+        }
+       
+    }
+
 
     private JLabel blockForInputCharacter(JPanel panel) {
         // wait for a button to be clicked
@@ -658,6 +683,7 @@ public class Renderer {
         flagLabel.setIcon(flagIcon);
         flagLabel.setBounds( x, y, 100, 100);
         panel.add(flagLabel);
+        
         // if (isSelectedButton == true) {
         //     panel.remove(flagLabel);
         // }
