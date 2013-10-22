@@ -13,6 +13,7 @@ public class Player {
     private int energy;
     private int smithore;
     private int mules;
+    private int mulesPlaced;
     private int row;
     private int column;
     private List<Tile> tiles;
@@ -72,9 +73,19 @@ public class Player {
         this.color = color;
         smithore = 0;
         mules = 0;
+        mulesPlaced = 0;
         row = 0;
         column = 0;
         tiles = new ArrayList<Tile>();
+    }
+
+    public void placeMule() {
+        mules--;
+        mulesPlaced++;
+    }
+
+    public int getMulesPlaced() {
+        return mulesPlaced;
     }
 
     /** 

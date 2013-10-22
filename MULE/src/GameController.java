@@ -207,11 +207,50 @@ public class GameController {
     private void switchPlayer() {
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
+            reorderPlayers();
+            checkForEnd();
         }
         currPlayer = (currPlayer + 1) % numPlayers;
         renderer.restartTimer();
         startTime = System.currentTimeMillis();
         state = "game";
+    }
+
+    private int getTime() {
+        int[] foodReqs = {3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5};
+        Player player = players.get(currPlayer);
+        if (player.getFood() >= foodReqs[roundNumber] && player.getEnergy() >= player.getMulesPlaced()) {
+            return 50000;
+        }
+
+        else if (player.getFood() > 0) {
+            return 30000;
+        }
+        return 5000;
+    }
+
+    private void reorderPlayers() {
+        // insertion sort is the fastest sort for < 30
+        System.out.println("Reordering players");
+        for (int i = 0; i < players.size(); i++) {
+            Player playerToAdd = players.get(i);
+            int index = i;
+            while (index > 0 && (playerToAdd.getMoney() < players.get(index - 1).getMoney())) {
+                players.set(index, players.get(index - 1));
+                index--;
+            }
+            players.set(index, playerToAdd);
+        }
+    }
+
+    private void checkForEnd() {
+        if (roundNumber < 12) {
+            return;
+        }
+
+        String winningPlayer = players.get(numPlayers - 1).getName();
+        System.out.println(winningPlayer + " is the winner!");
+        System.exit(0);
     }
 
     /**
