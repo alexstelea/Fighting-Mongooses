@@ -21,7 +21,7 @@ public class GameController {
 	public static final int DIFFICULTY_NOT_SET = 0;
 
 	private int difficulty;
-    private int roundNumber = 0;
+    private int roundNumber = 1;
 	private Renderer renderer;
     private int currPlayer;
     private int numPlayers;
