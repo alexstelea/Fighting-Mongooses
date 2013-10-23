@@ -21,7 +21,7 @@ public class GameController {
 	public static final int DIFFICULTY_NOT_SET = 0;
 
 	private int difficulty;
-    private int roundNumber = 1;
+    private int roundNumber = 0;
 	private Renderer renderer;
     private int currPlayer;
     private int numPlayers;
@@ -104,7 +104,7 @@ public class GameController {
 
             // Character selection screen
             else if (state.equals("player")) {
-                String[] results = renderer.drawCharacterScreen();
+                String[] results = renderer.drawCharacterScreen(players);
                 String action = results[0];
                 if (action.equals("back")) {
                     state = "map";
@@ -156,7 +156,7 @@ public class GameController {
     private void mainGame() {
 
         boolean initializing = true;
-        renderer.startTimer();
+        renderer.startTimer(getTime());
         startTime = System.currentTimeMillis();
 
         while(initializing) {
@@ -211,7 +211,7 @@ public class GameController {
             checkForEnd();
         }
         currPlayer = (currPlayer + 1) % numPlayers;
-        renderer.restartTimer();
+        renderer.restartTimer(getTime());
         startTime = System.currentTimeMillis();
         state = "game";
     }
@@ -220,12 +220,15 @@ public class GameController {
         int[] foodReqs = {3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5};
         Player player = players.get(currPlayer);
         if (player.getFood() >= foodReqs[roundNumber] && player.getEnergy() >= player.getMulesPlaced()) {
+            System.out.println("Timer set to: " + 50000);
             return 50000;
         }
 
         else if (player.getFood() > 0) {
+            System.out.println("Timer set to: " + 30000);
             return 30000;
         }
+        System.out.println("Timer set to: " + 5000);
         return 5000;
     }
 
@@ -264,9 +267,12 @@ public class GameController {
         }
         else{
             LandOffice landOffice = new LandOffice(roundNumber);
-            landOffice.buyProperty(tileSelection, players, currPlayer, map);
+            boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
             //stopTime = System.currentTimeMillis();
-            switchPlayer();
+
+            if (bought) {
+                switchPlayer();
+            }
         }
     }
 

@@ -206,7 +206,7 @@ public class Renderer {
     // States[1] - Race: {"human", "elephant", "squirrel", "frog", "cat"}
     // States[2] - Player Name
     // States[3] - Color: {"red", "blue", "pink", "green", "orange"}
-    public String[] drawCharacterScreen() {
+    public String[] drawCharacterScreen(ArrayList<Player> players) {
 
         // declare initial variables
         String action = "";
@@ -222,7 +222,7 @@ public class Renderer {
 
 
         JPanel playerPanel = new JPanel();
-        playerPanel.setPreferredSize(new Dimension(950, 175));
+        /*playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         for (int i = 0; i < 6; i++) {
             ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
@@ -233,7 +233,11 @@ public class Renderer {
                 playerBox.setPreferredSize(new Dimension(158, 175));
             }
             playerPanel.add(playerBox);
-        }
+        }*/
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, -1);
 
         ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
@@ -505,11 +509,13 @@ public class Renderer {
         timer.stop();
     }
 
-    public void startTimer() {
+    public void startTimer(int time) {
+        timer.setDelay(time);
         timer.start();
     }
 
-    public void restartTimer() {
+    public void restartTimer(int time) {
+        timer.setDelay(time);
         timer.restart();
     }
 
@@ -559,22 +565,24 @@ public class Renderer {
             drawPlayerStatus(players.get(i), i, panel);
         }
 
-        // current player color
-        String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
-        BufferedImage colorImg;
-        try {
-            colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
-        }
-        catch (Exception e) {
-            System.out.println("Caught: " + e);
-            return;
-        }
+        if (currPlayer >= 0) {  
+            // current player color
+            String colorPrefix = players.get(currPlayer).getColor().substring(0, 1);
+            BufferedImage colorImg;
+            try {
+                colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
+            }
+            catch (Exception e) {
+                System.out.println("Caught: " + e);
+                return;
+            }
 
-        JLabel colorLabel = new JLabel();
-        ImageIcon colorIcon = new ImageIcon(colorImg);
-        colorLabel.setIcon(colorIcon);
-        colorLabel.setBounds(122, 128, 18, 18);
-        panel.add(colorLabel);
+            JLabel colorLabel = new JLabel();
+            ImageIcon colorIcon = new ImageIcon(colorImg);
+            colorLabel.setIcon(colorIcon);
+            colorLabel.setBounds(122, 128, 18, 18);
+            panel.add(colorLabel);
+        }
 
         // create boxes for players
         for (int i = 0; i < 6; i++) {

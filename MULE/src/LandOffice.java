@@ -39,7 +39,7 @@ public class LandOffice{
 	 * @param tileSelection The tile current player selected
 	 * @param map Used to set owner of tile to currPlayer
 	 */
-	public void buyProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
+	public boolean buyProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
 
 		System.out.println("BuyingRand: " + buyingRand);
 		System.out.println("Buying Price: " + buyingPrice);
@@ -48,9 +48,11 @@ public class LandOffice{
 		if((playerValue - buyingPrice) >= 0){
 				players.get(currPlayer).setMoney(playerValue - buyingPrice);
 				map.setOwnerOfTile(tileSelection, players.get(currPlayer));
+                return true;
 		}
 		else{
 			System.out.println("Player does not have sufficient funds.");
+            return false;
 		}
 	}
 
