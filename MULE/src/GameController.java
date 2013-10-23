@@ -219,7 +219,7 @@ public class GameController {
     private int getTime() {
         int[] foodReqs = {3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5};
         Player player = players.get(currPlayer);
-        if (player.getFood() >= foodReqs[roundNumber] && player.getEnergy() >= player.getMulesPlaced()) {
+        if (player.getFood() >= foodReqs[roundNumber - 1] && player.getEnergy() >= player.getMulesPlaced()) {
             System.out.println("Timer set to: " + 50000);
             return 50000;
         }
@@ -247,7 +247,7 @@ public class GameController {
     }
 
     private void checkForEnd() {
-        if (roundNumber < 12) {
+        if (roundNumber <= 12) {
             return;
         }
 
