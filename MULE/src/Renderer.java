@@ -98,7 +98,7 @@ public class Renderer {
         String action = "";
         states = new String[3];
         states[0] = "okay";
-        states[1] = "2";
+        states[1] = "1";
         states[2] = "1";
 
         ImagePanel panel = new ImagePanel("/media/gamesetup.png");
@@ -130,10 +130,10 @@ public class Renderer {
         panels.add(playerPanel);
         panels.add(menuPanel);
         changePanel(frame, panels);
+
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "back");
         JButton okayButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "okay");
-        
         JButton easyButton = addButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
         JButton mediumButton = addButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
         JButton hardButton = addButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
@@ -380,8 +380,8 @@ public class Renderer {
             }
         }
     }
+    
     private void blockForSetupScreen(JPanel panel){
-
         JLabel colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*280 + 170, 170, 804, 200, "/media/uparrow.png");
         panel.repaint();
         String oldState = states[1];
@@ -402,7 +402,6 @@ public class Renderer {
                 lock.unlock();
             }
         }
-       
     }
 
 
