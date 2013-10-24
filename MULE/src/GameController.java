@@ -187,13 +187,16 @@ public class GameController {
                     switchPlayer();
                 }
 
-                else{
-                    if (results[0].equals("pub")){
-                        pub();
-                    }
-                    else {
-                        state = "game";
-                    }
+                else if (results[0].equals("pub")){
+                    pub();
+                }
+
+                else if (results[0].equals("store")){
+                    //store();
+                }
+                
+                else {
+                    state = "game";
                 } 
             }
 
@@ -289,6 +292,12 @@ public class GameController {
         Pub pub = new Pub(roundNumber, timeRemaining);
         pub.gamble(players, currPlayer);
         switchPlayer();
+    }
+
+    /**
+     * store allows currPlayer to sell and buy resources.
+     */
+    private void store(){
     }
 
 	private void showLoadGameSavePartial(Save savedGame){

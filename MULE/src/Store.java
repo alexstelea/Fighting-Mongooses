@@ -37,6 +37,7 @@ public class Store {
 	private	int crystiteFee = 100;
 
     private int costOfPurchases;
+    private boolean muleEquiped = false;
 
     /**
      * Store sets initial quanitity based on difficulty
@@ -60,18 +61,50 @@ public class Store {
 	}
 
     /**
-     * Player purchases. Subtracts purchase from player's money.
+     * Player buys. Subtracts purchase from player's money.
      * @param players ArrayList contaning all players
      * @param currPlayer The current player
      */
-    private void purchaseItem(ArrayList<Player> players, int currPlayer){
+    private void buyItem(ArrayList<Player> players, int currPlayer){
         int playerValue = (int)players.get(currPlayer).getMoney();
         if((playerValue - costOfPurchases) > 0){
+            //deduct from store
+
             players.get(currPlayer).setMoney(playerValue - costOfPurchases);
+            //if player has mule, must place mule before buying another mule
         }
         else{
             System.out.println("Do not have sufficient funds");
         }
+    }
+
+    /**
+     * Player sells. Adds value of sale to player's money.
+     * @param players ArrayList contaning all players
+     * @param currPlayer The current player
+     */
+    private void sellItem(ArrayList<Player> players, int currPlayer){
+        //get player quantitiy
+        int fQuanitity = (int)players.get(currPlayer).getMules();
+        int eQuanitity = (int)players.get(currPlayer).getMules();
+        int sQuanitity = (int)players.get(currPlayer).getMules();
+        int cQuanitity = (int)players.get(currPlayer).getMules();
+        int mQuanitity = (int)players.get(currPlayer).getMules();
+
+        //get store quanitity
+
+        //check to see if player is selling more resources than they have
+
+
+        //get player money
+        int playerValue = (int)players.get(currPlayer).getMoney();
+        
+        //add money to player
+        //(int)players.get(currPlayer).setMoney(*enter cost here*);
+
+        //increase store quanitity
+
+        System.out.println("Funds added to player");
     }
 
     /**
@@ -243,50 +276,5 @@ public class Store {
      */
     public void setMulesQuantity(int mulesQuantity) {
         this.mulesQuantity = mulesQuantity;
-    }
-
-    /**
-     * Setter method for the store's food price
-     *
-     * @param foodPrice The store's new food price
-     */
-    public void setFoodPrice(int foodPrice) {
-        this.foodPrice = foodPrice;
-    }
-
-    /**
-     * Setter method for the store's energy price
-     *
-     * @param energyPrice The store's new energy price
-     */
-    public void setEnergyPrice(int energyPrice) {
-        this.energyPrice = energyQuantity;
-    }
-
-    /**
-     * Setter method for the store's smithore price
-     *
-     * @param smithorePrice The store's new smithore price
-     */
-    public void setSmithorePrice(int smithorePrice) {
-        this.smithorePrice = smithorePrice;
-    }
-
-    /**
-     * Setter method for the store's crystite price
-     *
-     * @param crystitePrice The store's new crystite eprice
-     */
-    public void setCrystitePrice(int crystitePrice) {
-        this.crystitePrice = crystitePrice;
-    }
-
-    /**
-     * Setter method for the store's mules price
-     *
-     * @param mulesPrice The store's new mules price
-     */
-    public void setMulesPrice(int mulesPrice) {
-        this.mulesPrice = mulesPrice;
     }
 }
