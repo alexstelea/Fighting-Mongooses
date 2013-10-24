@@ -143,7 +143,7 @@ public class Renderer {
         JButton fourPlayer = addButtonToPanel(panel, 605, 404, 24, 40, 2, "4");
         JButton fivePlayer = addButtonToPanel(panel, 745, 404, 24, 40, 2, "5");
 
-        blockForSetupScreen(panel);
+        blockForSetupScreen(panel, 170, 150, 280, 1);
         exitSafely();
         return states;
     }
@@ -381,18 +381,31 @@ public class Renderer {
         }
     }
     
-    private void blockForSetupScreen(JPanel panel){
-        JLabel colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*280 + 170, 170, 804, 200, "/media/uparrow.png");
+    private void blockForSetupScreen(JPanel panel, int x, int y, int xMargin, int stateNum){
+
+        
+        JLabel colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x, y, 804, 200, "/media/uparrow.png");
+        JLabel colors2 = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*150 + x, 390, 804, 200, "/media/uparrow.png");
+
         panel.repaint();
         String oldState = states[1];
+        String oldState2 = states[2];
+
         boolean waitingSafe = true; // used to avoid race condition
         while (waitingSafe) {
             if (!oldState.equals(states[1])) {
                 panel.remove(colors);
-                colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*280 + 170 , 170, 804, 200, "/media/uparrow.png");
+                colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x , y, 804, 200, "/media/uparrow.png");
                 panel.repaint();
                 oldState = states[1];
             }
+             if (!oldState2.equals(states[2])) {
+                panel.remove(colors2);
+                colors2 = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*140 + x , 390, 804, 200, "/media/uparrow.png");
+                panel.repaint();
+                oldState2 = states[2];
+            }
+
 
             try {
                 lock.lock();
@@ -402,6 +415,8 @@ public class Renderer {
                 lock.unlock();
             }
         }
+
+       
     }
 
 
@@ -440,23 +455,6 @@ public class Renderer {
         }
     }
 
-    private JButton addInteractiveButtonToPanel(final JPanel panel, final int x, final int y, int width, int height, final int stateNum, final String stateText) {
-        final JButton button = new JButton();
-        button.setBounds(x, y, width, height);
-        panel.add(button);
-
-        button.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("CLicked");
-                drawSelectedState(x, y + 50 , panel);
-            }
-        });
-
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        return button;
-    }
 
 
     private JButton addButtonToPanel(JPanel panel, int x, int y, int width, int height, 
