@@ -30,6 +30,7 @@ import javax.swing.BorderFactory;
 
 import java.util.concurrent.locks.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Renderer {
 
@@ -43,6 +44,7 @@ public class Renderer {
     private JButton[] buttons = new JButton[WIDTH + HEIGHT];
     private Timer timer;
     private boolean isSelectedButtonCreated = false;
+    private long timeWhenTimerSet;
 
     public Renderer() {
 
@@ -354,7 +356,7 @@ public class Renderer {
             }
         }
 
-        blockForInput();
+        blockForInputMain(playerPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
         return states;
@@ -487,6 +489,37 @@ public class Renderer {
         return colors;
     }
 
+    private void blockForInputMain(JPanel panel) {
+        Date date = new Date();
+        long currentTime = date.getTime();
+        int timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
+        int oldTimerNum = timerNum;
+        JLabel timerImage = addLabelToPanel(panel, 70, 115, 41, 41, "/media/t" + timerNum + ".png");
+        panel.repaint();
+        boolean waitingSafe = true;
+        
+        while (waitingSafe) {
+            date = new Date();
+            currentTime = date.getTime();
+            timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
+
+            if (oldTimerNum != timerNum) {
+                panel.remove(timerImage);
+                timerImage = addLabelToPanel(panel, 70, 115, 41, 41, "/media/t" + timerNum + ".png");
+                panel.repaint();
+                oldTimerNum = timerNum;
+            }
+
+            try {
+                lock.lock();
+                waitingSafe = waiting;
+            }
+            finally {
+                lock.unlock();
+            }
+        }
+    }  
+
     private void exitSafely() {
         try {
             lock.lock();
@@ -549,11 +582,15 @@ public class Renderer {
     }
 
     public void startTimer(int time) {
+        Date date = new Date();
+        timeWhenTimerSet = date.getTime();
         timer.setDelay(time);
         timer.start();
     }
 
     public void restartTimer(int time) {
+        Date date = new Date();
+        timeWhenTimerSet = date.getTime();
         timer.setDelay(time);
         timer.restart();
     }
@@ -594,7 +631,7 @@ public class Renderer {
         JLabel label = new JLabel();
         label.setIcon(icon);
         label.setBounds(x, y, width, height);
-        panel.add(label);
+        panel.add(label, 0);
         return label;
     }
 
