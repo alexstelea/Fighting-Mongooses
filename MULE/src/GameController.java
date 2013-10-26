@@ -90,7 +90,7 @@ public class GameController {
 
             // Map Screen
             else if (state.equals("map")) {
-                String[] results = renderer.drawMapScreen();
+                String[] results = renderer.drawMapScreen(difficulty);
                 String action = results[0];
                 map = new Map(Integer.parseInt(results[1]));
                 System.out.println("Map created with num " + Integer.parseInt(results[1]));

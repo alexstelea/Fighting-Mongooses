@@ -106,19 +106,22 @@ public class Renderer {
         panel.setLayout(null);
 
         JPanel playerPanel = new JPanel();
+        ImagePanel playerBox1 = new ImagePanel("/media/p00.png");
         playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         for (int i = 0; i < 6; i++) {
-            ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
+            ImagePanel playerBox = new ImagePanel("/media/p" +i+"0.png");
             if (i == 0) {
-                playerBox.setPreferredSize(new Dimension(160, 175));
+                playerBox1.setPreferredSize(new Dimension(160, 175));
+                playerPanel.add(playerBox1);
             }
             else {
                 playerBox.setPreferredSize(new Dimension(158, 175));
-            }
-            playerPanel.add(playerBox);
-        }
+                playerPanel.add(playerBox);
 
+            }
+
+        }
         ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
@@ -143,14 +146,14 @@ public class Renderer {
         JButton fourPlayer = addButtonToPanel(panel, 605, 404, 24, 40, 2, "4");
         JButton fivePlayer = addButtonToPanel(panel, 745, 404, 24, 40, 2, "5");
 
-        blockForSetupScreen(panel, 170, 150, 280, 1);
+        blockForSetupScreen(panel, playerBox1, 170, 150, 280, 1);
         exitSafely();
         return states;
     }
 
     // States[0] - Action to perform: {"new", "load", "quit"}
     // States[1] - Map Number: {"1", "2", "3", "4", "5"}
-    public String[] drawMapScreen() {
+    public String[] drawMapScreen(int difficulty) {
 
         // declare initial variables
         String action = "";
@@ -158,22 +161,28 @@ public class Renderer {
         states[0] = "okay";
         states[1] = "1";
 
+        String difficultyValue = getDifficultyValueString(difficulty);
+
         ImagePanel panel = new ImagePanel("/media/mapselection.png");
         panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null); 
 
         JPanel playerPanel = new JPanel();
+        ImagePanel playerBox1 = new ImagePanel("/media/p00.png");
         playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         for (int i = 0; i < 6; i++) {
-            ImagePanel playerBox = new ImagePanel("/media/p" + i + "0.png");
+            ImagePanel playerBox = new ImagePanel("/media/p" +i+"0.png");
             if (i == 0) {
-                playerBox.setPreferredSize(new Dimension(160, 175));
+                playerBox1.setPreferredSize(new Dimension(160, 175));
+                playerPanel.add(playerBox1);
             }
             else {
                 playerBox.setPreferredSize(new Dimension(158, 175));
+                playerPanel.add(playerBox);
+
             }
-            playerPanel.add(playerBox);
+
         }
 
         ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
@@ -195,7 +204,7 @@ public class Renderer {
         JButton map4Button = addButtonToPanel(panel, 235, 317, 224, 126, 1, "4");
         JButton map5Button = addButtonToPanel(panel, 490, 317, 224, 126, 1, "5");
 
-        blockForInput();
+        blockForMapScreen(panel, playerBox1, 170, 150, 280, difficultyValue);
         exitSafely();
         return states;
     }
@@ -380,14 +389,44 @@ public class Renderer {
             }
         }
     }
-    
-    private void blockForSetupScreen(JPanel panel, int x, int y, int xMargin, int stateNum){
+
+    private void blockForMapScreen(JPanel panel, ImagePanel playerPanel, int x, int y, int xMargin, String difficultyValue){
+
+        
+        JLabel map = addLabelToPanel(playerPanel, 102, 38, 120, 66, "/media/m"+ states[1]+ ".png");
+        JTextField difficultyText = drawDifficulty(playerPanel, difficultyValue,  31,  128,  100, 50);
+        playerPanel.repaint();
+        String oldState = states[1];
+
+        boolean waitingSafe = true; // used to avoid race condition
+        while (waitingSafe) {
+            if (!oldState.equals(states[1])) {
+                playerPanel.remove(map);
+                map = addLabelToPanel(playerPanel, 22, 38, 120, 66, "/media/m"+ states[1]+ ".png");
+                playerPanel.repaint();
+                oldState = states[1];
+            }
+
+            try {
+                lock.lock();
+                waitingSafe = waiting;
+            }
+            finally {
+                lock.unlock();
+            }
+        }
+
+       
+    }
+
+    private void blockForSetupScreen(JPanel panel, ImagePanel playerPanel, int x, int y, int xMargin, int stateNum){
 
         
         JLabel colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x, y, 804, 200, "/media/uparrow.png");
         JLabel colors2 = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*150 + x, 390, 804, 200, "/media/uparrow.png");
-
+        JTextField difficultyText = drawDifficulty(playerPanel, "Easy",  31,  128,  100, 20);
         panel.repaint();
+        playerPanel.repaint();
         String oldState = states[1];
         String oldState2 = states[2];
 
@@ -395,8 +434,11 @@ public class Renderer {
         while (waitingSafe) {
             if (!oldState.equals(states[1])) {
                 panel.remove(colors);
+                playerPanel.remove(difficultyText);
                 colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x , y, 804, 200, "/media/uparrow.png");
+                difficultyText = drawDifficulty(playerPanel, getDifficultyValue(),  31,  128,  100, 20);
                 panel.repaint();
+                playerPanel.repaint();
                 oldState = states[1];
             }
              if (!oldState2.equals(states[2])) {
@@ -671,6 +713,7 @@ public class Renderer {
         }
     }
 
+
     private void drawSelectedState(int x, int y, JPanel panel) {
         System.out.println("Drawing at location " + x + ", " + y);
         BufferedImage flagImg;
@@ -696,7 +739,19 @@ public class Renderer {
         frame.repaint();
 
     }
-
+    private JTextField drawDifficulty(JPanel panel, String textString, int x, int y, int width, int height) {
+        JTextField text = new JTextField(textString);
+        text.setBounds(x, y, width, height);
+        text.setFont(new Font("Candara", Font.PLAIN, 20));
+        text.setHorizontalAlignment(JTextField.CENTER);
+        text.setForeground(Color.BLACK);
+        text.setBackground(new Color(87, 51, 4));
+        text.setOpaque(false);
+        text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        panel.add(text);
+        panel.repaint();
+        return text;
+    }
     private void drawPlayerFlag(int row, int column, Player player, JPanel panel) {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage flagImg;
@@ -735,6 +790,32 @@ public class Renderer {
         panel.add(mountLabel);
     }
 
+    private String getDifficultyValueString(int num){
+        String returnString = "";
+        if (num == 1){
+            returnString = "Easy";
+        }
+        if (num == 2){
+            returnString = "Medium";
+        }
+        if (num == 3){
+            returnString = "Hard";
+        }
+        return returnString;
+    }
+    private String getDifficultyValue(){
+        String returnString = "";
+        if (states[1] == "1"){
+            returnString = "Easy";
+        }
+        if (states[1] == "2"){
+            returnString = "Medium";
+        }
+        if (states[1] == "3"){
+            returnString = "Hard";
+        }
+        return returnString;
+    }
 /*
     private JTextField drawTime(JPanel panel, int timeRemaining, int x, int y, int width, int height) {
         JTextField text2 = new JTextField("Time Remaining: " + timeRemaining);
