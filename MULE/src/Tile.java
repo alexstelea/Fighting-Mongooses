@@ -9,7 +9,9 @@ public abstract class Tile {
         hasMule = false;
     }
 
-    public abstract void collectResources(Player player);
+    public void collectResources() {
+
+    }
 
     // return the String of the image to draw at this location, or null if we don't need to draw anything
     public abstract String image();

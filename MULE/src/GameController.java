@@ -208,6 +208,7 @@ public class GameController {
     }
 
     private void switchPlayer() {
+        gatherResources();
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
             reorderPlayers();
@@ -217,6 +218,12 @@ public class GameController {
         renderer.restartTimer(getTime());
         startTime = System.currentTimeMillis();
         state = "game";
+    }
+
+    private void gatherResources() {
+        for (Tile t : map.getTiles()) {
+            t.collectResources();
+        }
     }
 
     private int getTime() {

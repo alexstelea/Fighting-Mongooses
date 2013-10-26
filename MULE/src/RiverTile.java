@@ -4,8 +4,11 @@ public class RiverTile extends Tile {
         super("river");
     }
 
-    public void collectResources(Player player) {
-        return;
+    public void collectResources() {
+        if (hasMule) {
+            owner.changeFood(4);
+            owner.changeEnergy(2);
+        }
     }
 
     public String image() {

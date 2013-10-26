@@ -7,7 +7,12 @@ public class MountainTile extends Tile {
         this.mountainNum = mountainNum;
     }
 
-    public void collectResources(Player player) {
+    public void collectResources() {
+        if (hasMule) {
+            owner.changeFood(1);
+            owner.changeEnergy(1);
+            owner.changeSmithore(1 + mountainNum);
+        }
         return;
     }
 

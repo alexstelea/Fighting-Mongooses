@@ -266,4 +266,20 @@ public class Player {
     public void addTile(Tile tile) {
         tiles.add(tile);
     }
+
+    public void changeFood(int amount) {
+        food += amount;
+    }
+
+    public void changeMoney(int amount) {
+        money += amount;
+    }
+
+    public void changeSmithore(int amount) {
+        smithore += amount;
+    }
+
+    public void changeEnergy(int amount) {
+        energy += amount;
+    }
 }

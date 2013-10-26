@@ -312,7 +312,7 @@ public class Renderer {
         addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub"); 
 
-        blockForInput();
+        blockForInputMain(playerPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
         return states;
