@@ -208,9 +208,9 @@ public class GameController {
     }
 
     private void switchPlayer() {
-        gatherResources();
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
+            gatherResources();
             reorderPlayers();
             checkForEnd();
         }
