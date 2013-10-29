@@ -504,7 +504,12 @@ public class Renderer {
             timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
 
             if (oldTimerNum != timerNum) {
-                panel.remove(timerImage);
+                try {
+                    panel.remove(timerImage);
+                }
+                catch (NullPointerException e) {
+
+                }
                 timerImage = addLabelToPanel(panel, 70, 115, 41, 41, "/media/t" + timerNum + ".png");
                 panel.repaint();
                 oldTimerNum = timerNum;
