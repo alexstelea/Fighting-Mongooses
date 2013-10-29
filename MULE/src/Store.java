@@ -22,7 +22,7 @@ public class Store {
 	private int foodQuantity;
 	private int energyQuantity;
 	private	int smithoreQuantity;
-	private	int crystiteQuantity;
+    private int crystiteQuantity;
 	private int mulesQuantity;
 
 	private int foodPrice = 30;
@@ -31,10 +31,10 @@ public class Store {
 	private	int crystitePrice = 100; 
 	private int mulesPrice = 100;
 
-	private int foodFee = 25;
-	private int energyFee = 50;
-	private	int smithoreFee = 75;
-	private	int crystiteFee = 100;
+	private int foodMule = 125;
+	private int energyMule = 150;
+	private	int smithoreMule = 175;
+    private int crystiteMule = 200;
 
     private int costOfPurchases;
     private boolean muleEquiped = false;
@@ -202,8 +202,8 @@ public class Store {
      *
      * @return The store's food fee
      */
-    public int getFoodFee() {
-        return foodFee;
+    public int getFoodMule() {
+        return foodMule;
     }
 
     /**
@@ -211,8 +211,8 @@ public class Store {
      *
      * @return The store's energy fee
      */
-    public int getEnergyFee() {
-        return energyFee;
+    public int getEnergyMule() {
+        return energyMule;
     }
 
     /**
@@ -220,8 +220,8 @@ public class Store {
      *
      * @return The store's smithore fee
      */
-    public int getSmithoreFee() {
-        return smithoreFee;
+    public int getSmithoreMule() {
+        return smithoreMule;
     }
 
    	/**
@@ -229,8 +229,8 @@ public class Store {
      *
      * @return The store's crystite fee
      */
-    public int getCrystiteFee() {
-        return crystiteFee;
+    public int getCrystiteMule() {
+        return crystiteMule;
     }
 
     /**
