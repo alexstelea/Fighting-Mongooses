@@ -65,13 +65,48 @@ public class Store {
      * @param players ArrayList contaning all players
      * @param currPlayer The current player
      */
-    private void buyItem(ArrayList<Player> players, int currPlayer){
+    private boolean buyItem(ArrayList<Player> players, int currPlayer, String muleType){
         int playerValue = (int)players.get(currPlayer).getMoney();
-        if((playerValue - costOfPurchases) > 0){
-            //deduct from store
-
-            players.get(currPlayer).setMoney(playerValue - costOfPurchases);
-            //if player has mule, must place mule before buying another mule
+        int costOfPurchase;
+        if(muleType.equals(foodMule)){
+            costOfPurchase = foodMule;
+        }
+        else if(muleType.equals(energyMule)){
+            costOfPurchase = energyMule;
+        }
+        else if(muleType.equals(smithoreMule)){
+            costOfPurchase = smithoreMule;
+        }
+        else if(muleType.equals(crystiteMule)){
+            costOfPurchase = crystiteMule;
+        }     
+        if((playerValue - costOfPurchase) >= 0){
+            if(muleType.equals(foodMule)){
+                this.foodQuantity--;
+                players.get(currPlayer).setMule(true);
+                players.get(currPlayer).setMuleType(foodMule);
+            }
+            else if(muleType.equals(energyMule)){
+                this.energyQuantity--;
+                players.get(currPlayer).setMule(true);
+                players.get(currPlayer).setMuleType(energyMule);
+            }
+            else if(muleType.equals(smithoreMule)){
+                this.smithoreQuantity--;
+                players.get(currPlayer).setMule(true);
+                players.get(currPlayer).setMuleType(smithoreMule);
+            }
+            else if(muleType.equals(crystiteMule)){
+                this.crystiteQuantity--;
+                players.get(currPlayer).setMule(true);
+                players.get(currPlayer).setMuleType(crystiteMule);
+            }
+            players.get(currPlayer).setMoney(playerValue - costOfPurchase);
+            if(players.get(currPlayer).getMule() == true){
+                //if player has mule, must place mule before buying another mule
+                return true; //if 'true' allow player to place mule on tile
+            }
+            
         }
         else{
             System.out.println("Do not have sufficient funds");
