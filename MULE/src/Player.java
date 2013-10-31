@@ -47,6 +47,9 @@ public class Player {
             race.equals("cat"))) {
             throw new IllegalArgumentException("Invalid race: " + race);
         }
+        if (name.equals("Enter Name")){
+            throw new IllegalArgumentException("Invalid name");
+        }
         
         if (getDifficulty == 1){
             this.food = 8;
