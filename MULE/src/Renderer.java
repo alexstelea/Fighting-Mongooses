@@ -699,7 +699,7 @@ public class Renderer {
         panel.add(smithoreLabel);
 
         // mule label
-        JLabel muleLabel = new JLabel("" + player.getMules());
+        JLabel muleLabel = new JLabel("" + player.getMule());
         muleLabel.setBounds((xBase + 158 * (number + 1)) + 107, yBase + 58, 100, 20);
         panel.add(muleLabel);
 
