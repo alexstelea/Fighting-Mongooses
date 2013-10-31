@@ -12,6 +12,7 @@ public class Player {
     private int food;
     private int energy;
     private int smithore;
+    private int crystite;
     private boolean mules;
     private String muleType;
     private int mulesPlaced;
@@ -165,6 +166,15 @@ public class Player {
     }
 
     /**
+     * Getter method for the player's crystite
+     *
+     * @return The player's crystite
+     */
+    public int getCrystite() {
+        return crystite;
+    }
+
+    /**
      * Getter method for the player's mules
      *
      * @return The player's mules
@@ -241,11 +251,20 @@ public class Player {
     }
 
     /**
+     * Setter method for the player's crystite
+     *
+     * @param smithore The player's new crystite
+     */
+    public void setCrystite(int crystite) {
+        this.crystite = crystite;
+    }
+
+    /**
      * Setter method for the player's mules
      *
      * @param mules The player's new mules
      */
-    public void setMules(boolean mules) {
+    public void setMule(boolean mules) {
         this.mules = mules;
     }
 
