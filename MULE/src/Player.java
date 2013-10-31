@@ -12,7 +12,8 @@ public class Player {
     private int food;
     private int energy;
     private int smithore;
-    private int mules;
+    private boolean mules;
+    private String muleType;
     private int mulesPlaced;
     private int row;
     private int column;
@@ -47,9 +48,6 @@ public class Player {
             race.equals("cat"))) {
             throw new IllegalArgumentException("Invalid race: " + race);
         }
-        if (name.equals("Enter Name")){
-            throw new IllegalArgumentException("Invalid name");
-        }
         
         if (getDifficulty == 1){
             this.food = 8;
@@ -69,13 +67,17 @@ public class Player {
         if ((race.equals("frog")) || (race.equals("squirrel")) || (race.equals("cat"))){
             this.money = 1000;
         }
+        if (name.equals("Enter Name")) {
+            throw new IllegalArgumentException("Invalid name");
+        }
 
         // set instance variables
         this.name = name;
         this.race = race;
         this.color = color;
         smithore = 0;
-        mules = 0;
+        mules = false;
+        muleType = "";
         mulesPlaced = 0;
         row = 0;
         column = 0;
@@ -83,7 +85,7 @@ public class Player {
     }
 
     public void placeMule() {
-        mules--;
+        mules = false;
         mulesPlaced++;
     }
 
@@ -167,8 +169,12 @@ public class Player {
      *
      * @return The player's mules
      */
-    public int getMules() {
+    public boolean getMule() {
         return mules;
+    }
+
+    public String getMuleType() {
+        return muleType;
     }
 
     /**
@@ -239,8 +245,12 @@ public class Player {
      *
      * @param mules The player's new mules
      */
-    public void setMules(int mules) {
+    public void setMules(boolean mules) {
         this.mules = mules;
+    }
+
+    public void setMuleType(String muleType) {
+        this.muleType = muleType;
     }
 
     /**
