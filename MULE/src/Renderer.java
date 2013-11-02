@@ -311,6 +311,67 @@ public class Renderer {
         return states;
     }
 
+    // state[0] = {"quit", "switchScreen", "food", "energy", "smithore", "crystite", "foodMule", "energyMule", "smithoreMule", "crystiteMule"}
+    // state[1] = quantityFood
+    // state[2] = quantityEnergy
+    // state[3] = quantitySmithore
+    // state[4] = quantityCrystite
+    public String[] drawStoreScreen(ArrayList<Player> players, int currPlayer, String transactionType, String[] quantities) {
+
+        // initialize the states
+        states = new String[5];
+        states[0] = "quit";
+        states[1] = quantities[0];
+        states[2] = quantities[1];
+        states[3] = quantities[2];
+        states[4] = quantities[3];
+    
+        ImagePanel panel = new ImagePanel("/media/storecomponents/store" + transactionType + ".png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        // buttons
+        addButtonToPanel(panel, 40, 455, 98, 58, 0, "quit"); 
+        addButtonToPanel(panel, 166, 455, 98, 58, 0, "switchScreen"); 
+        addButtonToPanel(panel, 471, 135, 42, 25, 0, "food"); 
+        addButtonToPanel(panel, 471, 220, 42, 25, 0, "energy"); 
+        addButtonToPanel(panel, 471, 305, 42, 25, 0, "smithore"); 
+        addButtonToPanel(panel, 471, 391, 42, 25, 0, "crystite"); 
+        addButtonToPanel(panel, 693, 161, 42, 25, 0, "foodMule");
+        addButtonToPanel(panel, 693, 257, 42, 25, 0, "energyMule");
+        addButtonToPanel(panel, 853, 161, 42, 25, 0, "smithoreMule");
+        addButtonToPanel(panel, 853, 257, 42, 25, 0, "crystiteMule");
+
+        addButtonToPanel(panel, 290, 117, 22, 18, 1, "+");
+        addButtonToPanel(panel, 290, 157, 22, 18, 1, "-");
+        addButtonToPanel(panel, 290, 202, 22, 18, 2, "+");
+        addButtonToPanel(panel, 290, 242, 22, 18, 2, "-");
+        addButtonToPanel(panel, 290, 288, 22, 18, 2, "+");
+        addButtonToPanel(panel, 290, 328, 22, 18, 2, "-");
+        addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
+        addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
+
+        blockForInputMain(playerPanel);
+        exitSafely();
+        return states;
+    }
+
     // State[0] = {"town", "time"}
     // State[1] = time left on timer
     public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer) {
@@ -537,7 +598,18 @@ public class Renderer {
         panel.add(button);
         button.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                states[stateNum] = stateText; // set the new state
+                if (stateText.equals("+")) {
+                    states[stateNum] = "" + (Integer.parseInt(states[stateNum]) + 1);
+                }
+                else if (stateText.equals("-")) {
+                    states[stateNum] = "" + (Integer.parseInt(states[stateNum]) - 1);
+                    if (states[stateNum].equals("-1")) {
+                        states[stateNum] = "0";
+                    }
+                }
+                else {
+                    states[stateNum] = stateText; // set the new state
+                }
 
                 System.out.println(stateNum + " set to: " + stateText);
                 if (stateNum == 0) {
@@ -552,9 +624,9 @@ public class Renderer {
             }
         });
 
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
+        //button.setOpaque(false);
+        //button.setContentAreaFilled(false);
+        //button.setBorderPainted(false);
         return button;
     }
 

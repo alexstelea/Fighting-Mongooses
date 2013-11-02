@@ -155,6 +155,7 @@ public class GameController {
 
     private void mainGame() {
 
+        String[] quantities = {"0", "0", "0", "0"}; // quantities to be bought/sold
         boolean initializing = true;
         renderer.startTimer(getTime());
         startTime = System.currentTimeMillis();
@@ -192,12 +193,109 @@ public class GameController {
                 }
 
                 else if (results[0].equals("store")){
-                    //store();
+                    state = "storeBuy";
                 }
                 
                 else {
                     state = "game";
                 } 
+            }
+
+            else if (state.equals("storeBuy")) {
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities);
+                quantities[0] = results[1];
+                quantities[1] = results[2];
+                quantities[2] = results[3];
+                quantities[3] = results[4];
+
+                if (results[0].equals("time")) {
+                    System.out.println("Time's up, switching player");
+                    switchPlayer();
+                }
+
+                else if (results[0].equals("quit")) {
+                    state = "town";
+                    quantities[0] = "0";
+                    quantities[1] = "0";
+                    quantities[2] = "0";
+                    quantities[3] = "0";
+                }
+                else if (results[0].equals("switchScreen")){
+                    state = "storeSell";
+                }
+                else if (results[0].equals("food")) {
+                    System.out.println("Buy " + results[1] + " food");
+                }
+                else if (results[0].equals("energy")) {
+                    System.out.println("Buy " + results[1] + " energy");
+                }
+                else if (results[0].equals("smithore")) {
+                    System.out.println("Buy " + results[1] + " smithore");
+                }
+                else if (results[0].equals("crystite")) {
+                    System.out.println("Buy " + results[1] + " crystite");
+                }
+                else if (results[0].equals("foodMule")) {
+                    System.out.println("Buy food mule");
+                }
+                else if (results[0].equals("energyMule")) {
+                    System.out.println("Buy energy mule");
+                }
+                else if (results[0].equals("smithoreMule")) {
+                    System.out.println("Buy smithore mule");
+                }
+                else if (results[0].equals("crystiteMule")) {
+                    System.out.println("Buy crystite mule");
+                }
+
+            }
+
+            else if (state.equals("storeSell")) {
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities);
+                quantities[0] = results[1];
+                quantities[1] = results[2];
+                quantities[2] = results[3];
+                quantities[3] = results[4];
+
+                if (results[0].equals("time")) {
+                    System.out.println("Time's up, switching player");
+                    switchPlayer();
+                }
+
+                else if (results[0].equals("quit")) {
+                    state = "town";
+                    quantities[0] = "0";
+                    quantities[1] = "0";
+                    quantities[2] = "0";
+                    quantities[3] = "0";
+                }
+                else if (results[0].equals("switchScreen")) {
+                    state = "storeBuy";
+                }
+                else if (results[0].equals("food")) {
+                    System.out.println("Sell " + results[1] + " food");
+                }
+                else if (results[0].equals("energy")) {
+                    System.out.println("Sell " + results[1] + " energy");
+                }
+                else if (results[0].equals("smithore")) {
+                    System.out.println("Sell " + results[1] + " smithore");
+                }
+                else if (results[0].equals("crystite")) {
+                    System.out.println("Sell " + results[1] + " crystite");
+                }
+                else if (results[0].equals("foodMule")) {
+                    System.out.println("Sell food mule");
+                }
+                else if (results[0].equals("energyMule")) {
+                    System.out.println("Sell energy mule");
+                }
+                else if (results[0].equals("smithoreMule")) {
+                    System.out.println("Sell smithore mule");
+                }
+                else if (results[0].equals("crystiteMule")) {
+                    System.out.println("Sell crystite mule");
+                }
             }
 
             else {
