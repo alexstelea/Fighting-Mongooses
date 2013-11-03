@@ -447,8 +447,6 @@ public class Renderer {
     }
 
     private void blockForMapScreen(JPanel panel, ImagePanel playerPanel, int x, int y, int xMargin, String difficultyValue){
-
-        
         JLabel map = addLabelToPanel(playerPanel, 102, 38, 120, 66, "/media/m"+ states[1]+ ".png");
         JTextField difficultyText = drawDifficulty(playerPanel, difficultyValue,  31,  128,  100, 50);
         playerPanel.repaint();
@@ -476,8 +474,6 @@ public class Renderer {
     }
 
     private void blockForSetupScreen(JPanel panel, ImagePanel playerPanel, int x, int y, int xMargin, int stateNum){
-
-        
         JLabel colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x, y, 804, 200, "/media/uparrow.png");
         JLabel colors2 = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*150 + x, 390, 804, 200, "/media/uparrow.png");
         JTextField difficultyText = drawDifficulty(playerPanel, "Easy",  31,  128,  100, 20);
@@ -911,6 +907,7 @@ public class Renderer {
         }
         return returnString;
     }
+    
     private String getDifficultyValue(){
         String returnString = "";
         if (states[1] == "1"){
@@ -924,20 +921,4 @@ public class Renderer {
         }
         return returnString;
     }
-/*
-    private JTextField drawTime(JPanel panel, int timeRemaining, int x, int y, int width, int height) {
-        JTextField text2 = new JTextField("Time Remaining: " + timeRemaining);
-        text2.setBounds(x, y, width, height);
-        text2.setFont(new Font("Candara", Font.PLAIN, 20));
-        text2.setHorizontalAlignment(JTextField.LEFT);
-        text2.setForeground(Color.WHITE);
-        text2.setBackground(new Color(87, 51, 4));
-        text2.setOpaque(false);
-        text2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        panel.add(text2);
-        panel.repaint();
-        return text2;
-    }
-*/
-
 }
