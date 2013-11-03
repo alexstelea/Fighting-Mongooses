@@ -14,11 +14,6 @@ public class GameController {
         System.out.println("Main Method!");
         GameController game = new GameController();
     }
-	
-	public static final int EASY_DIFFICULTY = 1;
-	public static final int MEDIUM_DIFFICULTY = 2;
-	public static final int HARD_DIFFICULTY = 3;
-	public static final int DIFFICULTY_NOT_SET = 0;
 
 	private int difficulty;
     private int roundNumber = 1;
@@ -53,7 +48,7 @@ public class GameController {
         boolean initializing = true;
 
         // variables we are collecting
-        int difficulty = 0;
+        difficulty = 1;
         map = null;
         ArrayList<String> takenColors = new ArrayList<String>();
 
@@ -224,30 +219,33 @@ public class GameController {
                     state = "storeSell";
                 }
                 else if (results[0].equals("food")) {
-                    System.out.println("Buy " + results[1] + " food");
+                    store("buyFood", Integer.parseInt(quantities[0]));
+                    quantities[0] = "0";
                 }
                 else if (results[0].equals("energy")) {
-                    System.out.println("Buy " + results[1] + " energy");
+                    store("buyEnergy", Integer.parseInt(quantities[1]));
+                    quantities[1] = "0";
                 }
                 else if (results[0].equals("smithore")) {
-                    System.out.println("Buy " + results[1] + " smithore");
+                    store("buySmithore", Integer.parseInt(quantities[2]));
+                    quantities[2] = "0";
                 }
                 else if (results[0].equals("crystite")) {
-                    System.out.println("Buy " + results[1] + " crystite");
+                    store("buyCrystite", Integer.parseInt(quantities[3]));
+                    quantities[3] = "0";
                 }
                 else if (results[0].equals("foodMule")) {
-                    System.out.println("Buy food mule");
+                    store("buyFoodMule", 1);
                 }
                 else if (results[0].equals("energyMule")) {
-                    System.out.println("Buy energy mule");
+                    store("buyEnergyMule", 1);
                 }
                 else if (results[0].equals("smithoreMule")) {
-                    System.out.println("Buy smithore mule");
+                    store("buySmithoreMule", 1);
                 }
                 else if (results[0].equals("crystiteMule")) {
-                    System.out.println("Buy crystite mule");
+                    store("buyCrystiteMule", 1);
                 }
-
             }
 
             else if (state.equals("storeSell")) {
@@ -273,28 +271,32 @@ public class GameController {
                     state = "storeBuy";
                 }
                 else if (results[0].equals("food")) {
-                    System.out.println("Sell " + results[1] + " food");
+                    store("sellFood", Integer.parseInt(quantities[0]));
+                    quantities[0] = "0";
                 }
                 else if (results[0].equals("energy")) {
-                    System.out.println("Sell " + results[1] + " energy");
+                    store("sellEnergy", Integer.parseInt(quantities[1]));
+                    quantities[1] = "0";
                 }
                 else if (results[0].equals("smithore")) {
-                    System.out.println("Sell " + results[1] + " smithore");
+                    store("sellSmithore", Integer.parseInt(quantities[2]));
+                    quantities[2] = "0";
                 }
                 else if (results[0].equals("crystite")) {
-                    System.out.println("Sell " + results[1] + " crystite");
+                    store("sellCrystite", Integer.parseInt(quantities[3]));
+                    quantities[3] = "0";
                 }
                 else if (results[0].equals("foodMule")) {
-                    System.out.println("Sell food mule");
+                    store("sellFoodMule", 1);
                 }
                 else if (results[0].equals("energyMule")) {
-                    System.out.println("Sell energy mule");
+                    store("sellEnergyMule", 1);
                 }
                 else if (results[0].equals("smithoreMule")) {
-                    System.out.println("Sell smithore mule");
+                    store("sellSmithoreMule", 1);
                 }
                 else if (results[0].equals("crystiteMule")) {
-                    System.out.println("Sell crystite mule");
+                    store("sellCrystiteMule", 1);
                 }
             }
 
@@ -402,7 +404,126 @@ public class GameController {
     /**
      * store allows currPlayer to sell and buy resources.
      */
-    private void store(){
+    private void store(String choice, int quantities){
+        Store store = new Store(difficulty);
+        //BUY
+        if(choice.equals("buyFood")){
+            System.out.println("Buy " + quantities + " food");
+            store.buyItem(players, currPlayer, "food", quantities);
+        }
+        else if(choice.equals("buyEnergy")){
+            System.out.println("Buy " + quantities + " energy");
+            store.buyItem(players, currPlayer, "energy", quantities);
+        }
+        else if(choice.equals("buySmithore")){
+            System.out.println("Buy " + quantities + " smithore");
+            store.buyItem(players, currPlayer, "smithore", quantities);
+        }
+        else if(choice.equals("buyCrystite")){
+            System.out.println("Buy " + quantities + " crystite");
+            store.buyItem(players, currPlayer, "crystite", quantities);
+        }
+        else if(choice.equals("buyFoodMule")){
+            if(store.buyItem(players, currPlayer, "foodMule", 1) == true){
+                System.out.println("Buy food mule");
+                //draw mule on town tile
+                //allow them place mule on tile that they own
+                //if placed on wrong tile, player loses mule and money
+            }
+            store.buyItem(players, currPlayer, "foodMule", quantities);
+        }
+        else if(choice.equals("buyEnergyMule")){
+            if(store.buyItem(players, currPlayer, "energyMule", 1) == true){
+                System.out.println("Buy energy mule");
+                //draw mule on town tile
+                //allow them place mule on tile that they own
+                //if placed on wrong tile, player loses mule and money
+            }
+            store.buyItem(players, currPlayer, "energyMule", quantities);
+        }
+        else if(choice.equals("buySmithoreMule")){
+            if(store.buyItem(players, currPlayer, "smithoreMule", 1) == true){
+                System.out.println("Buy smithore mule");
+                //draw mule on town tile
+                //allow them place mule on tile that they own
+                //if placed on wrong tile, player loses mule and money
+            }
+            store.buyItem(players, currPlayer, "smithoreMule", quantities);
+        }
+        else if(choice.equals("buyCrystiteMule")){
+            if(store.buyItem(players, currPlayer, "crystiteMule", 1) == true){
+                System.out.println("Buy crystite mule");
+                //draw mule on town tile
+                //allow them place mule on tile that they own
+                //if placed on wrong tile, player loses mule and money
+            }
+            store.buyItem(players, currPlayer, "crystiteMule", quantities);
+        }
+        //SELL
+        if(choice.equals("sellFood")){
+            System.out.println("Sell " + quantities + " food");
+            store.sellItem(players, currPlayer, "food", quantities);
+        }
+        else if(choice.equals("sellEnergy")){
+            System.out.println("Sell " + quantities + " energy");
+            store.sellItem(players, currPlayer, "energy", quantities);
+        }
+        else if(choice.equals("sellSmithore")){
+            System.out.println("Sell " + quantities + " smithore");
+            store.sellItem(players, currPlayer, "smithore", quantities);
+        }
+        else if(choice.equals("sellCrystite")){
+            System.out.println("Sell " + quantities + " crystite");
+            store.sellItem(players, currPlayer, "crystite", quantities);
+        }
+        /*
+        Two options to sell mules:
+            Option 1:
+                -player selects from store what type of mule they want to sell
+                -map displays and player selects the mule the want to sell
+                -if player chooses wrong type of mule or another player's mule they pick again
+                pros:
+                    -none
+                con:
+                    -have to check if player is selecting correct mule type
+            Option 2:
+                -player selects "sell mule" option from store
+                -game redirects to map for player to choose mule to sell
+                -if player chooses another's player's mule they have to pick again
+                pros:
+                    -don't have to account for if player picks wrong type of mule
+                con:
+                    -none
+
+
+        else if(choice.equals("sellFoodMule")){
+            if(store.sellItem(players, currPlayer, "foodMule", 1) == true){
+                System.out.println("Sell food mule");
+            }
+            store.sellItem(players, currPlayer, "foodMule", quantities);
+        }
+        else if(choice.equals("sellEnergyMule")){
+            if(store.sellItem(players, currPlayer, "energyMule", 1) == true){
+                System.out.println("Sell energy mule");
+                //draw mule on town tile
+            }
+            store.sellItem(players, currPlayer, "energyMule", quantities);
+        }
+        else if(choice.equals("sellSmithoreMule")){
+            if(store.sellItem(players, currPlayer, "smithoreMule", 1) == true){
+                System.out.println("Sell smithore mule");
+                //draw mule on town tile
+            }
+            store.sellItem(players, currPlayer, "smithoreMule", quantities);
+        }
+        else if(choice.equals("sellCrystiteMule")){
+            if(store.sellItem(players, currPlayer, "crystiteMule", 1) == true){
+                System.out.println("Sell crystite mule");
+                //draw mule on town tile
+            }
+            store.sellItem(players, currPlayer, "crystiteMule", quantities);
+        }
+        */
     }
 
 	private void showLoadGameSavePartial(Save savedGame){

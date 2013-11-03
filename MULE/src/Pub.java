@@ -30,7 +30,6 @@ public class Pub{
 	 * @param time gets current time
 	 */
 	public Pub(int getRoundNumber, int timeRemaining){
-
 		if(getRoundNumber < 4){
 			this.roundBonus = 50;
 		}

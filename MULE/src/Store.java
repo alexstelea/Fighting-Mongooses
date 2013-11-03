@@ -13,7 +13,9 @@ import java.util.ArrayList;
  * the item. If you have a mule, you cannot buy another until you 
  * emplace the one you have.
  *
- * When a Mule is purchased, it must also be configured, so the following fees are added to the base price.
+ * When a Mule is purchased, it must also be configured, so the 
+ * following fees are added to the base price.
+ *
  * So an energy mule would cost 100 + 50 = 150.
 */
 
@@ -36,29 +38,30 @@ public class Store {
 	private	int smithoreMule = 175;
     private int crystiteMule = 200;
 
+    private boolean isModified;
     private int costOfPurchase;
     private int playerQuantity;
     private int itemCost;
 
     /**
      * Store sets initial quanitity based on difficulty
-     * @param getDifficulty gets current game difficulty
+     * @param difficulty takes in current game difficulty
      */
-	public Store(int getDifficulty){
-		if (getDifficulty == 1) {
-			this.foodQuantity = 16;
-			this.energyQuantity = 16;
-			this.smithoreQuantity = 0;
-			this.crystiteQuantity = 0;
-			this.mulesQuantity = 25;
-		}
-		if ((getDifficulty == 2) || (getDifficulty == 3)) {
-			this.foodQuantity = 8;
-			this.energyQuantity = 8;
-			this.smithoreQuantity = 8;
-			this.crystiteQuantity = 0;
-			this.mulesQuantity = 14;
-		}
+	public Store(int difficulty){
+        if((difficulty > 0) && (difficulty < 2)){
+            foodQuantity = 16;
+            energyQuantity = 16;
+            smithoreQuantity = 0;
+            crystiteQuantity = 0;
+            mulesQuantity = 25;
+        }
+        else if((difficulty > 1) && (difficulty < 4)) {
+            foodQuantity = 8;
+            energyQuantity = 8;
+            smithoreQuantity = 8;
+            crystiteQuantity = 0;
+            mulesQuantity = 14;
+        }
 	}
 
     /**
@@ -66,41 +69,138 @@ public class Store {
      * @param players ArrayList contaning all players
      * @param currPlayer The current player
      */
-    private boolean buyItem(ArrayList<Player> players, int currPlayer, String muleType){
+    public boolean buyItem(ArrayList<Player> players, int currPlayer, String item, int toBuy){
         int playerValue = (int)players.get(currPlayer).getMoney();
         //int costOfPurchase;
-        if(muleType.equals("food")){
+        if(item.equals("food")){
+            costOfPurchase = foodPrice * toBuy;
+        }
+        else if(item.equals("energy")){
+            costOfPurchase = energyPrice * toBuy;
+        }
+        else if(item.equals("smithore")){
+            costOfPurchase = smithorePrice * toBuy;
+        }
+        else if(item.equals("crystite")){
+            costOfPurchase = crystitePrice * toBuy;
+        }
+        else if(item.equals("foodMule")){
             costOfPurchase = foodMule;
         }
-        else if(muleType.equals("energy")){
+        else if(item.equals("energyMule")){
             costOfPurchase = energyMule;
         }
-        else if(muleType.equals("smithore")){
+        else if(item.equals("smithoreMule")){
             costOfPurchase = smithoreMule;
         }
-        else if(muleType.equals("crystite")){
+        else if(item.equals("crystiteMule")){
             costOfPurchase = crystiteMule;
-        }     
+        }
         if((playerValue - costOfPurchase) >= 0){
-            if(muleType.equals("food")){
-                this.foodQuantity--;
-                players.get(currPlayer).setMule(true);
-                players.get(currPlayer).setMuleType("food");
+            System.out.println("food: " + foodQuantity);
+            if(item.equals("food")){
+                if(foodQuantity > 0){
+                    if(toBuy > 0){
+                        int pFoodQuantity = players.get(currPlayer).getFood();
+                        players.get(currPlayer).setFood(pFoodQuantity + toBuy);
+                        this.foodQuantity = (foodQuantity - toBuy);
+                    }
+                    else{
+                        System.out.println("Store cannot sell a negative amount.");
+                    }
+                }
+                else{
+                    System.out.println("Store does not have any more food to sell.");
+                }
             }
-            else if(muleType.equals("energy")){
-                this.energyQuantity--;
-                players.get(currPlayer).setMule(true);
-                players.get(currPlayer).setMuleType("energy");
+            else if(item.equals("energy")){
+                if(energyQuantity > 0){
+                    if(toBuy > 0){
+                        int pEnergyQuantity = players.get(currPlayer).getEnergy();
+                        players.get(currPlayer).setEnergy(pEnergyQuantity + toBuy);
+                        this.energyQuantity = (energyQuantity - toBuy);
+                    }
+                    else{
+                        System.out.println("Store cannot sell a negative amount.");
+                    }
+                }
+                else{
+                        System.out.println("Store does not have any more energy to sell.");
+                    }
             }
-            else if(muleType.equals("smithore")){
-                this.smithoreQuantity--;
-                players.get(currPlayer).setMule(true);
-                players.get(currPlayer).setMuleType("smithore");
+            else if(item.equals("smithore")){
+                if(smithoreQuantity > 0){
+                    if(toBuy > 0){
+                        int pSmithoreQuantity = players.get(currPlayer).getSmithore();
+                        players.get(currPlayer).setSmithore(pSmithoreQuantity + toBuy);
+                        this.smithoreQuantity = (smithoreQuantity - toBuy);
+                    }
+                    else{
+                        System.out.println("Store cannot sell a negative amount.");
+                    }
+                }
+                else{
+                        System.out.println("Store does not have any more smithore to sell.");
+                    }
             }
-            else if(muleType.equals("crystite")){
-                this.crystiteQuantity--;
-                players.get(currPlayer).setMule(true);
-                players.get(currPlayer).setMuleType("crystite");
+            else if(item.equals("crystite")){
+                if(crystiteQuantity > 0){
+                    if(toBuy > 0){
+                        int pCrystiteQuantity = players.get(currPlayer).getCrystite();
+                        players.get(currPlayer).setCrystite(pCrystiteQuantity + toBuy);
+                        this.crystiteQuantity = (crystiteQuantity - toBuy);
+                    }
+                    else{
+                        System.out.println("Store cannot sell a negative amount.");
+                    }
+                }
+                else{
+                    System.out.println("Store does not have any more crystite to sell.");
+                }
+            }
+            else if(item.equals("foodMule")){
+                if((foodQuantity > 0) && (mulesQuantity > 0)){
+                    this.foodQuantity--;
+                    this.mulesQuantity--;
+                    players.get(currPlayer).setMule(true);
+                    players.get(currPlayer).setMuleType("food");
+                }
+                else{
+                    System.out.println("Store does not have any more food mules to sell.");
+                }
+            }
+            else if(item.equals("energyMule")){
+                if((energyQuantity > 0) && (mulesQuantity > 0)){
+                    this.energyQuantity--;
+                    this.mulesQuantity--;
+                    players.get(currPlayer).setMule(true);
+                    players.get(currPlayer).setMuleType("energy");
+                }
+                else{
+                        System.out.println("Store does not have any more energy mules to sell.");
+                    }
+            }
+            else if(item.equals("smithoreMule")){
+                if((smithoreQuantity > 0) && (mulesQuantity > 0)){
+                    this.smithoreQuantity--;
+                    this.mulesQuantity--;
+                    players.get(currPlayer).setMule(true);
+                    players.get(currPlayer).setMuleType("smithore");
+                }
+                else{
+                        System.out.println("Store does not have any more smithore mules to sell.");
+                    }
+            }
+            else if(item.equals("crystiteMule")){
+                if((crystiteQuantity > 0) && (mulesQuantity > 0)){
+                    this.crystiteQuantity--;
+                    this.mulesQuantity--;
+                    players.get(currPlayer).setMule(true);
+                    players.get(currPlayer).setMuleType("crystite");
+                }
+                else{
+                    System.out.println("Store does not have any more crystite mules to sell.");
+                }
             }
             players.get(currPlayer).setMoney(playerValue - costOfPurchase);
             if(players.get(currPlayer).getMule() == true){
@@ -108,7 +208,7 @@ public class Store {
             }
         }
         else{
-            System.out.println("Player does not have sufficient funds");
+        System.out.println("Player does not have sufficient funds");
         }
         return false;
     }
@@ -118,61 +218,103 @@ public class Store {
      * @param players ArrayList contaning all players
      * @param currPlayer The current player
      */
-    private void sellItem(ArrayList<Player> players, int currPlayer, String resource, int toSell){
-        //check to see if player is selling more resource than they have
-        if(resource.equals("food")){
+    public void sellItem(ArrayList<Player> players, int currPlayer, String item, int toSell){
+        //check to see if player is selling more items than they have
+        if(toSell < 0){
+            System.out.println("Store cannot sell a negative amount.");
+            return;
+        }
+        else if(item.equals("ore")){
+            this.mulesQuantity+= toSell;
+        }
+        else if(item.equals("food")){
             playerQuantity = (int)players.get(currPlayer).getFood();
-            itemCost = foodPrice;
+            itemCost = foodPrice * toSell;
             if(toSell > playerQuantity){
                 System.out.println("Player selling more than what they own");
                 return;
             }
+            else{
+                //get player money & add money to player
+                int playerValue = (int)players.get(currPlayer).getMoney();
+                players.get(currPlayer).setMoney(playerValue + itemCost);
+                //increase store quanitity & reduce player quantity
+                int pFoodQuantity = players.get(currPlayer).getFood();
+                players.get(currPlayer).setFood(pFoodQuantity - toSell);
+                foodQuantity += toSell;
+                //notify player that sale was successful
+                System.out.println("Funds successfully added to player");
+            }
         }
-        else if(resource.equals("energy")){
+        else if(item.equals("energy")){
             playerQuantity = (int)players.get(currPlayer).getEnergy();
-            itemCost = energyPrice;
+            itemCost = energyPrice * toSell;
             if(toSell > playerQuantity){
                 System.out.println("Player selling more than what they own");
                 return;
             }
+            else{
+                //get player money & add money to player
+                int playerValue = (int)players.get(currPlayer).getMoney();
+                players.get(currPlayer).setMoney(playerValue + itemCost);
+                //increase store quanitity & reduce player quantity
+                int pEnergyQuantity = players.get(currPlayer).getEnergy();
+                players.get(currPlayer).setEnergy(pEnergyQuantity - toSell);
+                energyQuantity += toSell;
+                //notify player that sale was successful
+                System.out.println("Funds successfully added to player");
+            }
         }
-        else if(resource.equals("smithore")){
+        else if(item.equals("smithore")){
             playerQuantity = (int)players.get(currPlayer).getSmithore();
-            itemCost = smithorePrice;
+            itemCost = smithorePrice * toSell;
             if(toSell > playerQuantity){
                 System.out.println("Player selling more than what they own");
                 return;
             }
+            else{
+                //get player money & add money to player
+                int playerValue = (int)players.get(currPlayer).getMoney();
+                players.get(currPlayer).setMoney(playerValue + itemCost);
+                //increase store quanitity & reduce player quantity
+                int pSmithoreQuantity = players.get(currPlayer).getSmithore();
+                players.get(currPlayer).setSmithore(pSmithoreQuantity - toSell);
+                smithoreQuantity += toSell;
+                //notify player that sale was successful
+                System.out.println("Funds successfully added to player");
+            }
         }
-        else if(resource.equals("crystite")){
+        else if(item.equals("crystite")){
             costOfPurchase = (int)players.get(currPlayer).getCrystite();
-            itemCost = crystitePrice;
+            itemCost = crystitePrice * toSell;
             if(toSell > playerQuantity){
                 System.out.println("Player selling more than what they own");
                 return;
             }
+            else{
+                //get player money & add money to player
+                int playerValue = (int)players.get(currPlayer).getMoney();
+                players.get(currPlayer).setMoney(playerValue + itemCost);
+                //increase store quanitity & reduce player quantity
+                int pCrystiteQuantity = players.get(currPlayer).getCrystite();
+                players.get(currPlayer).setSmithore(pCrystiteQuantity - toSell);
+                crystiteQuantity += toSell;
+                //notify player that sale was successful
+                System.out.println("Funds successfully added to player");
+            }
         }
-
-        //get player money & add money to player
-        int playerValue = (int)players.get(currPlayer).getMoney();
-        players.get(currPlayer).setMoney(playerValue + itemCost);
-
-        //increase store quanitity
-        if(resource.equals("food")){
-            foodQuantity += toSell;
+        else if(item.equals("foodMule")){
+            itemCost = (foodMule - 10); //no rules for selling mule. liken to selling used car so you get less than msrp
         }
-        else if(resource.equals("energy")){
-            energyQuantity += toSell;
+        else if(item.equals("energyMule")){
+            itemCost = (energyMule - 20); //no rules for selling mule. liken to selling used car so you get less than msrp
         }
-        else if(resource.equals("smithore")){
-            smithoreQuantity += toSell;
+        else if(item.equals("smithoreMule")){
+            itemCost = (smithoreMule - 30); //no rules for selling mule. liken to selling used car so you get less than msrp
         }
-        else if(resource.equals("crystite")){
-            crystiteQuantity += toSell;
+        else if(item.equals("crystiteMule")){
+            itemCost = (crystiteMule - 40); //no rules for selling mule. liken to selling used car so you get less than msrp
         }
-        
-        //notify player that sale was successful
-        System.out.println("Funds successfully added to player");
     }
 
     /**
