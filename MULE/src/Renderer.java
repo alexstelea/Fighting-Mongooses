@@ -307,7 +307,7 @@ public class Renderer {
         addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub"); 
 
-        blockForInputMain(playerPanel);
+        blockForInputMain(menuPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
         return states;
@@ -369,7 +369,7 @@ public class Renderer {
         addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
         addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
 
-        blockForInputMain(playerPanel);
+        blockForInputMain(menuPanel);
         exitSafely();
         return states;
     }
@@ -413,7 +413,7 @@ public class Renderer {
             }
         }
 
-        blockForInputMain(playerPanel);
+        blockForInputMain(menuPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
         return states;
@@ -544,7 +544,7 @@ public class Renderer {
         long currentTime = date.getTime();
         int timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
         int oldTimerNum = timerNum;
-        JLabel timerImage = addLabelToPanel(panel, 70, 115, 41, 41, "/media/t" + timerNum + ".png");
+        JLabel timerImage = addLabelToPanel(panel, 11, 4, 41, 41, "/media/t" + timerNum + ".png");
         panel.repaint();
         boolean waitingSafe = true;
         
@@ -560,7 +560,7 @@ public class Renderer {
                 catch (NullPointerException e) {
 
                 }
-                timerImage = addLabelToPanel(panel, 70, 115, 41, 41, "/media/t" + timerNum + ".png");
+                timerImage = addLabelToPanel(panel, 11, 4, 41, 41, "/media/t" + timerNum + ".png");
                 panel.repaint();
                 oldTimerNum = timerNum;
             }
