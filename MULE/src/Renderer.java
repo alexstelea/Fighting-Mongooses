@@ -807,7 +807,7 @@ public class Renderer {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
                 Player owner = map.getOwnerOfTile(i * Map.WIDTH + j);
-                if (owner != null && owner.getMule()) {
+                if (owner != null && map.getTiles()[i * Map.WIDTH + j].hasMule()) {
                     drawPlayerMule(i, j, owner, panel);
                 }
             }

@@ -507,6 +507,7 @@ public class GameController {
         }
         else{
             store(choice, 1);
+            map.getTiles()[tileSelection].addMule();
             //add mule on selected tile
         }
         return false;
