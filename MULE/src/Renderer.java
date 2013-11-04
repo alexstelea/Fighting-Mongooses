@@ -389,7 +389,7 @@ public class Renderer {
         playerPanel.setLayout(null);
 
         drawPlayerFlags(map, panel);
-        //drawPlayerMules(map, panel);
+        drawPlayerMules(map, panel);
         drawTerrain(map, panel);
         drawGameStatus(players, playerPanel, currPlayer);
         
@@ -807,7 +807,7 @@ public class Renderer {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
                 Player owner = map.getOwnerOfTile(i * Map.WIDTH + j);
-                if (owner != null) {
+                if (owner != null && owner.getMule()) {
                     drawPlayerMule(i, j, owner, panel);
                 }
             }
