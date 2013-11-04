@@ -46,8 +46,10 @@ public class Renderer {
     private boolean isSelectedButtonCreated = false;
     private long timeWhenTimerSet;
 
+    /**
+     * Renderer handles all graphics related actions for game.
+     */
     public Renderer() {
-
         frame = new JFrame("M.U.L.E.");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);

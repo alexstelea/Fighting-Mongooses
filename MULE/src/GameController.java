@@ -28,6 +28,9 @@ public class GameController {
     private Integer elapsedTime;
     private Store store;
 
+    /**
+     * GameController handles all input related actions for game.
+     */
 	public GameController() {
 		renderer = new Renderer();
         currPlayer = 0;
@@ -37,12 +40,17 @@ public class GameController {
         playGame();
 	}
 
+    /**
+     * playGame initializes main game
+     */
     private void playGame() {
         startGame();
-        //landSelection();
         mainGame();
     }
 
+    /**
+     * startGame handles and appropriates intial game data
+     */
 	private void startGame() {
 
         state = "intro";
@@ -150,8 +158,10 @@ public class GameController {
         System.out.println("Starting game...\n\n");
 	}
 
+    /**
+     * mainGame main framework for the game.
+     */
     private void mainGame() {
-
         String[] quantities = {"0", "0", "0", "0"}; // quantities to be bought/sold
         boolean initializing = true;
         renderer.startTimer(getTime());
@@ -389,6 +399,9 @@ public class GameController {
         }
     }
 
+    /**
+     * switchPlayer switches player to determine currPlayer
+     */
     private void switchPlayer() {
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
@@ -402,12 +415,20 @@ public class GameController {
         state = "game";
     }
 
+    /**
+     * gatherResources gathers resource players made
+     *                 from mules after each round
+     */
     private void gatherResources() {
         for (Tile t : map.getTiles()) {
             t.collectResources();
         }
     }
 
+    /**
+     * getTime gets current round time and sets round time
+     *         based on how much food the currPlayer has
+     */
     private int getTime() {
         int[] foodReqs = {3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5};
         Player player = players.get(currPlayer);
@@ -424,6 +445,9 @@ public class GameController {
         return 5000;
     }
 
+    /**
+     * reorderPlayers reorders players based on who has the lowest amount of money
+     */
     private void reorderPlayers() {
         // insertion sort is the fastest sort for < 30
         System.out.println("Reordering players");
@@ -438,6 +462,9 @@ public class GameController {
         }
     }
 
+    /**
+     * checkForEnd checks to see if roundNumber is equal to 12
+     */
     private void checkForEnd() {
         if (roundNumber <= 12) {
             return;
@@ -467,6 +494,12 @@ public class GameController {
         }
     }
 
+    /**
+     * mulePlacement takes land clicked and places appropriate mule on it
+     * @param tileSelection The tile current player selected
+     * @param map Used to set owner of tile to currPlayer
+     * @param choice The mule type the player wishes to place on the map
+     */
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
             System.out.println("Player does not own tile.");
@@ -479,7 +512,13 @@ public class GameController {
         return false;
     }
 
-        private void muleRemoval(int tileSelection, Map map, String choice) {
+    /**
+     * muleRemoval takes land clicked and removes the mule placed on it
+     * @param tileSelection The tile current player selected
+     * @param map Used to set owner of tile to currPlayer
+     * @param choice The mule type the player wishes to remove from the map
+     */
+    private void muleRemoval(int tileSelection, Map map, String choice) {
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
             System.out.println("You do not own this mule. Try again.");
         }
@@ -514,6 +553,8 @@ public class GameController {
 
     /**
      * store allows currPlayer to sell and buy resources.
+     * @param choice The resources the player wishes to buy/sell from store
+     * @param quantities The amount of resources the player wishes to buy/sell
      */
     private void store(String choice, int quantities){
         //BUY
@@ -585,16 +626,26 @@ public class GameController {
         }
     }
 
+    /**
+     * ---Work In Progress----
+     * showLoadGameSavePartial
+     * @param savedGame 
+     */
 	private void showLoadGameSavePartial(Save savedGame){
 
 	}
 	
+    /**
+     * ---Work In Progress----
+     * showLoadScreen shows load screen for game
+     */
 	private void showLoadScreen(){
 		Save[] savedGames = getSavedGames();
 		LoadScreenModel model = new LoadScreenModel();
 		model.setSavedGames(savedGames);
 		renderer.drawLoadScreen(model);
 	}
+
     /**
      * Getter method for the game save
      *
