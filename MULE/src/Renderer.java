@@ -387,6 +387,7 @@ public class Renderer {
         playerPanel.setLayout(null);
 
         drawPlayerFlags(map, panel);
+        //drawPlayerMules(map, panel);
         drawTerrain(map, panel);
         drawGameStatus(players, playerPanel, currPlayer);
         
@@ -509,10 +510,7 @@ public class Renderer {
                 lock.unlock();
             }
         }
-
-       
     }
-
 
     private JLabel blockForInputCharacter(JPanel panel) {
         // wait for a button to be clicked
@@ -585,8 +583,6 @@ public class Renderer {
         }
     }
 
-
-
     private JButton addButtonToPanel(JPanel panel, int x, int y, int width, int height, 
         final int stateNum, final String stateText) {
         final JButton button = new JButton();
@@ -619,10 +615,10 @@ public class Renderer {
                 }
             }
         });
-
-        //button.setOpaque(false);
-        //button.setContentAreaFilled(false);
-        //button.setBorderPainted(false);
+        ///////
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
         return button;
     }
 
@@ -805,6 +801,17 @@ public class Renderer {
         }
     }
 
+    private void drawPlayerMules(Map map, JPanel panel) {
+        for (int i = 0; i < Map.HEIGHT; i++) {
+            for (int j = 0; j < Map.WIDTH; j++) {
+                Player owner = map.getOwnerOfTile(i * Map.WIDTH + j);
+                if (owner != null) {
+                    drawPlayerMule(i, j, owner, panel);
+                }
+            }
+        }
+    }
+
     private void drawTerrain(Map map, JPanel panel) {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
@@ -817,7 +824,7 @@ public class Renderer {
         }
     }
 
-
+    /*
     private void drawSelectedState(int x, int y, JPanel panel) {
         System.out.println("Drawing at location " + x + ", " + y);
         BufferedImage flagImg;
@@ -841,8 +848,9 @@ public class Renderer {
         // }
         // isSelectedButton = true;
         frame.repaint();
-
     }
+    */
+
     private JTextField drawDifficulty(JPanel panel, String textString, int x, int y, int width, int height) {
         JTextField text = new JTextField(textString);
         text.setBounds(x, y, width, height);
@@ -874,6 +882,27 @@ public class Renderer {
         flagLabel.setIcon(flagIcon);
         flagLabel.setBounds(25 + column * 100, 25 + row * 100, 100, 100);
         panel.add(flagLabel);
+    }
+
+    private void drawPlayerMule(int row, int column, Player player, JPanel panel) {
+        System.out.println("Drawing at location " + row + ", " + column);
+        BufferedImage muleImg;
+        String mulePrefix = player.getMuleType().substring(0, 1);
+
+        try {
+        muleImg = ImageIO.read(getClass().getResourceAsStream("/media/storecomponents/mule" + mulePrefix + ".png"));
+
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e);
+            return;
+        }
+
+        JLabel muleLabel = new JLabel();
+        ImageIcon muleIcon = new ImageIcon(muleImg); 
+        muleLabel.setIcon(muleIcon);
+        muleLabel.setBounds(25 + column * 100, 25 + row * 100, 100, 100);
+        panel.add(muleLabel);
     }
 
     private void drawMountain(int row, int column, String type, JPanel panel) {

@@ -26,6 +26,7 @@ public class GameController {
     private long startTime;
     private long stopTime;
     private Integer elapsedTime;
+    private Store store;
 
 	public GameController() {
 		renderer = new Renderer();
@@ -74,6 +75,7 @@ public class GameController {
                String[] results = renderer.drawSetupScreen();
                String action = results[0];
                difficulty = Integer.parseInt(results[1]);
+               store = new Store(difficulty);
                numPlayers = Integer.parseInt(results[2]);
                if (action.equals("okay")) {
                    state = "map";
@@ -514,7 +516,6 @@ public class GameController {
      * store allows currPlayer to sell and buy resources.
      */
     private void store(String choice, int quantities){
-        Store store = new Store(difficulty);
         //BUY
         if(choice.equals("buyFood")){
             System.out.println("Buy " + quantities + " food");
