@@ -688,7 +688,7 @@ public class Renderer {
             img = ImageIO.read(getClass().getResourceAsStream(image));
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function addLabelToPanel");
             return null;
         }
 
@@ -714,7 +714,7 @@ public class Renderer {
                 colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
             }
             catch (Exception e) {
-                System.out.println("Caught: " + e);
+                System.out.println("Caught: " + e + " in function drawGameStatus");
                 return;
             }
 
@@ -781,7 +781,7 @@ public class Renderer {
             colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function drawPlayerStatus");
             return;
         }
 
@@ -806,9 +806,10 @@ public class Renderer {
     private void drawPlayerMules(Map map, JPanel panel) {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
-                Player owner = map.getOwnerOfTile(i * Map.WIDTH + j);
-                if (owner != null && map.getTiles()[i * Map.WIDTH + j].hasMule()) {
-                    drawPlayerMule(i, j, owner, panel);
+                Tile tile = map.getTiles()[i * Map.WIDTH + j];
+                if (tile != null && map.getTiles()[i * Map.WIDTH + j].hasMule()) {
+                    drawPlayerMule(i, j, tile, panel);
+                    System.out.println("Drawing mule at " + i + ", " + j);
                 }
             }
         }
@@ -875,7 +876,7 @@ public class Renderer {
             flagImg = ImageIO.read(getClass().getResourceAsStream("/media/flag" + colorPrefix + ".png"));
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function drawPlayerFlag");
             return;
         }
 
@@ -886,17 +887,19 @@ public class Renderer {
         panel.add(flagLabel);
     }
 
-    private void drawPlayerMule(int row, int column, Player player, JPanel panel) {
+    private void drawPlayerMule(int row, int column, Tile tile, JPanel panel) {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage muleImg;
-        String mulePrefix = player.getMuleType().substring(0, 1);
+        String mulePrefix = tile.getMuleType().substring(0, 1);
+        mulePrefix = mulePrefix.toUpperCase();
 
         try {
         muleImg = ImageIO.read(getClass().getResourceAsStream("/media/storecomponents/mule" + mulePrefix + ".png"));
 
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function drawPlayerMule");
+            System.out.println("mulePrefix: " + mulePrefix);
             return;
         }
 
@@ -914,7 +917,7 @@ public class Renderer {
             mountImg = ImageIO.read(getClass().getResourceAsStream("/media/mount" + type + ".png"));
         }
         catch (Exception e) {
-            System.out.println("Caught" + e);
+            System.out.println("Caught: " + e + " in function drawMountain");
             return;
         }
 

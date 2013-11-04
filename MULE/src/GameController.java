@@ -501,13 +501,17 @@ public class GameController {
      * @param choice The mule type the player wishes to place on the map
      */
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
+        String type = choice.substring(3);
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
             System.out.println("Player does not own tile.");
             return true;
         }
-        else{
+        //else {
+        else if(map.getTiles()[tileSelection].muleIsValid(type)) {
             store(choice, 1);
-            map.getTiles()[tileSelection].addMule();
+            Tile tile = map.getTiles()[tileSelection];
+            tile.addMule();
+            tile.setMuleType(type); // just get the type
             //add mule on selected tile
         }
         return false;
@@ -525,8 +529,9 @@ public class GameController {
         }
         else{
             String type = choice.substring(4);
-            if(map.getOwnerOfTile(tileSelection).getMuleType().equals(type)){
+            if(map.getTiles()[tileSelection].muleIsValid(type)){
                 store(choice, 1);
+                map.getTiles()[tileSelection].removeMule();
                 //remove mule on selected tile
             }
             else{
