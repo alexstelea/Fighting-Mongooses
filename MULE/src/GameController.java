@@ -420,32 +420,9 @@ public class GameController {
      *                 from mules after each round
      */
     private void gatherResources() {
-
-        // make sure player has enough energy
-        int[] playerEnergy = new int[numPlayers];
-        for (int i = 0; i < numPlayers; i++) {
-            playerEnergy[i] = players.get(i).getEnergy();
-        }
-
         for (Tile t : map.getTiles()) {
-            int ownerIndex = getPlayerIndex(t.getOwner());
-            if (ownerIndex == -1) 
-                continue;
-            Player player = players.get(ownerIndex);
-            if (playerEnergy[ownerIndex] > 0) { 
-                t.collectResources();
-                playerEnergy[ownerIndex]--;
-            }
+            t.collectResources();
         }
-    }
-
-    private int getPlayerIndex(Player player) {
-        for (int i = 0; i < numPlayers; i++) {
-            if (players.get(i) == player) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     /**
@@ -492,6 +469,7 @@ public class GameController {
         if (roundNumber <= 12) {
             return;
         }
+
         String winningPlayer = players.get(numPlayers - 1).getName();
         System.out.println(winningPlayer + " is the winner!");
         System.exit(0);
@@ -523,21 +501,13 @@ public class GameController {
      * @param choice The mule type the player wishes to place on the map
      */
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
-        String type = choice.substring(3);
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
             System.out.println("Player does not own tile.");
             return true;
         }
-        //else {
-        else if(map.getTiles()[tileSelection].muleIsValid(type)) {
+        else{
             store(choice, 1);
-<<<<<<< HEAD
-=======
-            Tile tile = map.getTiles()[tileSelection];
-            tile.addMule();
-            tile.setMuleType(type); // just get the type
             //add mule on selected tile
->>>>>>> f61259b9443e914765def42622ba655fa1d48c50
         }
         return false;
     }
@@ -554,13 +524,9 @@ public class GameController {
         }
         else{
             String type = choice.substring(4);
-            if(map.getTiles()[tileSelection].muleIsValid(type)){
+            if(map.getOwnerOfTile(tileSelection).getMuleType().equals(type)){
                 store(choice, 1);
-<<<<<<< HEAD
-=======
-                map.getTiles()[tileSelection].removeMule();
                 //remove mule on selected tile
->>>>>>> f61259b9443e914765def42622ba655fa1d48c50
             }
             else{
                 System.out.println("Player should have selected a: " + type);
