@@ -1,4 +1,5 @@
 <!-- Ant Fighting Mongooses Build -->
+<!-- test -->
 
 <project name="MULE" basedir="." default="all">
     <target name="init">
