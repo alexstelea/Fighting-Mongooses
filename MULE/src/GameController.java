@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class GameController {
@@ -15,9 +14,9 @@ public class GameController {
         GameController game = new GameController();
     }
 
-	private int difficulty;
+    private int difficulty;
     private int roundNumber = 1;
-	private Renderer renderer;
+    private Renderer renderer;
     private int currPlayer;
     private int numPlayers;
     private Map map;
@@ -31,14 +30,14 @@ public class GameController {
     /**
      * GameController handles all input related actions for game.
      */
-	public GameController() {
-		renderer = new Renderer();
+    public GameController() {
+        renderer = new Renderer();
         currPlayer = 0;
         numPlayers = 1;
         state = "";
         players = new ArrayList<Player>();
         playGame();
-	}
+    }
 
     /**
      * playGame initializes main game
@@ -51,8 +50,7 @@ public class GameController {
     /**
      * startGame handles and appropriates intial game data
      */
-	private void startGame() {
-
+    private void startGame() {
         state = "intro";
         boolean initializing = true;
 
@@ -62,7 +60,6 @@ public class GameController {
         ArrayList<String> takenColors = new ArrayList<String>();
 
         while(initializing) {
-
             System.out.println("State: " + state);
             // Introduction Screen
             if (state.equals("intro")) {
@@ -156,7 +153,7 @@ public class GameController {
             System.out.println(p);
         }
         System.out.println("Starting game...\n\n");
-	}
+        }
 
     /**
      * mainGame main framework for the game.
@@ -420,9 +417,34 @@ public class GameController {
      *                 from mules after each round
      */
     private void gatherResources() {
-        for (Tile t : map.getTiles()) {
-            t.collectResources();
+        // make sure player has enough energy
+        int[] playerEnergy = new int[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
+            playerEnergy[i] = players.get(i).getEnergy();
         }
+
+        for (Tile t : map.getTiles()) {
+            int ownerIndex = getPlayerIndex(t.getOwner());
+            if (ownerIndex == -1) 
+                continue;
+            Player player = players.get(ownerIndex);
+            if (playerEnergy[ownerIndex] > 0) { 
+                t.collectResources();
+                playerEnergy[ownerIndex]--;
+            }
+        }
+    }
+
+    /**
+     * getPlayerIndex gets player index
+     */
+    private int getPlayerIndex(Player player) {
+        for (int i = 0; i < numPlayers; i++) {
+            if (players.get(i) == player) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -501,19 +523,18 @@ public class GameController {
      * @param choice The mule type the player wishes to place on the map
      */
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
+        String type = choice.substring(3);
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
             System.out.println("Player does not own tile.");
             return true;
         }
-        else{
+        //else {
+        else if(map.getTiles()[tileSelection].muleIsValid(type)) {
             store(choice, 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
+            Tile tile = map.getTiles()[tileSelection];
+            tile.addMule();
+            tile.setMuleType(type); // just get the type
             //add mule on selected tile
-=======
->>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
-=======
->>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
         }
         return false;
     }
@@ -530,15 +551,10 @@ public class GameController {
         }
         else{
             String type = choice.substring(4);
-            if(map.getOwnerOfTile(tileSelection).getMuleType().equals(type)){
+            if(map.getTiles()[tileSelection].muleIsValid(type)){
                 store(choice, 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
+                map.getTiles()[tileSelection].removeMule();
                 //remove mule on selected tile
-=======
->>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
-=======
->>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
             }
             else{
                 System.out.println("Player should have selected a: " + type);
@@ -643,39 +659,39 @@ public class GameController {
      * showLoadGameSavePartial
      * @param savedGame 
      */
-	private void showLoadGameSavePartial(Save savedGame){
+    private void showLoadGameSavePartial(Save savedGame){
 
-	}
-	
+    }
+        
     /**
      * ---Work In Progress----
      * showLoadScreen shows load screen for game
      */
-	private void showLoadScreen(){
-		Save[] savedGames = getSavedGames();
-		LoadScreenModel model = new LoadScreenModel();
-		model.setSavedGames(savedGames);
-		renderer.drawLoadScreen(model);
-	}
+    private void showLoadScreen(){
+        Save[] savedGames = getSavedGames();
+        LoadScreenModel model = new LoadScreenModel();
+        model.setSavedGames(savedGames);
+        renderer.drawLoadScreen(model);
+    }
 
     /**
      * Getter method for the game save
      *
      * @return null
      */
-	private Save[] getSavedGames() {
-		return null;
-		//Query database for saved games
-	}
+    private Save[] getSavedGames() {
+        return null;
+        //Query database for saved games
+    }
 
     /**
      * Getter method for the game's difficulty setting
      *
      * @return Game's difficulty setting
      */
-	public int getDifficulty() {
-		return difficulty;
-	}
+    public int getDifficulty() {
+        return difficulty;
+    }
 
     /**
      * Getter method for current round

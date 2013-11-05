@@ -307,7 +307,7 @@ public class Renderer {
         addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub"); 
 
-        blockForInputMain(playerPanel);
+        blockForInputMain(menuPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
         return states;
@@ -369,7 +369,7 @@ public class Renderer {
         addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
         addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
 
-        blockForInputMain(playerPanel);
+        blockForInputMain(menuPanel);
         exitSafely();
         return states;
     }
@@ -413,7 +413,7 @@ public class Renderer {
             }
         }
 
-        blockForInputMain(playerPanel);
+        blockForInputMain(menuPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
         return states;
@@ -544,7 +544,7 @@ public class Renderer {
         long currentTime = date.getTime();
         int timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
         int oldTimerNum = timerNum;
-        JLabel timerImage = addLabelToPanel(panel, 70, 115, 41, 41, "/media/t" + timerNum + ".png");
+        JLabel timerImage = addLabelToPanel(panel, 11, 4, 41, 41, "/media/t" + timerNum + ".png");
         panel.repaint();
         boolean waitingSafe = true;
         
@@ -560,7 +560,7 @@ public class Renderer {
                 catch (NullPointerException e) {
 
                 }
-                timerImage = addLabelToPanel(panel, 70, 115, 41, 41, "/media/t" + timerNum + ".png");
+                timerImage = addLabelToPanel(panel, 11, 4, 41, 41, "/media/t" + timerNum + ".png");
                 panel.repaint();
                 oldTimerNum = timerNum;
             }
@@ -688,7 +688,7 @@ public class Renderer {
             img = ImageIO.read(getClass().getResourceAsStream(image));
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function addLabelToPanel");
             return null;
         }
 
@@ -714,7 +714,7 @@ public class Renderer {
                 colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
             }
             catch (Exception e) {
-                System.out.println("Caught: " + e);
+                System.out.println("Caught: " + e + " in function drawGameStatus");
                 return;
             }
 
@@ -781,7 +781,7 @@ public class Renderer {
             colorImg = ImageIO.read(getClass().getResourceAsStream("/media/circ" + colorPrefix + ".png"));
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function drawPlayerStatus");
             return;
         }
 
@@ -806,9 +806,10 @@ public class Renderer {
     private void drawPlayerMules(Map map, JPanel panel) {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
-                Player owner = map.getOwnerOfTile(i * Map.WIDTH + j);
-                if (owner != null && owner.getMule()) {
-                    drawPlayerMule(i, j, owner, panel);
+                Tile tile = map.getTiles()[i * Map.WIDTH + j];
+                if (tile != null && map.getTiles()[i * Map.WIDTH + j].hasMule()) {
+                    drawPlayerMule(i, j, tile, panel);
+                    System.out.println("Drawing mule at " + i + ", " + j);
                 }
             }
         }
@@ -875,7 +876,7 @@ public class Renderer {
             flagImg = ImageIO.read(getClass().getResourceAsStream("/media/flag" + colorPrefix + ".png"));
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function drawPlayerFlag");
             return;
         }
 
@@ -886,17 +887,19 @@ public class Renderer {
         panel.add(flagLabel);
     }
 
-    private void drawPlayerMule(int row, int column, Player player, JPanel panel) {
+    private void drawPlayerMule(int row, int column, Tile tile, JPanel panel) {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage muleImg;
-        String mulePrefix = player.getMuleType().substring(0, 1);
+        String mulePrefix = tile.getMuleType().substring(0, 1);
+        mulePrefix = mulePrefix.toUpperCase();
 
         try {
         muleImg = ImageIO.read(getClass().getResourceAsStream("/media/storecomponents/mule" + mulePrefix + ".png"));
 
         }
         catch (Exception e) {
-            System.out.println("Caught: " + e);
+            System.out.println("Caught: " + e + " in function drawPlayerMule");
+            System.out.println("mulePrefix: " + mulePrefix);
             return;
         }
 
@@ -914,7 +917,7 @@ public class Renderer {
             mountImg = ImageIO.read(getClass().getResourceAsStream("/media/mount" + type + ".png"));
         }
         catch (Exception e) {
-            System.out.println("Caught" + e);
+            System.out.println("Caught: " + e + " in function drawMountain");
             return;
         }
 
