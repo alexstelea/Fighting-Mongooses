@@ -1,0 +1,21 @@
+problems in game
+
+map selection screen
+    *game difficulty is shifted up too high as is the map preview thumbnail. when map thumbnail is updated, its position is corrected but the text position remains in the same place and is obstructed
+    *no red arrow under the selected map
+character selection screen
+    *panels on bottom should be p00, p10, p20, etc. currently they are p01, p11, p12, etc. 
+    *color preview image is shifted up and to the right, clipping the image
+    *red arrows indicating selected player are not present
+map
+    *store inventory is not displayed
+    *crystite quantity displayed as "false" or "true" 
+    *if no player is assigned, panels at bottom should not be present
+    *font color is incorrect
+    *menu button
+    *timer set to 50000?
+town
+    *no back button
+store
+	*no quantities displayed
+
