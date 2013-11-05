@@ -1,3 +1,6 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
@@ -420,6 +423,9 @@ public class GameController {
         renderer.restartTimer(getTime());
         startTime = System.currentTimeMillis();
         state = "game";
+
+        Gson gson = new GsonBuilder().create();
+        gson.toJson(players, System.out);
     }
 
     /**
