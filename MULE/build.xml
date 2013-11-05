@@ -9,6 +9,9 @@
         <property name="api.dir" value="apidoc"/>
         <property name="lib.dir" value="lib"/>
         <property name="main-class" value="GameController"/>
+        <path id="classpath">
+            <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        </path>
     </target>
 
     <target name="prepare">
@@ -19,7 +22,13 @@
     </target>
 
     <target name="compile">
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" includeantruntime="false"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" includeantruntime="false">
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
     </target>
 
     <target name="javadoc">
@@ -45,6 +54,10 @@
 
     <target name="run" depends="jar">
         <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
+            <classpath>
+                <path refid="classpath"/>
+                <path location="lib/*.jar"/>
+            </classpath>
         </java>
     </target>
     <!-- We removed the javadoc for faster builds -->
