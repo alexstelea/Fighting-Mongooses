@@ -3,10 +3,12 @@ public abstract class Tile {
     protected boolean hasMule;
     protected Player owner;
     protected String type;
+    protected String muleType;
 
     public Tile(String type) {
         this.type = type;
         hasMule = false;
+        muleType = "";
     }
 
     public void collectResources() {
@@ -27,10 +29,11 @@ public abstract class Tile {
     }
 
     public boolean removeMule() {
-        if (hasMule != true && owner != null) {
+        if (hasMule != true) {
             System.out.println("Tile does not have a MULE!");
             return false;
         }
+        System.out.println("Mule removed!");
         hasMule = false;
         return true;
     }
@@ -54,5 +57,25 @@ public abstract class Tile {
 
     public String getType() {
         return type;
+    }
+
+    public String getMuleType() {
+        return muleType;
+    }
+
+    public void setMuleType(String muleType) {
+        this.muleType = muleType;
+    }
+
+    public boolean muleIsValid(String muleType) {
+        System.out.println("Comparing " + type + " and " + muleType);
+        if (type.equals("river") && muleType.equals("FoodMule"))
+            return true;
+        else if (type.length() > 8 && type.substring(0, 8).equals("mountain") && muleType.equals("SmithoreMule"))
+            return true;
+        else if (type.equals("plain") && muleType.equals("EnergyMule")) 
+            return true;
+        else
+            return false;
     }
 }
