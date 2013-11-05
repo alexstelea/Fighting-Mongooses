@@ -507,7 +507,10 @@ public class GameController {
         }
         else{
             store(choice, 1);
+<<<<<<< HEAD
             //add mule on selected tile
+=======
+>>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
         }
         return false;
     }
@@ -526,7 +529,10 @@ public class GameController {
             String type = choice.substring(4);
             if(map.getOwnerOfTile(tileSelection).getMuleType().equals(type)){
                 store(choice, 1);
+<<<<<<< HEAD
                 //remove mule on selected tile
+=======
+>>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
             }
             else{
                 System.out.println("Player should have selected a: " + type);
