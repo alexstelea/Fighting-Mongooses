@@ -7,6 +7,7 @@
         <property name="classes.dir" value="${build.dir}/classes"/>
         <property name="jar.dir" value="${build.dir}/jar"/>
         <property name="api.dir" value="apidoc"/>
+        <property name="lib.dir" value="lib"/>
         <property name="main-class" value="GameController"/>
     </target>
 
@@ -38,6 +39,7 @@
             <manifest>
                 <attribute name="main-Class" value="${main-class}"/>
             </manifest>
+            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>
         </jar>
     </target>
 
