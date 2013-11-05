@@ -5,7 +5,6 @@ map selection screen
     *no red arrow under the selected map
 character selection screen
     *thumbnails and names of characters need to be implemented
-    *color preview image is shifted up and to the right, clipping the image
     *red arrows indicating selected player are not present
 map
     *store inventory is not displayed
