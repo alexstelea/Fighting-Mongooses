@@ -508,7 +508,10 @@ public class GameController {
         else{
             store(choice, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
             //add mule on selected tile
+=======
+>>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
 =======
 >>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
         }
@@ -530,7 +533,10 @@ public class GameController {
             if(map.getOwnerOfTile(tileSelection).getMuleType().equals(type)){
                 store(choice, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
                 //remove mule on selected tile
+=======
+>>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
 =======
 >>>>>>> parent of a786106... Merge branch 'master' of https://github.com/alexstelea/Fighting-Mongooses
             }
