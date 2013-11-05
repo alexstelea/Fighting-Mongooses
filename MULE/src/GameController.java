@@ -469,7 +469,6 @@ public class GameController {
         if (roundNumber <= 12) {
             return;
         }
-
         String winningPlayer = players.get(numPlayers - 1).getName();
         System.out.println(winningPlayer + " is the winner!");
         System.exit(0);
@@ -507,7 +506,6 @@ public class GameController {
         }
         else{
             store(choice, 1);
-            //add mule on selected tile
         }
         return false;
     }
@@ -526,7 +524,6 @@ public class GameController {
             String type = choice.substring(4);
             if(map.getOwnerOfTile(tileSelection).getMuleType().equals(type)){
                 store(choice, 1);
-                //remove mule on selected tile
             }
             else{
                 System.out.println("Player should have selected a: " + type);
