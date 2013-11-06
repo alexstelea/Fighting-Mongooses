@@ -12,8 +12,7 @@ map
     *crystite quantity displayed as "false" or "true" 
     *if no player is assigned, panels at bottom should not be present
     *font color is incorrect
-    *menu button
-    *timer set to 50000?
+    *menu button needs to be implemented
 town
     *no back button
 store
