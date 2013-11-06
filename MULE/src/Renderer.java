@@ -269,7 +269,7 @@ public class Renderer {
         return states;
     }
 
-    public String[] drawTownScreen(ArrayList<Player> players, int currPlayer) {
+    public String[] drawTownScreen(ArrayList<Player> players, int currPlayer, Store store) {
 
         states = new String[2];
     
@@ -281,7 +281,7 @@ public class Renderer {
         playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(null);
 
-        drawGameStatus(players, playerPanel, currPlayer);
+        drawGameStatus(players, playerPanel, currPlayer, store);
 
         ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
@@ -297,7 +297,9 @@ public class Renderer {
         addButtonToPanel(panel, 60, 60, 200, 400, 0, "assay");
         addButtonToPanel(panel, 260, 60, 250, 400, 0, "store");
         addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
-        addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub"); 
+        addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub");
+
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
 
         blockForInputMain(menuPanel);
         exitSafely();
@@ -310,7 +312,7 @@ public class Renderer {
     // state[2] = quantityEnergy
     // state[3] = quantitySmithore
     // state[4] = quantityCrystite
-    public String[] drawStoreScreen(ArrayList<Player> players, int currPlayer, String transactionType, String[] quantities) {
+    public String[] drawStoreScreen(ArrayList<Player> players, int currPlayer, String transactionType, String[] quantities, Store store) {
 
         // initialize the states
         states = new String[5];
@@ -328,7 +330,7 @@ public class Renderer {
         playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(null);
 
-        drawGameStatus(players, playerPanel, currPlayer);
+        drawGameStatus(players, playerPanel, currPlayer, store);
 
         ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
@@ -368,7 +370,7 @@ public class Renderer {
 
     // State[0] = {"town", "time"}
     // State[1] = time left on timer
-    public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer) {
+    public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer, Store store) {
 
         states = new String[2];
 
@@ -383,7 +385,7 @@ public class Renderer {
         drawPlayerFlags(map, panel);
         drawPlayerMules(map, panel);
         drawTerrain(map, panel);
-        drawGameStatus(players, playerPanel, currPlayer);
+        drawGameStatus(players, playerPanel, currPlayer, store);
         
 
         ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
@@ -715,10 +717,11 @@ public class Renderer {
         return label;
     }
 
-    private void drawGameStatus(ArrayList<Player> players, JPanel panel, int currPlayer) {
+    private void drawGameStatus(ArrayList<Player> players, JPanel panel, int currPlayer, Store store) {
         System.out.println("Size: " + players.size());
         for (int i = 0; i < players.size(); i++) {
             drawPlayerStatus(players.get(i), i, panel);
+            drawStoreStatus(store, panel);
         }
 
         if (currPlayer >= 0) {  
@@ -753,11 +756,39 @@ public class Renderer {
         }
     }
 
-    private void drawPlayerStatus(Player player, int number, JPanel panel) {
+    private void drawStoreStatus(Store store, JPanel panel){
         int xBase = 0;
         int yBase = 30;
 
-        // read in all images
+        //food label
+        JLabel foodLabel = new JLabel("" + store.getFoodQuantity());
+        foodLabel.setBounds(45, 53, 100, 20);
+        panel.add(foodLabel);
+
+        //energy label
+        JLabel energyLabel = new JLabel("" + store.getEnergyQuantity());
+        energyLabel.setBounds(103, 53, 100, 20);
+        panel.add(energyLabel);
+
+        //smithore label
+        JLabel smithoreLabel = new JLabel("" + store.getSmithoreQuantity());
+        smithoreLabel.setBounds(45, 88, 100, 20);
+        panel.add(smithoreLabel);
+
+        //crystite label
+        JLabel crystiteLabel = new JLabel("" + store.getCrystiteQuantity());
+        crystiteLabel.setBounds(103, 88, 100, 20);
+        panel.add(crystiteLabel);
+
+        //mule label
+        JLabel muleLabel = new JLabel("" + store.getMulesQuantity());
+        muleLabel.setBounds(45, 125, 100, 20);
+        panel.add(muleLabel);
+    }
+
+    private void drawPlayerStatus(Player player, int number, JPanel panel) {
+        int xBase = 0;
+        int yBase = 30;
 
         // player name label
         JLabel playerLabel = new JLabel(player.getName());
@@ -779,8 +810,8 @@ public class Renderer {
         smithoreLabel.setBounds((xBase + 158 * (number + 1)) + 45, yBase + 58, 100, 20);
         panel.add(smithoreLabel);
 
-        // mule label
-        JLabel muleLabel = new JLabel("" + player.getMule());
+        // crystite label
+        JLabel muleLabel = new JLabel("" + player.getCrystite());
         muleLabel.setBounds((xBase + 158 * (number + 1)) + 107, yBase + 58, 100, 20);
         panel.add(muleLabel);
 
@@ -855,6 +886,7 @@ public class Renderer {
         panel.repaint();
         return text;
     }
+
     private void drawPlayerFlag(int row, int column, Player player, JPanel panel) {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage flagImg;

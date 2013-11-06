@@ -7,11 +7,7 @@
         <property name="classes.dir" value="${build.dir}/classes"/>
         <property name="jar.dir" value="${build.dir}/jar"/>
         <property name="api.dir" value="apidoc"/>
-        <property name="lib.dir" value="lib"/>
         <property name="main-class" value="GameController"/>
-        <path id="classpath">
-            <fileset dir="${lib.dir}" includes="**/*.jar"/>
-        </path>
     </target>
 
     <target name="prepare">
@@ -22,13 +18,7 @@
     </target>
 
     <target name="compile">
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" includeantruntime="false" classpath="./lib/*.jar">
-            <classpath>
-                <fileset dir="${lib.dir}">
-                    <include name="**/*.jar"/>
-                </fileset>
-            </classpath>
-        </javac>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" includeantruntime="false"/>
     </target>
 
     <target name="javadoc">
@@ -48,16 +38,11 @@
             <manifest>
                 <attribute name="main-Class" value="${main-class}"/>
             </manifest>
-            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>
         </jar>
     </target>
 
     <target name="run" depends="jar">
-        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true" classpath="./lib/*.jar">
-            <classpath>
-                <path refid="classpath"/>
-                <path location="lib/*.jar"/>
-            </classpath>
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true">
         </java>
     </target>
     <!-- We removed the javadoc for faster builds -->
