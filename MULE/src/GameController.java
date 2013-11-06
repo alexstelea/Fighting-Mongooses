@@ -400,11 +400,21 @@ public class GameController {
      * switchPlayer switches player to determine currPlayer
      */
     private void switchPlayer() {
+        double chance = 25;//Math.random() * 100;
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
             gatherResources();
             reorderPlayers();
             checkForEnd();
+        }
+        if((chance -= 27) < 0){
+            RandomEvents randomEvent = new RandomEvents(roundNumber);
+            if(players.get(currPlayer).equals(players.get(0))){
+                randomEvent.generate(players, currPlayer, 3);
+            }
+            else{
+                randomEvent.generate(players, currPlayer, 6);
+            }
         }
         currPlayer = (currPlayer + 1) % numPlayers;
         renderer.restartTimer(getTime());
@@ -491,7 +501,6 @@ public class GameController {
         if (roundNumber <= 12) {
             return;
         }
-
         String winningPlayer = players.get(numPlayers - 1).getName();
         System.out.println(winningPlayer + " is the winner!");
         System.exit(0);

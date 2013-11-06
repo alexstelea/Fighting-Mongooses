@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class Pub{
 
 	private Random rand = new Random();
+	private int buyingRand = rand.nextInt(101) + 1; //101 exclusive
 	private int roundBonus;
 	private int timeBonus;
 	
