@@ -63,28 +63,28 @@ public class RandomEvents{
 		int pcBonus = 8*m;
 		
 		if(eventRand == 0){
-			System.out.println("YOU JUST RECEIVED A PACKAGE FROM THE GT ALUMNI CONTAINING 3 FOOD AND 2 ENERGY UNITS.");
+			System.out.println("You just received a package from the GT Alumni containing 3 Food and 2 Energy units.");
 			players.get(currPlayer).setFood(playerFood + 3);
 			players.get(currPlayer).setEnergy(playerEnergy+ 2);
 		}
 		else if(eventRand == 1){
-			System.out.println("A WANDERING TECH STUDENT REPAID YOUR HOSPITALITY BY LEAVING TWO BARS OF ORE.");
+			System.out.println("A wandering Tech student repaid your hospitality by leaving 2 bars of Smithore.");
 			players.get(currPlayer).setSmithore(playerSmithore + 2);
 		}
 		else if(eventRand == 2){
-			System.out.println("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $" + pcBonus + ".");
+			System.out.println("The museum bought your antique laptop for $" + pcBonus + ".");
 			players.get(currPlayer).setMoney(playerValue + pcBonus);
 		}
 		else if(eventRand == 3){
-			System.out.println("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $" + catRepair + ".");
+			System.out.println("Flying cat-bugs ate the roof off your house. Repair costs $" + catRepair + ".");
 			players.get(currPlayer).setMoney(playerValue - catRepair);
 		}
 		else if(eventRand == 4){
-			System.out.println("MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE SHED AND STOLE HALF YOUR FOOD.");
+			System.out.println("UGA students broke into your storage shed and stole half of your Food.");
 			players.get(currPlayer).setFood(playerFood / 2);
 		}
 		else if(eventRand == 5){
-			System.out.println("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. IT COST YOU $" + inlawsRepair + " TO CLEAN IT UP.");
+			System.out.println("Your gypsy in-laws made a mess of the Town. It cost you $" + inlawsRepair + " to clean it up.");
 			players.get(currPlayer).setMoney(playerValue - inlawsRepair);
 		}	
 	}
