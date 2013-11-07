@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class LandOffice{
 
 	private Random rand = new Random();
-	private int buyingRand = rand.nextInt(100);
+	private int buyingRand = rand.nextInt(100) + 1;
 	private int playerValue;
 	private int buyingPrice;
 
@@ -64,7 +64,7 @@ public class LandOffice{
 	 * @param map Used to set owner of tile to currPlayer
 	 */
 	public void sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
-		int sellingRand = rand.nextInt(200);
+		int sellingRand = rand.nextInt(200) +1;
 		int sellingPrice = 400 + sellingRand;
 		playerValue = (int)players.get(currPlayer).getMoney();
 		players.get(currPlayer).setMoney(playerValue + sellingPrice);

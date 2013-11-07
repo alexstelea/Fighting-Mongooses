@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.lang.Math;
 import java.util.ArrayList;
 
 /**
@@ -55,6 +56,8 @@ public class Pub{
 		}
 		else if((timeRemaining > 0) && (timeRemaining < 12)){
 			this.timeBonus = 50;
+		} else {
+			this.timeBonus = 1;
 		}
 	}
 
@@ -64,7 +67,8 @@ public class Pub{
 	 * @param currPlayer The current player
 	 */
 	public void gamble(ArrayList<Player> players, int currPlayer){
-		int bonusRand = rand.nextInt(timeBonus);
+		int abs = Math.abs(timeBonus);
+		int bonusRand = rand.nextInt(abs);
 		int playerValue = (int)players.get(currPlayer).getMoney();
 		int moneyBonus = roundBonus + bonusRand;
 		if(moneyBonus < 251){

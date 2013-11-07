@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  * Store allows player to purchase things. The store has a limited 
@@ -72,6 +73,23 @@ public class Store {
      */
     public void buyItem(ArrayList<Player> players, int currPlayer, String item, int toBuy){
         int playerValue = (int)players.get(currPlayer).getMoney();
+
+        if(foodQuantity - toBuy < 0){
+            System.out.println("Buying more than what store owns.");
+            return;
+        }
+        else if(energyQuantity - toBuy < 0){
+            System.out.println("Buying more than what store owns.");
+            return;
+        }
+        else if(smithoreQuantity - toBuy < 0){
+            System.out.println("Buying more than what store owns.");
+            return;
+        }
+        else if(crystiteQuantity - toBuy < 0){
+            System.out.println("Buying more than what store owns.");
+            return;
+        }
 
         if(item.equals("food")){
             costOfPurchase = foodPrice * toBuy;

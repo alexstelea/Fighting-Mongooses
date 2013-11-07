@@ -419,9 +419,13 @@ public class GameController {
             reorderPlayers();
             checkForEnd();
         }
+
         if((chance -= 27) < 0){
             RandomEvents randomEvent = new RandomEvents(roundNumber);
-            if(players.get(currPlayer).equals(players.get(0))){
+            if(numPlayers == 1){
+                randomEvent.generate(players, currPlayer, 6);
+            }
+            else if(players.get(currPlayer).equals(players.get(0))){
                 randomEvent.generate(players, currPlayer, 3);
             }
             else{
@@ -480,7 +484,6 @@ public class GameController {
             System.out.println("Timer set to: " + 50000);
             return 50000;
         }
-
         else if (player.getFood() > 0) {
             System.out.println("Timer set to: " + 30000);
             return 30000;
@@ -552,7 +555,6 @@ public class GameController {
             Tile tile = map.getTiles()[tileSelection];
             tile.addMule();
             tile.setMuleType(type); // just get the type
-            //add mule on selected tile
         }
         return false;
     }
@@ -572,7 +574,6 @@ public class GameController {
             if(map.getTiles()[tileSelection].muleIsValid(type)){
                 store(choice, 1);
                 map.getTiles()[tileSelection].removeMule();
-                //remove mule on selected tile
             }
             else{
                 System.out.println("Player should have selected a: " + type);
