@@ -74,7 +74,11 @@ public class GameController {
                     state = "setup";
                 }
             }
-
+            /*
+            //Load
+            else if(state.equals("load")){
+            }
+            */
             // Setup Screen
             else if (state.equals("setup")) {
                String[] results = renderer.drawSetupScreen();
@@ -106,7 +110,7 @@ public class GameController {
 
             // Character selection screen
             else if (state.equals("player")) {
-                String[] results = renderer.drawCharacterScreen(players);
+                String[] results = renderer.drawCharacterScreen(players, difficulty, map);
                 String action = results[0];
                 if (action.equals("back")) {
                     state = "map";
