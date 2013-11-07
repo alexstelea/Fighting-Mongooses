@@ -14,7 +14,7 @@ public class GameController {
         GameController game = new GameController();
     }
 
-    private int difficulty;
+    private int difficulty = 1;
     private int roundNumber = 1;
     private Renderer renderer;
     private int currPlayer;
@@ -81,7 +81,7 @@ public class GameController {
             */
             // Setup Screen
             else if (state.equals("setup")) {
-               String[] results = renderer.drawSetupScreen();
+               String[] results = renderer.drawSetupScreen(numPlayers, difficulty);
                String action = results[0];
                difficulty = Integer.parseInt(results[1]);
                store = new Store(difficulty);
@@ -96,7 +96,7 @@ public class GameController {
 
             // Map Screen
             else if (state.equals("map")) {
-                String[] results = renderer.drawMapScreen(difficulty);
+                String[] results = renderer.drawMapScreen(numPlayers, difficulty);
                 String action = results[0];
                 map = new Map(Integer.parseInt(results[1]));
                 System.out.println("Map created with num " + Integer.parseInt(results[1]));
@@ -110,8 +110,9 @@ public class GameController {
 
             // Character selection screen
             else if (state.equals("player")) {
-                String[] results = renderer.drawCharacterScreen(players, difficulty, map);
+                String[] results = renderer.drawCharacterScreen(players, difficulty, map, numPlayers);
                 String action = results[0];
+                int counter = 5;
                 if (action.equals("back")) {
                     state = "map";
                 }
@@ -120,7 +121,6 @@ public class GameController {
                         System.out.println("That color is taken!");
                         continue;
                     }
-
                     try {
                         players.add(new Player(results[2], results[1], results[3], difficulty));
                         takenColors.add(results[3]);
@@ -134,6 +134,7 @@ public class GameController {
                     if (--numPlayers == 0) {
                         state = "game";
                     }
+                    
                 }
             }
 
@@ -170,7 +171,7 @@ public class GameController {
 
         while(initializing) {
             if (state.equals("game")){
-                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
@@ -189,7 +190,7 @@ public class GameController {
             }
 
             else if (state.equals("town")) {
-                String[] results = renderer.drawTownScreen(players, currPlayer, store);
+                String[] results = renderer.drawTownScreen(players, currPlayer, store, numPlayers);
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
@@ -203,7 +204,7 @@ public class GameController {
                 }
                 else if (results[0].equals("land office")){
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         landSelection(tileSelection, map);
@@ -217,7 +218,7 @@ public class GameController {
             }
 
             else if (state.equals("storeBuy")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store, numPlayers);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
@@ -256,7 +257,7 @@ public class GameController {
                 }
                 else if (results[0].equals("foodMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyFoodMule");
@@ -271,7 +272,7 @@ public class GameController {
                 }
                 else if (results[0].equals("energyMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyEnergyMule");
@@ -286,7 +287,7 @@ public class GameController {
                 }
                 else if (results[0].equals("smithoreMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buySmithoreMule");
@@ -301,7 +302,7 @@ public class GameController {
                 }
                 else if (results[0].equals("crystiteMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyCrystiteMule");
@@ -317,7 +318,7 @@ public class GameController {
             }
 
             else if (state.equals("storeSell")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store, numPlayers);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
@@ -356,7 +357,7 @@ public class GameController {
                 }
                 else if (results[0].equals("foodMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellFoodMule");
@@ -367,7 +368,7 @@ public class GameController {
                 }
                 else if (results[0].equals("energyMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellEnergyMule");
@@ -378,7 +379,7 @@ public class GameController {
                 }
                 else if (results[0].equals("smithoreMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellSmithoreMule");
@@ -389,7 +390,7 @@ public class GameController {
                 }
                 else if (results[0].equals("crystiteMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellCrystiteMule");
@@ -530,9 +531,6 @@ public class GameController {
             LandOffice landOffice = new LandOffice(roundNumber);
             boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
 
-            if (bought) {
-                switchPlayer();
-            }
         }
     }
 
