@@ -180,7 +180,7 @@ public class GameController {
                 else {
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        landSelection(tileSelection, map);
+                        System.out.println("Map");
                     }
                     else {
                         state = "town";
@@ -201,6 +201,13 @@ public class GameController {
                 else if (results[0].equals("store")){
                     state = "storeBuy";
                 }
+                else if (results[0].equals("land office")){
+                    state = "game";
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store);
+                    int tileSelection = Integer.parseInt(results[0]);
+                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                        landSelection(tileSelection, map);
+                    }                }
                 else if (results[0].equals("assay")){
                     System.out.println("Assay Office");
                 }
