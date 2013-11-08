@@ -253,6 +253,9 @@ public class Renderer {
             playerBox.setPreferredSize(new Dimension(158, 175));
             playerPanel.add(playerBox);
         }
+        for (int i = 0; i < players.size(); i++) {
+            drawPlayerCharacter(players.get(i), i, playerPanel);
+        }
 
         ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
@@ -934,6 +937,17 @@ public class Renderer {
         JLabel muleLabel = new JLabel("" + store.getMulesQuantity());
         muleLabel.setBounds(45, 125, 100, 20);
         panel.add(muleLabel);
+    }
+
+    private void drawPlayerCharacter(Player player, int number, JPanel panel){
+        int xBase = 0;
+        int yBase = 30;
+
+        // player name label
+        JLabel playerLabel = new JLabel(player.getName());
+        playerLabel.setBounds((xBase + 158 * (number + 1)) + 30, 30 , 100, 20);
+        panel.add(playerLabel);
+
     }
 
     private void drawPlayerStatus(Player player, int number, JPanel panel) {
