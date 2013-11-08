@@ -178,6 +178,33 @@ public class GameController {
                     switchPlayer();
                 }
 
+                else if(results[0].equals("stop")) {
+                    System.out.println("Stop.");
+                }
+
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "game";
+                    }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
+                    switchPlayer();
+                }
+
                 else {
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
@@ -214,6 +241,31 @@ public class GameController {
                 }
                 else if (results[0].equals("back")){
                     state = "game";
+                }
+                else if(results[0].equals("stop")) {
+                    System.out.println("Stop.");
+                }
+
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "town";
+                    }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
+                    switchPlayer();
                 }
             }
 
@@ -311,9 +363,33 @@ public class GameController {
                             state = "game";
                         }
                     }
-                    else {
-                        state = "town";
+                }
+                else if(results[0].equals("stop")) {
+                        System.out.println("Stop.");
+                }
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "storeBuy";
                     }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
+                    switchPlayer();
+                }
+                else {
+                    state = "town";
                 }
             }
 
@@ -398,6 +474,30 @@ public class GameController {
                     else {
                         state = "town";
                     }
+                }
+                else if(results[0].equals("stop")) {
+                    System.out.println("Stop.");
+                }
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "storeSell";
+                    }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
+                    switchPlayer();
                 }
             }
 

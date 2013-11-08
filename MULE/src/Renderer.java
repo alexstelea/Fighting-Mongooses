@@ -316,6 +316,10 @@ public class Renderer {
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub");
         addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
 
+        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
+        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
+        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+
         blockForInputMain(menuPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
@@ -379,6 +383,43 @@ public class Renderer {
         addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
         addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
 
+        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
+        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
+        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+
+        blockForInputMain(menuPanel);
+        exitSafely();
+        return states;
+    }
+
+    public String[] drawMenuScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+
+        ImagePanel panel = new ImagePanel("/media/menu.png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        addButtonToPanel(panel, 390, 166, 170, 40, 0, "resume");
+        addButtonToPanel(panel, 390, 242, 170, 40, 0, "save");
+        addButtonToPanel(panel, 390, 316, 170, 40, 0, "load");
+        addButtonToPanel(panel, 390, 390, 170, 40, 0, "quit");
+
         blockForInputMain(menuPanel);
         exitSafely();
         return states;
@@ -419,6 +460,11 @@ public class Renderer {
                 buttons[i * Map.WIDTH + j] = addButtonToPanel(panel, 25 + j * 100, 25 + i * 100, 100, 100, 0, "" + (i * Map.WIDTH + j));
             }
         }
+
+        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
+        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
+        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+
         blockForInputMain(menuPanel);
         exitSafely();
         states[1] = "" + timer.getDelay();
@@ -746,7 +792,7 @@ public class Renderer {
         Timer timer = new Timer(time, timerListener);
         return timer;
     }
-
+    
     public void stopTimer() {
         timer.stop();
     }
