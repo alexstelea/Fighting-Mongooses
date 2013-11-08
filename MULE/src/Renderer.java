@@ -151,7 +151,7 @@ public class Renderer {
         JButton fourPlayer = addButtonToPanel(panel, 605, 404, 24, 40, 2, "4");
         JButton fivePlayer = addButtonToPanel(panel, 745, 404, 24, 40, 2, "5");
 
-        blockForSetupScreen(panel, playerBox1, 170, 150, 280, numPlayers, difficultyValue);
+        blockForSetupScreen(panel, playerBox1, 170, 150, 280, numPlayers, difficultyValue, playerPanel);
         exitSafely();
         return states;
     }
@@ -496,13 +496,14 @@ public class Renderer {
         }
     }
 
-    private void blockForSetupScreen(JPanel panel, ImagePanel infoPanel, int x, int y, int xMargin, int numPlayers, String difficultyValue){
+    private void blockForSetupScreen(JPanel panel, ImagePanel infoPanel, int x, int y, int xMargin, int numPlayers, String difficultyValue, JPanel playerPanel){
         JLabel difficultyArrow = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x, y, 804, 200, "/media/uparrow.png");
         JLabel playerArrow = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*150 + x, 390, 804, 200, "/media/uparrow.png");
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue,  31,  228,  100, 20);
 
         panel.repaint();
         infoPanel.repaint();
+        playerPanel.repaint();
 
         String oldState = states[1];
         String oldState2 = states[2];
@@ -524,7 +525,19 @@ public class Renderer {
                 panel.remove(playerArrow);
                 playerArrow = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*140 + x , 390, 804, 200, "/media/uparrow.png");
                 
+                for (int i = 1; i < Integer.parseInt(states[2])+1; i++) {
+                    playerPanel.remove(i);
+                    JLabel playerBox = addLabelToPanel(playerPanel, i*158 , 0, 158, 175, "/media/p"+i+"0.png");
+
+                }
+                for (int i = Integer.parseInt(states[2])+1; i < 6; i++) {
+                    JLabel playerBox = addLabelToPanel(playerPanel, i*158 , 0, 158, 175, "/media/p"+i+".png");
+
+                }
+
+                playerPanel.repaint();
                 panel.repaint();
+
                 oldState2 = states[2];
             }
             try {
