@@ -538,19 +538,25 @@ public class GameController {
         Type playerList = new TypeToken<ArrayList<Player>>() {}.getType();
 
         Gson gson = new GsonBuilder().create();
-        difficulty = gson.fromJson(game.get("difficulty").toString(), int.class);
-        roundNumber = gson.fromJson(game.get("roundNumber").toString(), int.class);
-        currPlayer = gson.fromJson(game.get("currPlayer").toString(), int.class);
-        numPlayers = gson.fromJson(game.get("numPlayers").toString(), int.class);
-        map = gson.fromJson(game.get("map").toString(), Map.class);
-        state = gson.fromJson(game.get("state").toString(), String.class);
-        players = gson.fromJson(game.get("player").toString(), playerList);
-        startTime = gson.fromJson(game.get("startTime").toString(), long.class);
-        stopTime = gson.fromJson(game.get("stopTime").toString(), long.class);
-        elapsedTime = gson.fromJson(game.get("elapsedTime").toString(), Integer.class);
-        store = gson.fromJson(game.get("store").toString(), Store.class);
+        try {  
+            difficulty = gson.fromJson(game.get("difficulty").toString(), int.class);
+            roundNumber = gson.fromJson(game.get("roundNumber").toString(), int.class);
+            currPlayer = gson.fromJson(game.get("currPlayer").toString(), int.class);
+            numPlayers = gson.fromJson(game.get("numPlayers").toString(), int.class);
+            map = gson.fromJson(game.get("map").toString(), Map.class);
+            state = gson.fromJson(game.get("state").toString(), String.class);
+            players = gson.fromJson(game.get("player").toString(), playerList);
+            startTime = gson.fromJson(game.get("startTime").toString(), long.class);
+            stopTime = gson.fromJson(game.get("stopTime").toString(), long.class);
+            elapsedTime = gson.fromJson(game.get("elapsedTime").toString(), Integer.class);
+            store = gson.fromJson(game.get("store").toString(), Store.class);
+
+            mainGame();
+        } catch (Exception e) {
+            System.out.println("Error loading game!  Starting new game instead");
+            playGame();
+        }
         
-        mainGame();
 
     }
 
