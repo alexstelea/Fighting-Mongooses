@@ -438,10 +438,7 @@ public class GameController {
         startTime = System.currentTimeMillis();
         state = "game";
 
-        Gson gson = new GsonBuilder().create();
-
-        DBCollection coll = db.getCollection("");
-        gson.toJson(players, System.out);
+/*        DBCollection coll = db.getCollection("");
 
         BasicDBObject doc = new BasicDBObject("name", "MongoDB").
                               append("type", "database").
@@ -449,8 +446,97 @@ public class GameController {
                               append("info", new BasicDBObject("x", 203).append("y", 102));
 
 
-        coll.insert(doc);
+        coll.insert(doc);*/
+        loadGame("testGame2");
         
+    }
+
+    private void saveGame(String gameName) {
+        DBCollection coll = db.getCollection(gameName);
+        BasicDBObject doc = new BasicDBObject("name", gameName);
+
+        // check if the name already exists
+        try { 
+            BasicDBObject query = new BasicDBObject("name", gameName);
+            DBCursor cursor = coll.find(query);
+            if (cursor.hasNext()) {
+                System.out.println("That save game already exists!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to connect to database!");
+            return;
+        }
+
+        Gson gson = new GsonBuilder().create();
+        String difficultyJson = gson.toJson(difficulty);
+        String roundNumberJson = gson.toJson(roundNumber);
+        String currPlayerJson = gson.toJson(currPlayer);
+        String numPlayersJson = gson.toJson(numPlayers);
+        String mapJson = gson.toJson(map);
+        String stateJson = gson.toJson(state);
+        String playerJson = gson.toJson(players);
+        String startTimeJson = gson.toJson(startTime);
+        String stopTimeJson = gson.toJson(stopTime);
+        String elapsedTimeJson = gson.toJson(elapsedTime);
+        String storeJson = gson.toJson(store);
+
+        System.out.println("JSON");
+        System.out.println(difficultyJson);
+        System.out.println(roundNumberJson);
+        System.out.println(currPlayerJson);
+        System.out.println(numPlayersJson);
+        System.out.println(mapJson);
+        System.out.println(stateJson);
+        System.out.println(playerJson);
+        System.out.println(startTimeJson);
+        System.out.println(stopTimeJson);
+        System.out.println(elapsedTimeJson);
+        System.out.println(storeJson);
+
+        doc.append("difficulty", difficultyJson);
+        doc.append("roundNumber", roundNumberJson);
+        doc.append("currPlayer", currPlayerJson);
+        doc.append("numPlayers", numPlayersJson);
+        doc.append("map", mapJson);
+        doc.append("state", stateJson);
+        doc.append("player", playerJson);
+        doc.append("startTime", startTimeJson);
+        doc.append("stopTime", stopTimeJson);
+        doc.append("elapsedTime", elapsedTimeJson);
+        doc.append("store", storeJson);
+
+        try {
+            coll.insert(doc);
+            System.out.println("Game successfully saved!");
+        }
+        catch (Exception e){
+            System.out.println("Failed to write to database!");
+        }
+    }
+
+
+    private void loadGame(String gameName) {
+        DBCollection coll = db.getCollection(gameName);
+
+        // check if the name already exists
+        try { 
+            BasicDBObject query = new BasicDBObject("name", gameName);
+            DBCursor cursor = coll.find(query);
+            if (!cursor.hasNext()) {
+                System.out.println("That save game doesn't exists!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to connect to database!");
+            return;
+        }
+
+        DBObject game = coll.findOne();
+
+        Gson gson = new GsonBuilder().create();
+        difficulty = gson.fromJson(game.get("difficulty").toString(), int.class);
+        System.out.println("Difficulty: " + difficulty);
     }
 
     /**
