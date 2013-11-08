@@ -1,4 +1,5 @@
-public abstract class Tile {
+
+public class Tile {
 
     protected boolean hasMule;
     protected Player owner;
@@ -16,7 +17,9 @@ public abstract class Tile {
     }
 
     // return the String of the image to draw at this location, or null if we don't need to draw anything
-    public abstract String image();
+    public String image() {
+        return null;
+    }
 
     public boolean addMule() {
 

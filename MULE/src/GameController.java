@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
@@ -447,7 +449,6 @@ public class GameController {
 
 
         coll.insert(doc);*/
-        loadGame("testGame2");
         
     }
 
@@ -534,9 +535,23 @@ public class GameController {
 
         DBObject game = coll.findOne();
 
+        Type playerList = new TypeToken<ArrayList<Player>>() {}.getType();
+
         Gson gson = new GsonBuilder().create();
         difficulty = gson.fromJson(game.get("difficulty").toString(), int.class);
-        System.out.println("Difficulty: " + difficulty);
+        roundNumber = gson.fromJson(game.get("roundNumber").toString(), int.class);
+        currPlayer = gson.fromJson(game.get("currPlayer").toString(), int.class);
+        numPlayers = gson.fromJson(game.get("numPlayers").toString(), int.class);
+        map = gson.fromJson(game.get("map").toString(), Map.class);
+        state = gson.fromJson(game.get("state").toString(), String.class);
+        players = gson.fromJson(game.get("player").toString(), playerList);
+        startTime = gson.fromJson(game.get("startTime").toString(), long.class);
+        stopTime = gson.fromJson(game.get("stopTime").toString(), long.class);
+        elapsedTime = gson.fromJson(game.get("elapsedTime").toString(), Integer.class);
+        store = gson.fromJson(game.get("store").toString(), Store.class);
+        
+        mainGame();
+
     }
 
     /**

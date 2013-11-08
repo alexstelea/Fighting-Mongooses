@@ -1,9 +1,10 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class Map {
+public class Map implements Serializable{
 
     private Tile[] tiles;
     private int mapNum;
