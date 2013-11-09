@@ -450,8 +450,9 @@ public class Renderer {
     }
 
     private void blockForMapScreen(JPanel panel, ImagePanel playerPanel, int x, int y, int xMargin, String difficultyValue){
-        JLabel map = addLabelToPanel(playerPanel, 102, 38, 120, 66, "/media/m"+ states[1]+ ".png");
-        JTextField difficultyText = drawDifficulty(playerPanel, difficultyValue,  31,  128,  100, 50);
+        try { Thread.sleep(100); } catch (Exception e) {}
+        JLabel map = addLabelToPanel(playerPanel, 22, 38, 120, 66, "/media/m"+ states[1]+ ".png");
+        JTextField difficultyText = drawDifficulty(playerPanel, difficultyValue,  31,  113,  100, 50);
         playerPanel.repaint();
         String oldState = states[1];
 
@@ -477,6 +478,7 @@ public class Renderer {
     }
 
     private void blockForSetupScreen(JPanel panel, ImagePanel playerPanel, int x, int y, int xMargin, int stateNum){
+        try { Thread.sleep(100); } catch (Exception e) {}
         JLabel colors = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x, y, 804, 200, "/media/uparrow.png");
         JLabel colors2 = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*150 + x, 390, 804, 200, "/media/uparrow.png");
         JTextField difficultyText = drawDifficulty(playerPanel, "Easy",  31,  128,  100, 20);
@@ -515,6 +517,7 @@ public class Renderer {
     }
 
     private JLabel blockForInputCharacter(JPanel panel) {
+        try { Thread.sleep(100); } catch (Exception e) {}
         // wait for a button to be clicked
         JLabel colors = addLabelToPanel(panel, 70, 250, 804, 200, "/media/" + states[1] + ".png");
         panel.repaint();
