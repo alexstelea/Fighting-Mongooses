@@ -261,6 +261,7 @@ public class Renderer {
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
+
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
         panels.add(playerPanel);
@@ -954,15 +955,14 @@ public class Renderer {
         panel.add(muleLabel);
     }
 
-    private void drawPlayerCharacter(Player player, int number, JPanel panel){
+    private void drawPlayerCharacter(Player player, int number, JPanel playerPanel){
         int xBase = 0;
         int yBase = 30;
 
         // player name label
         JLabel playerLabel = new JLabel(player.getName());
         playerLabel.setBounds((xBase + 158 * (number + 1)) + 30, 30 , 100, 20);
-        panel.add(playerLabel);
-
+        playerPanel.add(playerLabel);
     }
 
     private void drawPlayerStatus(Player player, int number, JPanel panel) {
@@ -1015,6 +1015,7 @@ public class Renderer {
         colorLabel.setIcon(colorIcon);
         colorLabel.setBounds((xBase + 158 * (number + 1) + 124), yBase + 98, 18, 18);
         panel.add(colorLabel);
+        //panel.repaint();
     }
 
     private void drawPlayerFlags(Map map, JPanel panel) {

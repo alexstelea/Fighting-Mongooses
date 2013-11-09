@@ -631,7 +631,9 @@ public class GameController {
             System.out.println("Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection));
         }
         else{
-            LandOffice landOffice = new LandOffice(roundNumber);
+            int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
+            System.out.println("propertyOwned: " + propertyOwned);
+            LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
             boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
 
         }
@@ -645,16 +647,22 @@ public class GameController {
      */
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
         String type = choice.substring(3);
+        //Subtract money from player if placed on wrong tile and lose mulse
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
+            store(choice, 1);
             System.out.println("Player does not own tile.");
             return true;
         }
         //else {
         else if(map.getTiles()[tileSelection].muleIsValid(type)) {
-            store(choice, 1);
-            Tile tile = map.getTiles()[tileSelection];
-            tile.addMule();
-            tile.setMuleType(type); // just get the type
+            if(store(choice, 1)){
+                Tile tile = map.getTiles()[tileSelection];
+                tile.addMule();
+                tile.setMuleType(type); // just get the type
+            }
+            else{
+                return false;
+            }
         }
         return false;
     }
@@ -703,7 +711,7 @@ public class GameController {
      * @param choice The resources the player wishes to buy/sell from store
      * @param quantities The amount of resources the player wishes to buy/sell
      */
-    private void store(String choice, int quantities){
+    private boolean store(String choice, int quantities){
         //BUY
         if(choice.equals("buyFood")){
             System.out.println("Buy " + quantities + " food");
@@ -723,19 +731,27 @@ public class GameController {
         }
         else if(choice.equals("buyFoodMule")){
             System.out.println("Buy food mule");
-            store.buyItem(players, currPlayer, "foodMule", quantities);
+            if(store.buyItem(players, currPlayer, "foodMule", quantities)){
+                return true;
+            }
         }
         else if(choice.equals("buyEnergyMule")){
             System.out.println("Buy energy mule");
-            store.buyItem(players, currPlayer, "energyMule", quantities);
+            if(store.buyItem(players, currPlayer, "energyMule", quantities)){
+                return true;
+            }
         }
         else if(choice.equals("buySmithoreMule")){
             System.out.println("Buy smithore mule");
-            store.buyItem(players, currPlayer, "smithoreMule", quantities);
+            if(store.buyItem(players, currPlayer, "smithoreMule", quantities)){
+                return true;
+            }
         }
         else if(choice.equals("buyCrystiteMule")){
             System.out.println("Buy crystite mule");
-            store.buyItem(players, currPlayer, "crystiteMule", quantities);
+            if(store.buyItem(players, currPlayer, "crystiteMule", quantities)){
+                return true;
+            }
         }
 
         //SELL
@@ -771,6 +787,7 @@ public class GameController {
             System.out.println("Sell crystite mule");
             store.sellItem(players, currPlayer, "crystiteMule", quantities);
         }
+        return false;
     }
 
     /**
