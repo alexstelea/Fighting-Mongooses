@@ -506,6 +506,7 @@ public class Renderer {
     }
 
     private void blockForMapScreen(JPanel panel, ImagePanel infoPanel, String difficultyValue){ 
+        try { Thread.sleep(100); } catch (Exception e) {}
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
         JLabel map = addLabelToPanel(infoPanel, 21, 37, 119, 66, "/media/m"+ 1+ ".png");
         JLabel mapArrow = addLabelToPanel(panel, 199, 289, 45, 24, "/media/uparrow.png");
@@ -571,6 +572,7 @@ public class Renderer {
     }
 
     private void blockForSetupScreen(JPanel panel, ImagePanel infoPanel, int x, int y, int xMargin, int numPlayers, String difficultyValue, JPanel playerPanel){
+        try { Thread.sleep(100); } catch (Exception e) {}
         JLabel difficultyArrow = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x, y, 804, 200, "/media/uparrow.png");
         JLabel playerArrow = addLabelToPanel(panel, (Integer.parseInt(states[2])-1)*150 + x, 390, 804, 200, "/media/uparrow.png");
         JTextField difficultyText = drawDifficulty(infoPanel, getDifficultyValueString(Integer.parseInt(states[1])),  0, 125, 162, 25);
@@ -626,6 +628,7 @@ public class Renderer {
     }
 
     private JLabel blockForInputCharacter(JPanel panel, ImagePanel infoPanel, String difficultyValue, Map map) {
+        try { Thread.sleep(100); } catch (Exception e) {}
         JLabel charArrow = addLabelToPanel(panel, 117, 210, 45, 24, "/media/uparrow.png");
         JLabel colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
         JLabel colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
