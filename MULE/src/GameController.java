@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-//import com.mongodb.MongoClient;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
 import com.mongodb.DB;
@@ -44,7 +44,7 @@ public class GameController {
     private long stopTime;
     private Integer elapsedTime;
     private Store store;
-    //private MongoClient mongoClient;
+    private MongoClient mongoClient;
     private DB db;
 
     /**
