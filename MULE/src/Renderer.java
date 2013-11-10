@@ -431,7 +431,7 @@ public class Renderer {
 
     // State[0] = {"town", "time"}
     // State[1] = time left on timer
-    public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+    public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round, String text) {
 
         states = new String[2];
 
@@ -452,6 +452,7 @@ public class Renderer {
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
+
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
         panels.add(playerPanel);
@@ -468,6 +469,7 @@ public class Renderer {
         addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
         addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
         addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+        drawStatusText(menuPanel, text);
 
         blockForInputMain(menuPanel);
         exitSafely();
@@ -1070,6 +1072,25 @@ public class Renderer {
         text.setBackground(new Color(87, 51, 4));
         text.setOpaque(false);
         text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        panel.add(text);
+        panel.repaint();
+        return text;
+    }
+
+    private JTextField drawStatusText(JPanel panel, String textString) {
+        if (textString == null) {
+            return null;
+        }
+        System.out.println("Displaying: " + textString);
+        JTextField text = new JTextField(textString);
+        text.setBounds(0, 6, 225, 38);
+        text.setFont(new Font("Candara", Font.PLAIN, 20));
+        text.setHorizontalAlignment(JTextField.CENTER);
+        text.setForeground(Color.WHITE);
+        text.setBackground(new Color(87, 51, 4));
+        text.setOpaque(false);
+        text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        text.setCaretColor(Color.WHITE);
         panel.add(text);
         panel.repaint();
         return text;
