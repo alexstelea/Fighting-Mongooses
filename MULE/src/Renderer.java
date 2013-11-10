@@ -452,7 +452,6 @@ public class Renderer {
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
-
         ArrayList<JPanel> panels = new ArrayList<JPanel>();
         panels.add(panel);
         panels.add(playerPanel);
@@ -1025,7 +1024,6 @@ public class Renderer {
         colorLabel.setIcon(colorIcon);
         colorLabel.setBounds((xBase + 158 * (number + 1) + 124), yBase + 98, 18, 18);
         panel.add(colorLabel);
-        //panel.repaint();
     }
 
     private void drawPlayerFlags(Map map, JPanel panel) {
@@ -1077,7 +1075,12 @@ public class Renderer {
         return text;
     }
 
-    private JTextField drawStatusText(JPanel panel, String textString) {
+    public JTextField drawStatusText(JPanel panel, String textString) {
+        if(panel == null){
+            panel = new ImagePanel("/media/bp1.png");
+            panel.setPreferredSize(new Dimension(950, 50));
+            panel.setLayout(null);
+        }
         if (textString == null) {
             return null;
         }

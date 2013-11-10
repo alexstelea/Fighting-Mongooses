@@ -550,7 +550,7 @@ public class GameController {
         if((chance -= 27) < 0){
             RandomEvents randomEvent = new RandomEvents(roundNumber);
             if(numPlayers == 1){
-                randomEvent.generate(players, currPlayer, 6);
+                renderer.drawStatusText(null, randomEvent.generate(players, currPlayer, 6));
             }
             else if(players.get(currPlayer).equals(players.get(0))){
                 randomEvent.generate(players, currPlayer, 3);
