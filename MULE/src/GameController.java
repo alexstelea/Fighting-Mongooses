@@ -1,3 +1,21 @@
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+//import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
+import com.mongodb.WriteConcern;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.ServerAddress;
+
 import java.util.ArrayList;
 
 public class GameController {
@@ -26,6 +44,8 @@ public class GameController {
     private long stopTime;
     private Integer elapsedTime;
     private Store store;
+    //private MongoClient mongoClient;
+    private DB db;
 
     /**
      * GameController handles all input related actions for game.
