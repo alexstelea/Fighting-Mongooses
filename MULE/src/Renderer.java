@@ -85,9 +85,12 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        JButton quitButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "quit");
-        JButton loadButton = addButtonToPanel(menuPanel, 590, 7, 171, 40, 0, "load");
+        final JButton quitButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "quit");
+		addHoverIcon(quitButton, "/media/hoverbuttons/quithover.png");
+        final JButton loadButton = addButtonToPanel(menuPanel, 590, 7, 171, 40, 0, "load");
+		addHoverIcon(loadButton, "/media/hoverbuttons/loadhover.png");
         JButton newButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "new");
+		//addHoverIcon(loadButton, "/media/hoverbuttons/newhover.png");
 
         blockForInput();
         exitSafely();
@@ -999,4 +1002,31 @@ public class Renderer {
         }
         return returnString;
     }
+	
+	private void addHoverIcon(final JButton button, String image) {
+		BufferedImage img;
+		BufferedImage defaultImg;
+		try {
+			img = ImageIO.read(getClass().getResourceAsStream(image));
+			defaultImg = ImageIO.read(getClass().getResourceAsStream("/media/trans.png"));
+        }
+        catch (Exception e) {
+            System.out.println("Caught: " + e + " in function addHoverIcon");
+            System.out.println("button: " + image);
+            return;
+        }
+		final ImageIcon defaultIcon = new ImageIcon(defaultImg);
+		final ImageIcon icon = new ImageIcon(img);
+		button.setIcon(defaultIcon);
+		button.addMouseListener(new MouseAdapter(){
+			public void mouseEntered(MouseEvent e){
+				button.setIcon(icon);
+				button.repaint();
+			}
+			public void mouseExited(MouseEvent e){
+				button.setIcon(defaultIcon);
+				button.repaint();
+			}
+		});
+	}
 }

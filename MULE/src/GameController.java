@@ -565,7 +565,7 @@ public class GameController {
      */
     private void muleRemoval(int tileSelection, Map map, String choice) {
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
-            System.out.println("You do not own this mule. Try again.");
+            System.out.println("You do not own this plot. Try again.");
         }
         else{
             String type = choice.substring(4);
