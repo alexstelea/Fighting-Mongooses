@@ -261,7 +261,8 @@ public class GameController {
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         landSelection(tileSelection, map);
-                    }                }
+                    }                
+                }
                 else if (results[0].equals("assay")){
                     System.out.println("Assay Office");
                 }
@@ -652,17 +653,19 @@ public class GameController {
      * @param tileSelection The tile current player selected
      * @param map Used to set owner of tile to currPlayer
      */
-    private void landSelection(int tileSelection, Map map) {
+    private String landSelection(int tileSelection, Map map) {
         if(map.getOwnerOfTile(tileSelection) != null){
+            String prompt = "Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection);
             System.out.println("Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection));
+            return prompt;
         }
         else{
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
-            System.out.println("propertyOwned: " + propertyOwned);
             LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
             boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
-
+            String prompt = "Successfully purchased land!";
         }
+        return null;
     }
 
     /**
