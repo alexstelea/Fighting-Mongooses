@@ -52,7 +52,7 @@ public class RandomEvents{
 	 * @param currPlayer The current player
 	 * @param limit Determines if event good or good/bad.
 	 */
-	public void generate(ArrayList<Player> players, int currPlayer, int limit){
+	public String generate(ArrayList<Player> players, int currPlayer, int limit){
 		int playerSmithore = (int)players.get(currPlayer).getSmithore();
 		int playerEnergy = (int)players.get(currPlayer).getEnergy();
 		int playerValue = (int)players.get(currPlayer).getMoney();
@@ -62,30 +62,38 @@ public class RandomEvents{
 		int catRepair = 4*m;
 		int pcBonus = 8*m;
 		
+		String prompt;
 		if(eventRand == 0){
-			System.out.println("YOU JUST RECEIVED A PACKAGE FROM THE GT ALUMNI CONTAINING 3 FOOD AND 2 ENERGY UNITS.");
+			prompt = "You just received a package from the GT Alumni containing 3 Food and 2 Energy units.";
 			players.get(currPlayer).setFood(playerFood + 3);
 			players.get(currPlayer).setEnergy(playerEnergy+ 2);
+			return prompt;
 		}
 		else if(eventRand == 1){
-			System.out.println("A WANDERING TECH STUDENT REPAID YOUR HOSPITALITY BY LEAVING TWO BARS OF ORE.");
+			prompt = "A wandering Tech student repaid your hospitality by leaving 2 bars of Smithore.";
 			players.get(currPlayer).setSmithore(playerSmithore + 2);
+			return prompt;
 		}
 		else if(eventRand == 2){
-			System.out.println("THE MUSEUM BOUGHT YOUR ANTIQUE PERSONAL COMPUTER FOR $" + pcBonus + ".");
+			prompt = "The museum bought your antique laptop for $" + pcBonus + ".";
 			players.get(currPlayer).setMoney(playerValue + pcBonus);
+			return prompt;
 		}
 		else if(eventRand == 3){
-			System.out.println("FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $" + catRepair + ".");
+			prompt = "Flying cat-bugs ate the roof off your house. Repair costs $" + catRepair + ".";
 			players.get(currPlayer).setMoney(playerValue - catRepair);
+			return prompt;
 		}
 		else if(eventRand == 4){
-			System.out.println("MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE SHED AND STOLE HALF YOUR FOOD.");
+			prompt = "UGA students broke into your storage shed and stole half of your Food.";
 			players.get(currPlayer).setFood(playerFood / 2);
+			return prompt;
 		}
 		else if(eventRand == 5){
-			System.out.println("YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. IT COST YOU $" + inlawsRepair + " TO CLEAN IT UP.");
+			prompt = "Your gypsy in-laws made a mess of the Town. It cost you $" + inlawsRepair + " to clean it up.";
 			players.get(currPlayer).setMoney(playerValue - inlawsRepair);
-		}	
+			return prompt;
+		}
+		return null;	
 	}
 }

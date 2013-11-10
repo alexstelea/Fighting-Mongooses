@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  * Store allows player to purchase things. The store has a limited 
@@ -70,32 +71,79 @@ public class Store {
      * @param item Item currPlayer is purchasing
      * @param toBuy number of items currPlayer is purchasing
      */
-    public void buyItem(ArrayList<Player> players, int currPlayer, String item, int toBuy){
+    public boolean buyItem(ArrayList<Player> players, int currPlayer, String item, int toBuy){
         int playerValue = (int)players.get(currPlayer).getMoney();
-
         if(item.equals("food")){
-            costOfPurchase = foodPrice * toBuy;
+            if(foodQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = foodPrice * toBuy;
+            }
         }
         else if(item.equals("energy")){
-            costOfPurchase = energyPrice * toBuy;
+            if(energyQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = energyPrice * toBuy;
+            }
         }
         else if(item.equals("smithore")){
-            costOfPurchase = smithorePrice * toBuy;
+            if(smithoreQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = smithorePrice * toBuy;
+            }
         }
         else if(item.equals("crystite")){
-            costOfPurchase = crystitePrice * toBuy;
+            if(crystiteQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = crystitePrice * toBuy;
+            }
         }
         else if(item.equals("foodMule")){
-            costOfPurchase = foodMule;
+            if(foodQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = foodMule;
+            }
         }
         else if(item.equals("energyMule")){
-            costOfPurchase = energyMule;
+            if(energyQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = energyMule;
+            }
         }
         else if(item.equals("smithoreMule")){
-            costOfPurchase = smithoreMule;
+            if(smithoreQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = smithoreMule;
+            }
         }
         else if(item.equals("crystiteMule")){
-            costOfPurchase = crystiteMule;
+            if(crystiteQuantity - toBuy < 0){
+                System.out.println("Buying more than what store owns.");
+                return false;
+            }
+            else{
+                costOfPurchase = crystiteMule;
+            }
         }
         if((playerValue - costOfPurchase) >= 0){
             System.out.println("food before: " + foodQuantity);
@@ -209,6 +257,7 @@ public class Store {
         else{
                 System.out.println("Player does not have sufficient funds");
         }
+        return true;
     }
 
     /**

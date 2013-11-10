@@ -69,13 +69,11 @@ public abstract class Tile {
 
     public boolean muleIsValid(String muleType) {
         System.out.println("Comparing " + type + " and " + muleType);
-        if (type.equals("river") && muleType.equals("FoodMule"))
-            return true;
-        else if (type.length() > 8 && type.substring(0, 8).equals("mountain") && muleType.equals("SmithoreMule"))
-            return true;
-        else if (type.equals("plain") && muleType.equals("EnergyMule")) 
-            return true;
-        else
+        if(type.equals("river") && muleType.equals("SmithoreMule")){
+            System.out.println("River plots cannot be mined for Smithore");
             return false;
+        }
+        else
+            return true;
     }
 }

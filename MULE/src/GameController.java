@@ -1,3 +1,21 @@
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
+import com.mongodb.WriteConcern;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.ServerAddress;
+
 import java.util.ArrayList;
 
 public class GameController {
@@ -26,6 +44,8 @@ public class GameController {
     private long stopTime;
     private Integer elapsedTime;
     private Store store;
+    private MongoClient mongoClient;
+    private DB db;
 
     /**
      * GameController handles all input related actions for game.
@@ -36,6 +56,12 @@ public class GameController {
         numPlayers = 1;
         state = "";
         players = new ArrayList<Player>();
+        try {
+            mongoClient = new MongoClient();
+        }
+        catch (Exception e){
+        }
+        db = mongoClient.getDB( "mule" ); 
         playGame();
     }
 
@@ -171,10 +197,37 @@ public class GameController {
 
         while(initializing) {
             if (state.equals("game")){
-                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
+                    switchPlayer();
+                }
+
+                else if(results[0].equals("stop")) {
+                    System.out.println("Stop.");
+                }
+
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "game";
+                    }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
                     switchPlayer();
                 }
 
@@ -190,7 +243,7 @@ public class GameController {
             }
 
             else if (state.equals("town")) {
-                String[] results = renderer.drawTownScreen(players, currPlayer, store, numPlayers);
+                String[] results = renderer.drawTownScreen(players, currPlayer, store, numPlayers, roundNumber);
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
@@ -204,21 +257,47 @@ public class GameController {
                 }
                 else if (results[0].equals("land office")){
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         landSelection(tileSelection, map);
-                    }                }
+                    }                
+                }
                 else if (results[0].equals("assay")){
                     System.out.println("Assay Office");
                 }
                 else if (results[0].equals("back")){
                     state = "game";
                 }
+                else if(results[0].equals("stop")) {
+                    System.out.println("Stop.");
+                }
+
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "town";
+                    }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
+                    switchPlayer();
+                }
             }
 
             else if (state.equals("storeBuy")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store, numPlayers);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store, numPlayers, roundNumber);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
@@ -257,7 +336,7 @@ public class GameController {
                 }
                 else if (results[0].equals("foodMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyFoodMule");
@@ -272,7 +351,7 @@ public class GameController {
                 }
                 else if (results[0].equals("energyMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyEnergyMule");
@@ -287,7 +366,7 @@ public class GameController {
                 }
                 else if (results[0].equals("smithoreMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buySmithoreMule");
@@ -302,7 +381,7 @@ public class GameController {
                 }
                 else if (results[0].equals("crystiteMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyCrystiteMule");
@@ -311,14 +390,38 @@ public class GameController {
                             state = "game";
                         }
                     }
-                    else {
-                        state = "town";
+                }
+                else if(results[0].equals("stop")) {
+                        System.out.println("Stop.");
+                }
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "storeBuy";
                     }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
+                    switchPlayer();
+                }
+                else {
+                    state = "town";
                 }
             }
 
             else if (state.equals("storeSell")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store, numPlayers);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store, numPlayers, roundNumber);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
@@ -357,7 +460,7 @@ public class GameController {
                 }
                 else if (results[0].equals("foodMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellFoodMule");
@@ -368,7 +471,7 @@ public class GameController {
                 }
                 else if (results[0].equals("energyMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellEnergyMule");
@@ -379,7 +482,7 @@ public class GameController {
                 }
                 else if (results[0].equals("smithoreMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellSmithoreMule");
@@ -390,7 +493,7 @@ public class GameController {
                 }
                 else if (results[0].equals("crystiteMule")) {
                     state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers);
+                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
                     int tileSelection = Integer.parseInt(results[0]);
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         muleRemoval(tileSelection, map, "sellCrystiteMule");
@@ -398,6 +501,30 @@ public class GameController {
                     else {
                         state = "town";
                     }
+                }
+                else if(results[0].equals("stop")) {
+                    System.out.println("Stop.");
+                }
+                else if(results[0].equals("pause")) {
+                    //pause timer
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("resume")) {
+                        state = "storeSell";
+                    }
+                    else if(results[0].equals("save")) {
+                        System.out.println("Save");
+                    }
+                    else if(results[0].equals("load")) {
+                        System.out.println("Load");
+                    }
+                    else if(results[0].equals("quit")) {
+                        System.exit(0);
+                        initializing = false;
+                    }
+                }
+                else if(results[0].equals("skip")) {
+                    System.out.println("Skip Turn.");
+                    switchPlayer();
                 }
             }
 
@@ -419,9 +546,13 @@ public class GameController {
             reorderPlayers();
             checkForEnd();
         }
+
         if((chance -= 27) < 0){
             RandomEvents randomEvent = new RandomEvents(roundNumber);
-            if(players.get(currPlayer).equals(players.get(0))){
+            if(numPlayers == 1){
+                randomEvent.generate(players, currPlayer, 6);
+            }
+            else if(players.get(currPlayer).equals(players.get(0))){
                 randomEvent.generate(players, currPlayer, 3);
             }
             else{
@@ -480,7 +611,6 @@ public class GameController {
             System.out.println("Timer set to: " + 50000);
             return 50000;
         }
-
         else if (player.getFood() > 0) {
             System.out.println("Timer set to: " + 30000);
             return 30000;
@@ -523,15 +653,19 @@ public class GameController {
      * @param tileSelection The tile current player selected
      * @param map Used to set owner of tile to currPlayer
      */
-    private void landSelection(int tileSelection, Map map) {
+    private String landSelection(int tileSelection, Map map) {
         if(map.getOwnerOfTile(tileSelection) != null){
+            String prompt = "Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection);
             System.out.println("Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection));
+            return prompt;
         }
         else{
-            LandOffice landOffice = new LandOffice(roundNumber);
+            int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
+            LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
             boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
-
+            String prompt = "Successfully purchased land!";
         }
+        return null;
     }
 
     /**
@@ -542,17 +676,23 @@ public class GameController {
      */
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
         String type = choice.substring(3);
+        //Subtract money from player if placed on wrong tile and lose mulse
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
-            System.out.println("Player does not own tile.");
-            return true;
+            if(store(choice, 1)){
+                System.out.println("Player does not own tile.");
+                return true;
+            }
         }
         //else {
         else if(map.getTiles()[tileSelection].muleIsValid(type)) {
-            store(choice, 1);
-            Tile tile = map.getTiles()[tileSelection];
-            tile.addMule();
-            tile.setMuleType(type); // just get the type
-            //add mule on selected tile
+            if(store(choice, 1)){
+                Tile tile = map.getTiles()[tileSelection];
+                tile.addMule();
+                tile.setMuleType(type); // just get the type
+            }
+            else{
+                return false;
+            }
         }
         return false;
     }
@@ -572,7 +712,6 @@ public class GameController {
             if(map.getTiles()[tileSelection].muleIsValid(type)){
                 store(choice, 1);
                 map.getTiles()[tileSelection].removeMule();
-                //remove mule on selected tile
             }
             else{
                 System.out.println("Player should have selected a: " + type);
@@ -602,7 +741,7 @@ public class GameController {
      * @param choice The resources the player wishes to buy/sell from store
      * @param quantities The amount of resources the player wishes to buy/sell
      */
-    private void store(String choice, int quantities){
+    private boolean store(String choice, int quantities){
         //BUY
         if(choice.equals("buyFood")){
             System.out.println("Buy " + quantities + " food");
@@ -622,19 +761,27 @@ public class GameController {
         }
         else if(choice.equals("buyFoodMule")){
             System.out.println("Buy food mule");
-            store.buyItem(players, currPlayer, "foodMule", quantities);
+            if(store.buyItem(players, currPlayer, "foodMule", quantities)){
+                return true;
+            }
         }
         else if(choice.equals("buyEnergyMule")){
             System.out.println("Buy energy mule");
-            store.buyItem(players, currPlayer, "energyMule", quantities);
+            if(store.buyItem(players, currPlayer, "energyMule", quantities)){
+                return true;
+            }
         }
         else if(choice.equals("buySmithoreMule")){
             System.out.println("Buy smithore mule");
-            store.buyItem(players, currPlayer, "smithoreMule", quantities);
+            if(store.buyItem(players, currPlayer, "smithoreMule", quantities)){
+                return true;
+            }
         }
         else if(choice.equals("buyCrystiteMule")){
             System.out.println("Buy crystite mule");
-            store.buyItem(players, currPlayer, "crystiteMule", quantities);
+            if(store.buyItem(players, currPlayer, "crystiteMule", quantities)){
+                return true;
+            }
         }
 
         //SELL
@@ -670,6 +817,7 @@ public class GameController {
             System.out.println("Sell crystite mule");
             store.sellItem(players, currPlayer, "crystiteMule", quantities);
         }
+        return false;
     }
 
     /**
@@ -718,5 +866,112 @@ public class GameController {
      */
     public int getRoundNumber() {
         return roundNumber;
+    }
+
+    private void saveGame(String gameName) {
+        DBCollection coll = db.getCollection(gameName);
+        BasicDBObject doc = new BasicDBObject("name", gameName);
+
+        // check if the name already exists
+        try {
+            BasicDBObject query = new BasicDBObject("name", gameName);
+            DBCursor cursor = coll.find(query);
+            if (cursor.hasNext()) {
+                System.out.println("That save game already exists!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to connect to database!");
+            return;
+        }
+
+        Gson gson = new GsonBuilder().create();
+        String difficultyJson = gson.toJson(difficulty);
+        String roundNumberJson = gson.toJson(roundNumber);
+        String currPlayerJson = gson.toJson(currPlayer);
+        String numPlayersJson = gson.toJson(numPlayers);
+        String mapJson = gson.toJson(map);
+        String stateJson = gson.toJson(state);
+        String playerJson = gson.toJson(players);
+        String startTimeJson = gson.toJson(startTime);
+        String stopTimeJson = gson.toJson(stopTime);
+        String elapsedTimeJson = gson.toJson(elapsedTime);
+        String storeJson = gson.toJson(store);
+
+        System.out.println("JSON");
+        System.out.println(difficultyJson);
+        System.out.println(roundNumberJson);
+        System.out.println(currPlayerJson);
+        System.out.println(numPlayersJson);
+        System.out.println(mapJson);
+        System.out.println(stateJson);
+        System.out.println(playerJson);
+        System.out.println(startTimeJson);
+        System.out.println(stopTimeJson);
+        System.out.println(elapsedTimeJson);
+        System.out.println(storeJson);
+
+        doc.append("difficulty", difficultyJson);
+        doc.append("roundNumber", roundNumberJson);
+        doc.append("currPlayer", currPlayerJson);
+        doc.append("numPlayers", numPlayersJson);
+        doc.append("map", mapJson);
+        doc.append("state", stateJson);
+        doc.append("player", playerJson);
+        doc.append("startTime", startTimeJson);
+        doc.append("stopTime", stopTimeJson);
+        doc.append("elapsedTime", elapsedTimeJson);
+        doc.append("store", storeJson);
+
+        try {
+            coll.insert(doc);
+            System.out.println("Game successfully saved!");
+        }
+        catch (Exception e){
+            System.out.println("Failed to write to database!");
+        }
+    }
+
+
+
+    private void loadGame(String gameName) {
+        DBCollection coll = db.getCollection(gameName);
+
+        // check if the name already exists
+        try {
+            BasicDBObject query = new BasicDBObject("name", gameName);
+            DBCursor cursor = coll.find(query);
+            if (!cursor.hasNext()) {
+                System.out.println("That save game doesn't exists!");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to connect to database!");
+            return;
+        }
+
+        DBObject game = coll.findOne();
+
+        Type playerList = new TypeToken<ArrayList<Player>>() {}.getType();
+
+        Gson gson = new GsonBuilder().create();
+        try {
+            difficulty = gson.fromJson(game.get("difficulty").toString(), int.class);
+            roundNumber = gson.fromJson(game.get("roundNumber").toString(), int.class);
+            currPlayer = gson.fromJson(game.get("currPlayer").toString(), int.class);
+            numPlayers = gson.fromJson(game.get("numPlayers").toString(), int.class);
+            map = gson.fromJson(game.get("map").toString(), Map.class);
+            state = gson.fromJson(game.get("state").toString(), String.class);
+            players = gson.fromJson(game.get("player").toString(), playerList);
+            startTime = gson.fromJson(game.get("startTime").toString(), long.class);
+            stopTime = gson.fromJson(game.get("stopTime").toString(), long.class);
+            elapsedTime = gson.fromJson(game.get("elapsedTime").toString(), Integer.class);
+            store = gson.fromJson(game.get("store").toString(), Store.class);
+
+            mainGame();
+        } catch (Exception e) {
+            System.out.println("Error loading game! Starting new game instead");
+            playGame();
+        }
     }
 }

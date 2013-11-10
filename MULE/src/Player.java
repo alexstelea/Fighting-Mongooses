@@ -18,6 +18,7 @@ public class Player {
     private int mulesPlaced;
     private int row;
     private int column;
+    private int propertyOwned;
     private List<Tile> tiles;
 
     /**
@@ -188,6 +189,15 @@ public class Player {
     }
 
     /**
+     * Getter method for the amount of property player owns
+     *
+     * @preturn The number of property player owns
+     */
+    public int getPropertyOwned() {
+        return propertyOwned;
+    }
+
+    /**
      * Getter method for the player's row
      *
      * @return The player's row
@@ -230,6 +240,15 @@ public class Player {
      */
     public void setFood(int food) {
         this.food = food;
+    }
+
+    /**
+     * Setter method for the amount of property player owns
+     *
+     * @param propertyOwned The amount of property player owns
+     */
+    public void setPropertyOwned(int propertyOwned) {
+        this.propertyOwned = propertyOwned;
     }
 
     /**

@@ -15,19 +15,18 @@ import java.util.ArrayList;
 public class LandOffice{
 
 	private Random rand = new Random();
-	private int buyingRand = rand.nextInt(100);
+	private int buyingRand = rand.nextInt(100) + 1;
 	private int playerValue;
 	private int buyingPrice;
+	private int propertyOwned;
 
 	/**
 	 * Land office sets buying price
+	 * @param propertyOwned gets number of property player owns
 	 * @param getRoundNumber gets current round number
 	 */
-	public LandOffice(int getRoundNumber){
-		if(getRoundNumber < 3){
-			this.buyingPrice = 0;
-		}
-		if(getRoundNumber > 2){
+	public LandOffice(int propertyOwned, int getRoundNumber){
+		if(propertyOwned > 1){
 			this.buyingPrice = 300 + (getRoundNumber * buyingRand);;
 		}
 	}
@@ -40,14 +39,13 @@ public class LandOffice{
 	 * @param map Used to set owner of tile to currPlayer
 	 */
 	public boolean buyProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
-
-		System.out.println("BuyingRand: " + buyingRand);
-		System.out.println("Buying Price: " + buyingPrice);
-
 		playerValue = (int)players.get(currPlayer).getMoney();
+		propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
+
 		if((playerValue - buyingPrice) >= 0){
 				players.get(currPlayer).setMoney(playerValue - buyingPrice);
 				map.setOwnerOfTile(tileSelection, players.get(currPlayer));
+				players.get(currPlayer).setPropertyOwned(propertyOwned + 1);
                 return true;
 		}
 		else{
@@ -64,10 +62,13 @@ public class LandOffice{
 	 * @param map Used to set owner of tile to currPlayer
 	 */
 	public void sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
-		int sellingRand = rand.nextInt(200);
+		int sellingRand = rand.nextInt(200) +1;
 		int sellingPrice = 400 + sellingRand;
 		playerValue = (int)players.get(currPlayer).getMoney();
+		propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
+		
 		players.get(currPlayer).setMoney(playerValue + sellingPrice);
+		players.get(currPlayer).setPropertyOwned(propertyOwned - 1);
 		map.setOwnerOfTile(tileSelection, null);
 		if(map.getTiles()[tileSelection].hasMule = true){
 			map.getTiles()[tileSelection].removeMule();
