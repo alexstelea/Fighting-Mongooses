@@ -45,7 +45,9 @@ public class Renderer {
     private Timer timer;
     private boolean isSelectedButtonCreated = false;
     private long timeWhenTimerSet;
+    private long pauseTime;
     private int num;
+    private boolean paused;
 
     /**
      * Renderer handles all graphics related actions for game.
@@ -61,6 +63,7 @@ public class Renderer {
         lock = new ReentrantLock();
         frame.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         timer = createTimer(50000);
+        paused = false;
     }
 
     public String[] drawIntroScreen() {
@@ -731,7 +734,7 @@ public class Renderer {
             currentTime = date.getTime();
             timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
 
-            if (oldTimerNum != timerNum) {
+            if (oldTimerNum != timerNum && !paused) {
                 try {
                     panel.remove(timerImage);
                 }
@@ -817,6 +820,26 @@ public class Renderer {
         };
         Timer timer = new Timer(time, timerListener);
         return timer;
+    }
+
+    public void pauseTimer() {
+        if (paused)
+            return;
+        Date date = new Date();
+        pauseTime = date.getTime();    
+        timer.stop();
+        paused = true;
+    }
+
+    public void unpauseTimer() {
+        if (!paused)
+            return;
+        Date date = new Date();
+        long timePaused = (date.getTime() - pauseTime);
+        pauseTime = 0;
+        timeWhenTimerSet += timePaused;
+        timer.start();
+        paused = false;
     }
     
     public void stopTimer() {
