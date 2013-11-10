@@ -212,10 +212,11 @@ public class GameController {
                 }
 
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "game";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
                         System.out.println("Save");
@@ -277,10 +278,11 @@ public class GameController {
                 }
 
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "town";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
                         System.out.println("Save");
@@ -398,10 +400,11 @@ public class GameController {
                         System.out.println("Stop.");
                 }
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "storeBuy";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
                         System.out.println("Save");
@@ -509,10 +512,11 @@ public class GameController {
                     System.out.println("Stop.");
                 }
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "storeSell";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
                         System.out.println("Save");
