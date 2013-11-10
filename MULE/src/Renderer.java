@@ -388,10 +388,10 @@ public class Renderer {
         addButtonToPanel(panel, 290, 157, 22, 18, 1, "-");
         addButtonToPanel(panel, 290, 202, 22, 18, 2, "+");
         addButtonToPanel(panel, 290, 242, 22, 18, 2, "-");
-        addButtonToPanel(panel, 290, 288, 22, 18, 2, "+");
-        addButtonToPanel(panel, 290, 328, 22, 18, 2, "-");
-        addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
-        addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
+        addButtonToPanel(panel, 290, 288, 22, 18, 3, "+");
+        addButtonToPanel(panel, 290, 328, 22, 18, 3, "-");
+        addButtonToPanel(panel, 290, 373, 22, 18, 4, "+");
+        addButtonToPanel(panel, 290, 413, 22, 18, 4, "-");
 
         addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
         addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");

@@ -68,12 +68,6 @@ public abstract class Tile {
     }
 
     public boolean muleIsValid(String muleType) {
-        System.out.println("Comparing " + type + " and " + muleType);
-        if(type.equals("river") && muleType.equals("SmithoreMule")){
-            System.out.println("River plots cannot be mined for Smithore");
-            return false;
-        }
-        else
-            return true;
+        return true;
     }
 }
