@@ -46,6 +46,7 @@ public class GameController {
     private Store store;
     private MongoClient mongoClient;
     private DB db;
+    private String randomEventText;
 
     /**
      * GameController handles all input related actions for game.
@@ -55,6 +56,7 @@ public class GameController {
         currPlayer = 0;
         numPlayers = 1;
         state = "";
+        randomEventText = "";
         players = new ArrayList<Player>();
         try {
             mongoClient = new MongoClient();
@@ -197,7 +199,8 @@ public class GameController {
 
         while(initializing) {
             if (state.equals("game")){
-                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
+                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, randomEventText);
+                randomEventText = "";
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
@@ -550,7 +553,7 @@ public class GameController {
         if((chance -= 27) < 0){
             RandomEvents randomEvent = new RandomEvents(roundNumber);
             if(numPlayers == 1){
-                renderer.drawStatusText(null, randomEvent.generate(players, currPlayer, 6));
+                randomEventText = randomEvent.generate(players, currPlayer, 6);
             }
             else if(players.get(currPlayer).equals(players.get(0))){
                 randomEvent.generate(players, currPlayer, 3);

@@ -1089,9 +1089,9 @@ public class Renderer {
         }
         System.out.println("Displaying: " + textString);
         JTextField text = new JTextField(textString);
-        text.setBounds(0, 6, 225, 38);
-        text.setFont(new Font("Candara", Font.PLAIN, 20));
-        text.setHorizontalAlignment(JTextField.CENTER);
+        text.setBounds(60, 6, 600, 38);
+        text.setFont(new Font("Candara", Font.PLAIN, 12));
+        text.setHorizontalAlignment(JTextField.LEFT);
         text.setForeground(Color.WHITE);
         text.setBackground(new Color(87, 51, 4));
         text.setOpaque(false);
