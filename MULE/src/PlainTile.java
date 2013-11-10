@@ -6,9 +6,15 @@ public class PlainTile extends Tile {
 
     public void collectResources() {
         if (hasMule) {
-            owner.changeFood(2);
-            owner.changeEnergy(3);
-            owner.changeSmithore(1);
+            if (muleType.equals("FoodMule")) {
+                owner.changeFood(2);
+            }
+            else if (muleType.equals("EnergyMule")) {
+                owner.changeEnergy(3);
+            }
+            else if (muleType.equals("SmithoreMule")) {
+                owner.changeSmithore(1);
+            }
         }
     }
 

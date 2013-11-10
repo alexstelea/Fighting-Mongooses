@@ -9,9 +9,15 @@ public class MountainTile extends Tile {
 
     public void collectResources() {
         if (hasMule) {
-            owner.changeFood(1);
-            owner.changeEnergy(1);
-            owner.changeSmithore(1 + mountainNum);
+            if (muleType.equals("FoodMule")) {
+                owner.changeFood(1);
+            }
+            else if (muleType.equals("EnergyMule")) {
+                owner.changeEnergy(1);
+            }
+            else if (muleType.equals("SmithoreMule")) {
+                owner.changeSmithore(1 + mountainNum);
+            }
         }
         return;
     }

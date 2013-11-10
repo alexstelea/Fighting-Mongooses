@@ -6,8 +6,12 @@ public class RiverTile extends Tile {
 
     public void collectResources() {
         if (hasMule) {
-            owner.changeFood(4);
-            owner.changeEnergy(2);
+            if (muleType.equals("FoodMule")) {
+                owner.changeFood(4);
+            }
+            else if (muleType.equals("EnergyMule")) {
+                owner.changeEnergy(2);
+            }
         }
     }
 
