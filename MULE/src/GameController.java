@@ -667,7 +667,12 @@ public class GameController {
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
             LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
             boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
-            output = "Successfully purchased land!";
+            if(bought){
+                output = "Successfully purchased land!";
+            }
+            else{
+                output = "Land not purchased. Player does not have sufficient funds.";
+            }
         }
     }
 
