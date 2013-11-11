@@ -650,8 +650,8 @@ public class GameController {
             return;
         }
         String winningPlayer = players.get(numPlayers - 1).getName();
-        output = winningPlayer + " is the winner!";
-        //System.exit(0);
+        System.out.println(winningPlayer + " is the winner!");
+        System.exit(0);
     }
 
     /**
