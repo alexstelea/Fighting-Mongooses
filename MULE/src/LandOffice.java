@@ -61,7 +61,7 @@ public class LandOffice{
 	 * @param tileSelection The tile current player selected
 	 * @param map Used to set owner of tile to currPlayer
 	 */
-	public void sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
+	public String sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
 		int sellingRand = rand.nextInt(200) +1;
 		int sellingPrice = 400 + sellingRand;
 		playerValue = (int)players.get(currPlayer).getMoney();
@@ -72,6 +72,8 @@ public class LandOffice{
 		map.setOwnerOfTile(tileSelection, null);
 		if(map.getTiles()[tileSelection].hasMule = true){
 			map.getTiles()[tileSelection].removeMule();
+			return "Player has successfully sold property!";
 		}
+		return null;
 	}
 }
