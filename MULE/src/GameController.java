@@ -577,20 +577,14 @@ public class GameController {
      *                 from mules after each round
      */
     private void gatherResources() {
-        // make sure player has enough energy
-        int[] playerEnergy = new int[numPlayers];
-        for (int i = 0; i < numPlayers; i++) {
-            playerEnergy[i] = players.get(i).getEnergy();
-        }
-
         for (Tile t : map.getTiles()) {
             int ownerIndex = getPlayerIndex(t.getOwner());
             if (ownerIndex == -1) 
                 continue;
             Player player = players.get(ownerIndex);
-            if (playerEnergy[ownerIndex] > 0) { 
+            if (player.getEnergy() > 0) { 
                 t.collectResources();
-                playerEnergy[ownerIndex]--;
+                player.setEnergy(player.getEnergy() - 1);
             }
         }
     }
