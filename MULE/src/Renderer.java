@@ -671,9 +671,9 @@ public class Renderer {
         JLabel charArrow = addLabelToPanel(panel, 117, 210, 45, 24, "/media/uparrow.png");
         JLabel colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
         JLabel colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
-        
+
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
-        JLabel map1 = addLabelToPanel(infoPanel, 21, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
+        JLabel map1 = addLabelToPanel(infoPanel, 100, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
              
         panel.repaint();
         infoPanel.repaint();
@@ -688,6 +688,7 @@ public class Renderer {
                 colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
 
                 infoPanel.remove(map1);
+
                 map1 = addLabelToPanel(infoPanel, 21, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
 
                 infoPanel.remove(difficultyText);
@@ -718,6 +719,10 @@ public class Renderer {
                 oldState = states[1];
             }
             if (!oldState2.equals(states[3])) {
+                
+                JLabel photo = addLabelToPanel(panel, 100, 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
+
+
                 if(states[3].equals("red")){
                     panel.remove(colorArrow);
                     colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
