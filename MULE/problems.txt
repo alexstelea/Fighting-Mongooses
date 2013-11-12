@@ -3,6 +3,7 @@ problems in game
 character selection screen
     *thumbnails and names of characters need to be implemented
     *occasionally, i will make a character and the game will just reset the player selection. the last time it happened, i tried every color of squirrel with the name "be" before it finally worked when i changed the name to "asdfjklaslk" 
+    *hover buttons
 map
     *store inventory is not displayed
     *font color is incorrect
@@ -12,9 +13,12 @@ map
     *game should pause when player turn ends with message at bottom indicating a change in player
     *map 1 should always return the given standard map while maps 2-5 can have randomly generated terrains
     *should the game pause when a random event happens? 
+    *hover buttons graphics and pop up text
 town
     *assay office graphic looks gross (jackson should fix)
     *we might want to put in a confirmation message for the pub? not sure
+    *hover buttons
 store
 	*no quantities displayed
+    *hover buttons and active/inactive button graphics need to be implemented
 
