@@ -127,7 +127,6 @@ public class GameController {
                 String[] results = renderer.drawMapScreen(numPlayers, difficulty);
                 String action = results[0];
                 map = new Map(Integer.parseInt(results[1]));
-                output = "Map created with num " + Integer.parseInt(results[1]);
                 if (action.equals("okay")) {
                     state = "player";
                 }
@@ -161,8 +160,7 @@ public class GameController {
                     // only move on if we have all the players
                     if (--numPlayers == 0) {
                         state = "game";
-                    }
-                    
+                    }   
                 }
             }
 
@@ -172,7 +170,6 @@ public class GameController {
 
             // quit state
             else {
-                System.out.println("State: " + state);
                 System.exit(0);
                 initializing = false;
             }
@@ -219,6 +216,12 @@ public class GameController {
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
+                        results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
+                        if(results[0].equals("save")) {
+                            //saveGame(results[1]);
+                            System.exit(0);
+                            initializing = false;
+                        }   
                         System.out.println("Save");
                     }
                     else if(results[0].equals("load")) {
@@ -316,7 +319,7 @@ public class GameController {
             }
 
             else if (state.equals("storeBuy")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store, numPlayers, roundNumber);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store, numPlayers, roundNumber, output);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
@@ -441,7 +444,7 @@ public class GameController {
             }
 
             else if (state.equals("storeSell")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store, numPlayers, roundNumber);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store, numPlayers, roundNumber, output);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
@@ -560,6 +563,7 @@ public class GameController {
      * switchPlayer switches player to determine currPlayer
      */
     private void switchPlayer() {
+        output = "5 ... 4 ... 3 ... 2 ... 1";
         double chance = Math.random() * 100;
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
@@ -769,59 +773,83 @@ public class GameController {
     private boolean store(String choice, int quantities){
         //BUY
         if(choice.equals("buyFood")){
-            store.buyItem(players, currPlayer, "food", quantities);
+            if(store.buyItem(players, currPlayer, "food", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Food.";
+            }
         }
         else if(choice.equals("buyEnergy")){
-            store.buyItem(players, currPlayer, "energy", quantities);
+            if(store.buyItem(players, currPlayer, "energy", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Energy.";
+            }
         }
         else if(choice.equals("buySmithore")){
-            store.buyItem(players, currPlayer, "smithore", quantities);
+            if(store.buyItem(players, currPlayer, "smithore", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Smithore.";
+            }
         }
         else if(choice.equals("buyCrystite")){
-            store.buyItem(players, currPlayer, "crystite", quantities);
+            if(store.buyItem(players, currPlayer, "crystite", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Crysite.";
+            }
         }
         else if(choice.equals("buyFoodMule")){
-            if(store.buyItem(players, currPlayer, "foodMule", quantities)){
+            if(store.buyItem(players, currPlayer, "foodMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
         else if(choice.equals("buyEnergyMule")){
-            if(store.buyItem(players, currPlayer, "energyMule", quantities)){
+            if(store.buyItem(players, currPlayer, "energyMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
         else if(choice.equals("buySmithoreMule")){
-            if(store.buyItem(players, currPlayer, "smithoreMule", quantities)){
+            if(store.buyItem(players, currPlayer, "smithoreMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
         else if(choice.equals("buyCrystiteMule")){
-            if(store.buyItem(players, currPlayer, "crystiteMule", quantities)){
+            if(store.buyItem(players, currPlayer, "crystiteMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
 
         //SELL
         if(choice.equals("sellFood")){
-            store.sellItem(players, currPlayer, "food", quantities);
+            output = store.sellItem(players, currPlayer, "food", quantities);
         }
         else if(choice.equals("sellEnergy")){
-            store.sellItem(players, currPlayer, "energy", quantities);
+            output = store.sellItem(players, currPlayer, "energy", quantities);
         }
         else if(choice.equals("sellSmithore")){
-            store.sellItem(players, currPlayer, "smithore", quantities);
+            output = output = store.sellItem(players, currPlayer, "smithore", quantities);
         }
         else if(choice.equals("sellCrystite")){
-            store.sellItem(players, currPlayer, "crystite", quantities);
+            output = store.sellItem(players, currPlayer, "crystite", quantities);
         }
         else if(choice.equals("sellFoodMule")){
-            store.sellItem(players, currPlayer, "foodMule", quantities);
+            output = store.sellItem(players, currPlayer, "foodMule", quantities);
         }
         else if(choice.equals("sellEnergyMule")){
-            store.sellItem(players, currPlayer, "energyMule", quantities);
+            output = store.sellItem(players, currPlayer, "energyMule", quantities);
         }
         else if(choice.equals("sellSmithoreMule")){
-            store.sellItem(players, currPlayer, "smithoreMule", quantities);
+            output = store.sellItem(players, currPlayer, "smithoreMule", quantities);
         }
         else if(choice.equals("sellCrystiteMule")){
             store.sellItem(players, currPlayer, "crystiteMule", quantities);
@@ -846,7 +874,7 @@ public class GameController {
         Save[] savedGames = getSavedGames();
         LoadScreenModel model = new LoadScreenModel();
         model.setSavedGames(savedGames);
-        renderer.drawLoadScreen(model);
+        //renderer.drawLoadScreen(model);
     }
 
     /**

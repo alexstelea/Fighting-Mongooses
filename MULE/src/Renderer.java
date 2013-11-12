@@ -342,7 +342,7 @@ public class Renderer {
     // state[3] = quantitySmithore
     // state[4] = quantityCrystite
     public String[] drawStoreScreen(ArrayList<Player> players, int currPlayer, String transactionType, String[] quantities, 
-        Store store, int numPlayers, int round) {
+        Store store, int numPlayers, int round, String text) {
 
         // initialize the states
         states = new String[5];
@@ -396,6 +396,8 @@ public class Renderer {
         addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
         addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
         addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+
+        drawStatusText(menuPanel, text);
 
         blockForInputMain(menuPanel);
         exitSafely();
@@ -514,8 +516,71 @@ public class Renderer {
         return states;
     }
 
-    public void drawLoadScreen(LoadScreenModel model) {
-        return;
+    public String[] drawSaveScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+        states[1] = "DefaultSave";
+
+        ImagePanel panel = new ImagePanel("/media/savescreen.png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        addButtonToPanel(panel, 126, 198, 166, 35, 0, "save");
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+
+        JTextField textBox = addTextToPanel(panel, 420, 480, 225, 38);
+
+        blockForInputMain(menuPanel);
+        exitSafely();
+        return states;
+    }
+
+    public String[] drawLoadScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+
+        ImagePanel panel = new ImagePanel("/media/loadscreen.png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        addButtonToPanel(panel, 126, 198, 166, 35, 0, "load");
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+
+        JTextField textBox = addTextToPanel(panel, 420, 480, 225, 38);
+
+        blockForInputMain(menuPanel);
+        exitSafely();
+        return states;
     }
     
     // helper methods
