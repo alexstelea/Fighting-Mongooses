@@ -290,7 +290,7 @@ public class Renderer {
 
         JTextField nameBox = addTextToPanel(menuPanel, 420, 6, 225, 38); //480
 
-        blockForInputCharacter(panel, playerBox1, difficultyValue, map);
+        blockForInputCharacter(panel, playerBox1, difficultyValue, map, playerPanel, players);
         exitSafely();
         states[2] = nameBox.getText();
         return states;
@@ -666,21 +666,30 @@ public class Renderer {
         }
     }
 
-    private JLabel blockForInputCharacter(JPanel panel, ImagePanel infoPanel, String difficultyValue, Map map) {
+    private JLabel blockForInputCharacter(JPanel panel, ImagePanel infoPanel, String difficultyValue, Map map, JPanel playerPanel, ArrayList<Player> players) {
         try { Thread.sleep(100); } catch (Exception e) {}
         JLabel charArrow = addLabelToPanel(panel, 117, 210, 45, 24, "/media/uparrow.png");
         JLabel colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
         JLabel colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
+    
+        System.out.println("pLAYER SIZE " +players.size());
 
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
-        JLabel map1 = addLabelToPanel(infoPanel, 100, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
-             
+        JLabel map1 = addLabelToPanel(infoPanel, 21 , 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
+        
+        JLabel photo = addLabelToPanel(playerPanel, 200 + (players.size()*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
+
+
         panel.repaint();
-        infoPanel.repaint();
+        playerPanel.repaint();
 
         String oldState = states[1];
+        System.out.println(states[2]);
         String oldState2 = states[3];
         
+
+        int currentPlayer = players.size();
+
         boolean waitingSafe = true; // used to avoid race condition
         while (waitingSafe) {
             if (!oldState.equals(states[1])){
@@ -720,7 +729,8 @@ public class Renderer {
             }
             if (!oldState2.equals(states[3])) {
                 
-                JLabel photo = addLabelToPanel(panel, 100, 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
+                playerPanel.remove(photo);
+                photo = addLabelToPanel(playerPanel, 200 + (currentPlayer*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
 
 
                 if(states[3].equals("red")){
@@ -744,6 +754,7 @@ public class Renderer {
                     colorArrow = addLabelToPanel(panel, 787, 482, 45, 24, "/media/uparrow.png");
                 }
                 panel.repaint();
+                playerPanel.repaint();
                 oldState2 = states[3];
             }
             try {
