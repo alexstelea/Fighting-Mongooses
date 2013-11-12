@@ -61,19 +61,24 @@ public class LandOffice{
 	 * @param tileSelection The tile current player selected
 	 * @param map Used to set owner of tile to currPlayer
 	 */
-	public String sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
-		int sellingRand = rand.nextInt(200) +1;
-		int sellingPrice = 400 + sellingRand;
-		playerValue = (int)players.get(currPlayer).getMoney();
-		propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
-		
-		players.get(currPlayer).setMoney(playerValue + sellingPrice);
-		players.get(currPlayer).setPropertyOwned(propertyOwned - 1);
-		map.setOwnerOfTile(tileSelection, null);
-		if(map.getTiles()[tileSelection].hasMule = true){
-			map.getTiles()[tileSelection].removeMule();
-			return "Player has successfully sold property!";
+	public boolean sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
+		if(map.getOwnerOfTile(tileSelection) != null){
+			int sellingRand = rand.nextInt(200) + 1;
+			int sellingPrice = 400 + sellingRand;
+			playerValue = (int)players.get(currPlayer).getMoney();
+			propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
+			//Should remove flag from tile.
+			map.setOwnerOfTile(tileSelection, null);
+			System.out.println("owner: " + map.getOwnerOfTile(tileSelection));
+			players.get(currPlayer).setMoney(playerValue + sellingPrice);
+			players.get(currPlayer).setPropertyOwned(propertyOwned - 1);
+			if(map.getTiles()[tileSelection].hasMule = true){
+				map.getTiles()[tileSelection].removeMule();
+			}
+			return true;
 		}
-		return null;
+		else{
+			return false;
+		}
 	}
 }

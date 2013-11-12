@@ -260,12 +260,26 @@ public class GameController {
                     state = "storeBuy";
                 }
                 else if (results[0].equals("land office")){
-                    state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        landSelection(tileSelection, map);
-                    }                
+                    results = renderer.drawLandOfficeScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("buy")) {
+                        state = "game";
+                        results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            landSelection(tileSelection, map, "buy");
+                        }
+                    }
+                    else if(results[0].equals("sell")) {
+                        state = "game";
+                        results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            landSelection(tileSelection, map, "sell");
+                        }
+                    }
+                    else if (results[0].equals("back")){
+                        state = "town";
+                    }  
                 }
                 else if (results[0].equals("assay")){
                     System.out.println("Assay Office");
@@ -659,11 +673,11 @@ public class GameController {
      * @param tileSelection The tile current player selected
      * @param map Used to set owner of tile to currPlayer
      */
-    private void landSelection(int tileSelection, Map map) {
-        if(map.getOwnerOfTile(tileSelection) != null){
-            output = "Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection);
-        }
-        else{
+    private void landSelection(int tileSelection, Map map, String choice) {
+        if(choice.equals("buy")){
+            if(map.getOwnerOfTile(tileSelection) != null){
+                output = "You cannot purchase land that is already owned by another player.";
+            }
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
             LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
             boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
@@ -672,6 +686,20 @@ public class GameController {
             }
             else{
                 output = "Land not purchased. Player does not have sufficient funds.";
+            }
+        }
+        else if(choice.equals("sell")){
+            if(map.getOwnerOfTile(tileSelection) == null){
+                output = "You cannot sell land that you do not own.";
+            }
+            int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
+            LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
+            boolean sold = landOffice.sellingProperty(tileSelection, players, currPlayer, map);
+            if(sold){
+                output = "Successfully sold land!";
+            }
+            else{
+                output = "Land not sold. You cannot sell land that you do not own.";
             }
         }
     }

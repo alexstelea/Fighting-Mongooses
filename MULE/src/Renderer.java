@@ -435,6 +435,38 @@ public class Renderer {
         return states;
     }
 
+    public String[] drawLandOfficeScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+
+        ImagePanel panel = new ImagePanel("/media/landoffice.png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        addButtonToPanel(panel, 126, 198, 166, 35, 0, "buy");
+        addButtonToPanel(panel, 126, 283, 166, 35, 0, "sell");
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+
+        blockForInputMain(menuPanel);
+        exitSafely();
+        return states;
+    }
+
     // State[0] = {"town", "time"}
     // State[1] = time left on timer
     public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round, String text) {

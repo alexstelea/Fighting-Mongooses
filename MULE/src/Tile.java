@@ -47,6 +47,7 @@ public abstract class Tile {
         return true;
     }
 
+
     public Player getOwner() {
         return owner;
     }
