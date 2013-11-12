@@ -85,12 +85,12 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        final JButton quitButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "quit");
+        final JButton quitButton = addButtonToPanel(menuPanel, 11, 5, 171, 40, 0, "quit");
 		addHoverIcon(quitButton, "/media/hoverbuttons/quithover.png");
-        final JButton loadButton = addButtonToPanel(menuPanel, 590, 7, 171, 40, 0, "load");
+        final JButton loadButton = addButtonToPanel(menuPanel, 590, 5, 171, 40, 0, "load");
 		addHoverIcon(loadButton, "/media/hoverbuttons/loadhover.png");
-        JButton newButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "new");
-		//addHoverIcon(loadButton, "/media/hoverbuttons/newhover.png");
+        JButton newButton = addButtonToPanel(menuPanel, 771, 5, 171, 40, 0, "new");
+		addHoverIcon(newButton, "/media/hoverbuttons/newhover.png");
 
         blockForInput();
         exitSafely();
@@ -144,16 +144,23 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 171, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 771, 7, 171, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 5, 171, 40, 0, "back");
+		addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
+        JButton okayButton = addButtonToPanel(menuPanel, 771, 5, 171, 40, 0, "okay");
+		addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
         JButton easyButton = addButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
         JButton mediumButton = addButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
         JButton hardButton = addButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
         JButton onePlayer = addButtonToPanel(panel, 185, 404, 24, 40, 2, "1");
+		//addHoverIcon(onePlayer, "/media/tileselect.png");
         JButton twoPlayer = addButtonToPanel(panel, 325, 404, 24, 40, 2, "2");
+		//addHoverIcon(twoPlayer, "/media/tileselect.png");
         JButton threePlayer = addButtonToPanel(panel, 465, 404, 24, 40, 2, "3");
+		//addHoverIcon(threePlayer, "/media/tileselect.png");
         JButton fourPlayer = addButtonToPanel(panel, 605, 404, 24, 40, 2, "4");
+		//addHoverIcon(fourPlayer, "/media/tileselect.png");
         JButton fivePlayer = addButtonToPanel(panel, 745, 404, 24, 40, 2, "5");
+		//addHoverIcon(fivePlayer, "/media/tileselect.png");
 
         blockForSetupScreen(panel, playerBox1, 170, 150, 280, numPlayers, difficultyValue, playerPanel);
         exitSafely();
@@ -205,8 +212,10 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 5, 170, 40, 0, "back");
+		addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
+        JButton okayButton = addButtonToPanel(menuPanel, 771, 5, 170, 40, 0, "okay");
+		addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
         JButton map1Button = addButtonToPanel(panel, 110, 162, 224, 126, 1, "1");
         JButton map2Button = addButtonToPanel(panel, 365, 162, 224, 126, 1, "2");
         JButton map3Button = addButtonToPanel(panel, 617, 162, 224, 126, 1, "3");
@@ -272,8 +281,10 @@ public class Renderer {
         changePanel(frame, panels);
 
         // add buttons
-        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 771, 7, 170, 40, 0, "okay");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 5, 170, 40, 0, "back");
+		addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
+        JButton okayButton = addButtonToPanel(menuPanel, 771, 5, 170, 40, 0, "okay");
+		addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
         JButton humanButton = addButtonToPanel(panel, 75, 78, 133, 115, 1, "human");
         JButton elephantButton = addButtonToPanel(panel, 232, 78, 133, 115, 1, "elephant");
         JButton squirrelButton = addButtonToPanel(panel, 413, 78, 123, 115, 1, "squirrel");
@@ -321,11 +332,15 @@ public class Renderer {
         addButtonToPanel(panel, 260, 60, 250, 400, 0, "store");
         addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub");
-        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+        JButton backButton = addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+		addHoverIcon(backButton, "/media/hoverbuttons/backhover2.png");
 
-        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
-        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
-        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+        JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
+		addHoverIcon(stopButton, "/media/hoverbuttons/stophover.png");
+        JButton pauseButton = addButtonToPanel(menuPanel, 839, 5, 40, 40, 0, "pause");
+		addHoverIcon(pauseButton, "/media/hoverbuttons/pausehover.png");
+        JButton skipButton = addButtonToPanel(menuPanel, 894, 5, 40, 40, 0, "skip");
+		addHoverIcon(skipButton, "/media/hoverbuttons/skiphover.png");
 
         blockForInputMain(menuPanel);
         exitSafely();
@@ -381,18 +396,29 @@ public class Renderer {
         addButtonToPanel(panel, 853, 161, 42, 25, 0, "smithoreMule");
         addButtonToPanel(panel, 853, 257, 42, 25, 0, "crystiteMule");
 
-        addButtonToPanel(panel, 290, 117, 22, 18, 1, "+");
-        addButtonToPanel(panel, 290, 157, 22, 18, 1, "-");
-        addButtonToPanel(panel, 290, 202, 22, 18, 2, "+");
-        addButtonToPanel(panel, 290, 242, 22, 18, 2, "-");
-        addButtonToPanel(panel, 290, 288, 22, 18, 2, "+");
-        addButtonToPanel(panel, 290, 328, 22, 18, 2, "-");
-        addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
-        addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
+        JButton plusButton1 = addButtonToPanel(panel, 290, 117, 22, 18, 1, "+");
+		addHoverIcon(plusButton1, "/media/hoverbuttons/plushover.png");
+        JButton minusButton1 = addButtonToPanel(panel, 290, 157, 22, 18, 1, "-");
+		addHoverIcon(minusButton1, "/media/hoverbuttons/minushover.png");
+        JButton plusButton2 = addButtonToPanel(panel, 290, 202, 22, 18, 2, "+");
+		addHoverIcon(plusButton2, "/media/hoverbuttons/plushover.png");
+        JButton minusButton2 = addButtonToPanel(panel, 290, 242, 22, 18, 2, "-");
+		addHoverIcon(minusButton2, "/media/hoverbuttons/minushover.png");
+        JButton plusButton3 = addButtonToPanel(panel, 290, 288, 22, 18, 2, "+");
+		addHoverIcon(plusButton3, "/media/hoverbuttons/plushover.png");
+        JButton minusButton3 = addButtonToPanel(panel, 290, 328, 22, 18, 2, "-");
+		addHoverIcon(minusButton3, "/media/hoverbuttons/minushover.png");
+        JButton plusButton4 = addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
+		addHoverIcon(plusButton4, "/media/hoverbuttons/plushover.png");
+        JButton minusButton4 = addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
+		addHoverIcon(minusButton4, "/media/hoverbuttons/minushover.png");
 
-        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
-        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
-        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+        JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
+		addHoverIcon(stopButton, "/media/hoverbuttons/stophover.png");
+        JButton pauseButton = addButtonToPanel(menuPanel, 839, 5, 40, 40, 0, "pause");
+		addHoverIcon(pauseButton, "/media/hoverbuttons/pausehover.png");
+        JButton skipButton = addButtonToPanel(menuPanel, 894, 5, 40, 40, 0, "skip");
+		addHoverIcon(skipButton, "/media/hoverbuttons/skiphover.png");
 
         blockForInputMain(menuPanel);
         exitSafely();
