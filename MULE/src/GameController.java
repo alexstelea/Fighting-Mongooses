@@ -102,11 +102,22 @@ public class GameController {
                     state = "setup";
                 }
             }
-            /*
+            
             //Load
             else if(state.equals("load")){
+                String[] results = renderer.drawLoadScreen();
+                String action = results[0];
+                if (action.equals("back")) {
+                   state = "intro";
+               }
+               else {
+                   state = "okay";
+                   //loadGame(results[1]);
+                    System.exit(0);
+                    initializing = false;
+               }
             }
-            */
+
             // Setup Screen
             else if (state.equals("setup")) {
                String[] results = renderer.drawSetupScreen(numPlayers, difficulty);
@@ -205,34 +216,32 @@ public class GameController {
                 }
 
                 else if(results[0].equals("stop")) {
-                    System.out.println("Stop.");
-                }
-
-                else if(results[0].equals("pause")) {
-                    renderer.pauseTimer();
-                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
-                    if(results[0].equals("resume")) {
-                        state = "game";
-                        renderer.unpauseTimer();
-                    }
-                    else if(results[0].equals("save")) {
-                        results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
-                        if(results[0].equals("save")) {
-                            //saveGame(results[1]);
-                            System.exit(0);
-                            initializing = false;
-                        }   
-                        System.out.println("Save");
-                    }
-                    else if(results[0].equals("load")) {
-                        System.out.println("Load");
-                    }
-                    else if(results[0].equals("quit")) {
+                    results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("save")) {
+                        //saveGame(results[1]);
                         System.exit(0);
                         initializing = false;
                     }
                 }
-
+                else if(results[0].equals("pause")) {
+                    renderer.pauseTimer();
+                    output = "Game Paused.";
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber, map, output);
+                    if(results[0].equals("resume")) {
+                        output = "Game Resumed.";
+                        state = "game";
+                        renderer.unpauseTimer();
+                    }
+                    else if(results[0].equals("save")) {
+                        //saveGame(results[1]);
+                        System.exit(0);
+                        initializing = false;
+                    }
+                    else if(results[0].equals("skip")) {
+                    output = "Player skipped turn.";
+                    switchPlayer();
+                    }
+                }
                 else if(results[0].equals("skip")) {
                     output = "Player skipped turn.";
                     switchPlayer();
@@ -291,25 +300,30 @@ public class GameController {
                     state = "game";
                 }
                 else if(results[0].equals("stop")) {
-                    System.out.println("Stop.");
+                    results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("save")) {
+                        //saveGame(results[1]);
+                        System.exit(0);
+                        initializing = false;
+                    }
                 }
-
                 else if(results[0].equals("pause")) {
                     renderer.pauseTimer();
-                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    output = "Game Paused.";
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber, map, output);
                     if(results[0].equals("resume")) {
-                        state = "town";
+                        output = "Game Resumed.";
+                        state = "game";
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
-                        System.out.println("Save");
-                    }
-                    else if(results[0].equals("load")) {
-                        System.out.println("Load");
-                    }
-                    else if(results[0].equals("quit")) {
+                        //saveGame(results[1]);
                         System.exit(0);
                         initializing = false;
+                    }
+                    else if(results[0].equals("skip")) {
+                    output = "Player skipped turn.";
+                    switchPlayer();
                     }
                 }
                 else if(results[0].equals("skip")) {
@@ -414,24 +428,30 @@ public class GameController {
                     }
                 }
                 else if(results[0].equals("stop")) {
-                        System.out.println("Stop.");
+                    results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("save")) {
+                        //saveGame(results[1]);
+                        System.exit(0);
+                        initializing = false;
+                    }
                 }
                 else if(results[0].equals("pause")) {
                     renderer.pauseTimer();
-                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    output = "Game Paused.";
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber, map, output);
                     if(results[0].equals("resume")) {
-                        state = "storeBuy";
+                        output = "Game Resumed.";
+                        state = "game";
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
-                        System.out.println("Save");
-                    }
-                    else if(results[0].equals("load")) {
-                        System.out.println("Load");
-                    }
-                    else if(results[0].equals("quit")) {
+                        //saveGame(results[1]);
                         System.exit(0);
                         initializing = false;
+                    }
+                    else if(results[0].equals("skip")) {
+                    output = "Player skipped turn.";
+                    switchPlayer();
                     }
                 }
                 else if(results[0].equals("skip")) {
@@ -526,24 +546,30 @@ public class GameController {
                     }
                 }
                 else if(results[0].equals("stop")) {
-                    System.out.println("Stop.");
+                    results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("save")) {
+                        //saveGame(results[1]);
+                        System.exit(0);
+                        initializing = false;
+                    }
                 }
                 else if(results[0].equals("pause")) {
                     renderer.pauseTimer();
-                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    output = "Game Paused.";
+                    results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber, map, output);
                     if(results[0].equals("resume")) {
-                        state = "storeSell";
+                        output = "Game Resumed.";
+                        state = "game";
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
-                        System.out.println("Save");
-                    }
-                    else if(results[0].equals("load")) {
-                        System.out.println("Load");
-                    }
-                    else if(results[0].equals("quit")) {
+                        //saveGame(results[1]);
                         System.exit(0);
                         initializing = false;
+                    }
+                    else if(results[0].equals("skip")) {
+                    output = "Player skipped turn.";
+                    switchPlayer();
                     }
                 }
                 else if(results[0].equals("skip")) {
@@ -563,7 +589,6 @@ public class GameController {
      * switchPlayer switches player to determine currPlayer
      */
     private void switchPlayer() {
-        output = "5 ... 4 ... 3 ... 2 ... 1";
         double chance = Math.random() * 100;
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
@@ -661,9 +686,12 @@ public class GameController {
         if (roundNumber <= 12) {
             return;
         }
-        String winningPlayer = players.get(numPlayers - 1).getName();
-        System.out.println(winningPlayer + " is the winner!");
-        System.exit(0);
+        String[] results = renderer.drawWinScreen(players, currPlayer, store, numPlayers, roundNumber);
+        if(results[0].equals("okay")) {
+            String winningPlayer = players.get(numPlayers - 1).getName();
+            System.out.println(winningPlayer + " is the winner!");
+            System.exit(0);
+        }
     }
 
     /**
@@ -876,7 +904,7 @@ public class GameController {
         Save[] savedGames = getSavedGames();
         LoadScreenModel model = new LoadScreenModel();
         model.setSavedGames(savedGames);
-        //renderer.drawLoadScreen(model);
+        renderer.drawLoadScreen();
     }
 
     /**
