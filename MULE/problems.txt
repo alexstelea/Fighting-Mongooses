@@ -4,6 +4,7 @@ character selection screen
     *thumbnails and names of characters need to be implemented
     *occasionally, i will make a character and the game will just reset the player selection. the last time it happened, i tried every color of squirrel with the name "be" before it finally worked when i changed the name to "asdfjklaslk" 
     *hover buttons
+    *when cat race is selected, the cat race graphic is shifted over to the left for some reason 
 map
     *store inventory is not displayed
     *font color is incorrect
