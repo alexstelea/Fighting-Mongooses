@@ -45,7 +45,9 @@ public class Renderer {
     private Timer timer;
     private boolean isSelectedButtonCreated = false;
     private long timeWhenTimerSet;
+    private long pauseTime;
     private int num;
+    private boolean paused;
 
     /**
      * Renderer handles all graphics related actions for game.
@@ -61,6 +63,7 @@ public class Renderer {
         lock = new ReentrantLock();
         frame.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         timer = createTimer(50000);
+        paused = false;
     }
 
     public String[] drawIntroScreen() {
@@ -354,7 +357,7 @@ public class Renderer {
     // state[3] = quantitySmithore
     // state[4] = quantityCrystite
     public String[] drawStoreScreen(ArrayList<Player> players, int currPlayer, String transactionType, String[] quantities, 
-        Store store, int numPlayers, int round) {
+        Store store, int numPlayers, int round, String text) {
 
         // initialize the states
         states = new String[5];
@@ -404,13 +407,13 @@ public class Renderer {
 		addHoverIcon(plusButton2, "/media/hoverbuttons/plushover.png");
         JButton minusButton2 = addButtonToPanel(panel, 290, 242, 22, 18, 2, "-");
 		addHoverIcon(minusButton2, "/media/hoverbuttons/minushover.png");
-        JButton plusButton3 = addButtonToPanel(panel, 290, 288, 22, 18, 2, "+");
+        JButton plusButton3 = addButtonToPanel(panel, 290, 288, 22, 18, 3, "+");
 		addHoverIcon(plusButton3, "/media/hoverbuttons/plushover.png");
-        JButton minusButton3 = addButtonToPanel(panel, 290, 328, 22, 18, 2, "-");
+        JButton minusButton3 = addButtonToPanel(panel, 290, 328, 22, 18, 3, "-");
 		addHoverIcon(minusButton3, "/media/hoverbuttons/minushover.png");
-        JButton plusButton4 = addButtonToPanel(panel, 290, 373, 22, 18, 2, "+");
+        JButton plusButton4 = addButtonToPanel(panel, 290, 373, 22, 18, 4, "+");
 		addHoverIcon(plusButton4, "/media/hoverbuttons/plushover.png");
-        JButton minusButton4 = addButtonToPanel(panel, 290, 413, 22, 18, 2, "-");
+        JButton minusButton4 = addButtonToPanel(panel, 290, 413, 22, 18, 4, "-");
 		addHoverIcon(minusButton4, "/media/hoverbuttons/minushover.png");
 
         JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
@@ -419,6 +422,8 @@ public class Renderer {
 		addHoverIcon(pauseButton, "/media/hoverbuttons/pausehover.png");
         JButton skipButton = addButtonToPanel(menuPanel, 894, 5, 40, 40, 0, "skip");
 		addHoverIcon(skipButton, "/media/hoverbuttons/skiphover.png");
+
+        drawStatusText(menuPanel, text);
 
         blockForInputMain(menuPanel);
         exitSafely();
@@ -452,6 +457,38 @@ public class Renderer {
         addButtonToPanel(panel, 390, 242, 170, 40, 0, "save");
         addButtonToPanel(panel, 390, 316, 170, 40, 0, "load");
         addButtonToPanel(panel, 390, 390, 170, 40, 0, "quit");
+
+        blockForInputMain(menuPanel);
+        exitSafely();
+        return states;
+    }
+
+    public String[] drawLandOfficeScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+
+        ImagePanel panel = new ImagePanel("/media/landoffice.png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        addButtonToPanel(panel, 126, 198, 166, 35, 0, "buy");
+        addButtonToPanel(panel, 126, 283, 166, 35, 0, "sell");
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
 
         blockForInputMain(menuPanel);
         exitSafely();
@@ -505,8 +542,71 @@ public class Renderer {
         return states;
     }
 
-    public void drawLoadScreen(LoadScreenModel model) {
-        return;
+    public String[] drawSaveScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+        states[1] = "DefaultSave";
+
+        ImagePanel panel = new ImagePanel("/media/savescreen.png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        addButtonToPanel(panel, 126, 198, 166, 35, 0, "save");
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+
+        JTextField textBox = addTextToPanel(panel, 420, 480, 225, 38);
+
+        blockForInputMain(menuPanel);
+        exitSafely();
+        return states;
+    }
+
+    public String[] drawLoadScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+
+        ImagePanel panel = new ImagePanel("/media/loadscreen.png");
+        panel.setPreferredSize(new Dimension(950, 525));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(playerPanel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        addButtonToPanel(panel, 126, 198, 166, 35, 0, "load");
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+
+        JTextField textBox = addTextToPanel(panel, 420, 480, 225, 38);
+
+        blockForInputMain(menuPanel);
+        exitSafely();
+        return states;
     }
     
     // helper methods
@@ -757,7 +857,7 @@ public class Renderer {
             currentTime = date.getTime();
             timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
 
-            if (oldTimerNum != timerNum) {
+            if (oldTimerNum != timerNum && !paused) {
                 try {
                     panel.remove(timerImage);
                 }
@@ -843,6 +943,26 @@ public class Renderer {
         };
         Timer timer = new Timer(time, timerListener);
         return timer;
+    }
+
+    public void pauseTimer() {
+        if (paused)
+            return;
+        Date date = new Date();
+        pauseTime = date.getTime();    
+        timer.stop();
+        paused = true;
+    }
+
+    public void unpauseTimer() {
+        if (!paused)
+            return;
+        Date date = new Date();
+        long timePaused = (date.getTime() - pauseTime);
+        pauseTime = 0;
+        timeWhenTimerSet += timePaused;
+        timer.start();
+        paused = false;
     }
     
     public void stopTimer() {
@@ -1115,9 +1235,9 @@ public class Renderer {
         }
         System.out.println("Displaying: " + textString);
         JTextField text = new JTextField(textString);
-        text.setBounds(0, 6, 225, 38);
-        text.setFont(new Font("Candara", Font.PLAIN, 20));
-        text.setHorizontalAlignment(JTextField.CENTER);
+        text.setBounds(60, 6, 600, 38);
+        text.setFont(new Font("Candara", Font.PLAIN, 12));
+        text.setHorizontalAlignment(JTextField.LEFT);
         text.setForeground(Color.WHITE);
         text.setBackground(new Color(87, 51, 4));
         text.setOpaque(false);

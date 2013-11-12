@@ -20,6 +20,7 @@ public class Map {
         int numTiles;
         if (mapNum == 1) {
             numTiles = setMap1();
+            return; // this is the default map, so we don't need to randomize anything
         }
         else if (mapNum == 2) {
             numTiles = setMap2();
@@ -36,9 +37,9 @@ public class Map {
 
         // this will need to be changed, I'm just guessing
         Random rand = new Random();
-        int numMount1 = (rand.nextInt() % 2) + 2;
-        int numMount2 = (rand.nextInt() % 2) + 2;
-        int numMount3 = (rand.nextInt() % 2) + 2;
+        int numMount1 = (rand.nextInt() % 3) + 2;
+        int numMount2 = (rand.nextInt() % 3) + 2;
+        int numMount3 = (rand.nextInt() % 3) + 2;
 
         int numElementsToAdd = WIDTH * HEIGHT - numTiles; // enough mountains and plains to fill the rest of the map
         ArrayList<Tile> newTiles = new ArrayList<Tile>();
@@ -112,11 +113,55 @@ public class Map {
     }
 
     private int setMap1() {
+        tiles[coordToLinear(0, 0)] = new PlainTile();
+        tiles[coordToLinear(0, 1)] = new PlainTile();
+        tiles[coordToLinear(0, 2)] = new MountainTile(1);
+        tiles[coordToLinear(0, 3)] = new PlainTile();
         tiles[coordToLinear(0, 4)] = new RiverTile();
+        tiles[coordToLinear(0, 5)] = new PlainTile();
+        tiles[coordToLinear(0, 6)] = new MountainTile(3);
+        tiles[coordToLinear(0, 7)] = new PlainTile();
+        tiles[coordToLinear(0, 8)] = new PlainTile();
+
+        tiles[coordToLinear(1, 0)] = new PlainTile();
+        tiles[coordToLinear(1, 1)] = new MountainTile(1);
+        tiles[coordToLinear(1, 2)] = new PlainTile();
+        tiles[coordToLinear(1, 3)] = new PlainTile();
         tiles[coordToLinear(1, 4)] = new RiverTile();
+        tiles[coordToLinear(1, 5)] = new PlainTile();
+        tiles[coordToLinear(1, 6)] = new PlainTile();
+        tiles[coordToLinear(1, 7)] = new PlainTile();
+        tiles[coordToLinear(1, 8)] = new MountainTile(3);
+
+        tiles[coordToLinear(2, 0)] = new MountainTile(3);
+        tiles[coordToLinear(2, 1)] = new PlainTile();
+        tiles[coordToLinear(2, 2)] = new PlainTile();
+        tiles[coordToLinear(2, 3)] = new PlainTile();
         tiles[coordToLinear(2, 4)] = new TownTile();
+        tiles[coordToLinear(2, 5)] = new PlainTile();
+        tiles[coordToLinear(2, 6)] = new PlainTile();
+        tiles[coordToLinear(2, 7)] = new PlainTile();
+        tiles[coordToLinear(2, 8)] = new MountainTile(1);
+
+        tiles[coordToLinear(3, 0)] = new PlainTile();
+        tiles[coordToLinear(3, 1)] = new MountainTile(2);
+        tiles[coordToLinear(3, 2)] = new PlainTile();
+        tiles[coordToLinear(3, 3)] = new PlainTile();
         tiles[coordToLinear(3, 4)] = new RiverTile();
+        tiles[coordToLinear(3, 5)] = new PlainTile();
+        tiles[coordToLinear(3, 6)] = new MountainTile(2);
+        tiles[coordToLinear(3, 7)] = new PlainTile();
+        tiles[coordToLinear(3, 8)] = new PlainTile();
+
+        tiles[coordToLinear(4, 0)] = new PlainTile();
+        tiles[coordToLinear(4, 1)] = new PlainTile();
+        tiles[coordToLinear(4, 2)] = new MountainTile(2);
+        tiles[coordToLinear(4, 3)] = new PlainTile();
         tiles[coordToLinear(4, 4)] = new RiverTile();
+        tiles[coordToLinear(4, 5)] = new PlainTile();
+        tiles[coordToLinear(4, 6)] = new PlainTile();
+        tiles[coordToLinear(4, 7)] = new PlainTile();
+        tiles[coordToLinear(4, 8)] = new MountainTile(2);
         return 5;
     }
 

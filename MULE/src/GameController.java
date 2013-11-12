@@ -46,6 +46,7 @@ public class GameController {
     private Store store;
     private MongoClient mongoClient;
     private DB db;
+    private String output;
 
     /**
      * GameController handles all input related actions for game.
@@ -55,6 +56,7 @@ public class GameController {
         currPlayer = 0;
         numPlayers = 1;
         state = "";
+        output = "";
         players = new ArrayList<Player>();
         try {
             mongoClient = new MongoClient();
@@ -125,7 +127,6 @@ public class GameController {
                 String[] results = renderer.drawMapScreen(numPlayers, difficulty);
                 String action = results[0];
                 map = new Map(Integer.parseInt(results[1]));
-                System.out.println("Map created with num " + Integer.parseInt(results[1]));
                 if (action.equals("okay")) {
                     state = "player";
                 }
@@ -144,7 +145,7 @@ public class GameController {
                 }
                 else {
                     if (takenColors.contains(results[3])) {
-                        System.out.println("That color is taken!");
+                        output = "That color is taken!";
                         continue;
                     }
                     try {
@@ -159,8 +160,7 @@ public class GameController {
                     // only move on if we have all the players
                     if (--numPlayers == 0) {
                         state = "game";
-                    }
-                    
+                    }   
                 }
             }
 
@@ -170,7 +170,6 @@ public class GameController {
 
             // quit state
             else {
-                System.out.println("State: " + state);
                 System.exit(0);
                 initializing = false;
             }
@@ -197,7 +196,8 @@ public class GameController {
 
         while(initializing) {
             if (state.equals("game")){
-                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
+                String[] results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, output);
+                output = "";
 
                 if (results[0].equals("time")) {
                     System.out.println("Time's up, switching player");
@@ -209,12 +209,19 @@ public class GameController {
                 }
 
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "game";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
+                        results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
+                        if(results[0].equals("save")) {
+                            //saveGame(results[1]);
+                            System.exit(0);
+                            initializing = false;
+                        }   
                         System.out.println("Save");
                     }
                     else if(results[0].equals("load")) {
@@ -227,7 +234,7 @@ public class GameController {
                 }
 
                 else if(results[0].equals("skip")) {
-                    System.out.println("Skip Turn.");
+                    output = "Player skipped turn.";
                     switchPlayer();
                 }
 
@@ -246,7 +253,7 @@ public class GameController {
                 String[] results = renderer.drawTownScreen(players, currPlayer, store, numPlayers, roundNumber);
 
                 if (results[0].equals("time")) {
-                    System.out.println("Time's up, switching player");
+                    output = "Time's up, switching player";
                     switchPlayer();
                 }
                 else if (results[0].equals("pub")){
@@ -256,12 +263,26 @@ public class GameController {
                     state = "storeBuy";
                 }
                 else if (results[0].equals("land office")){
-                    state = "game";
-                    results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        landSelection(tileSelection, map);
-                    }                
+                    results = renderer.drawLandOfficeScreen(players, currPlayer, store, numPlayers, roundNumber);
+                    if(results[0].equals("buy")) {
+                        state = "game";
+                        results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            landSelection(tileSelection, map, "buy");
+                        }
+                    }
+                    else if(results[0].equals("sell")) {
+                        state = "game";
+                        results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            landSelection(tileSelection, map, "sell");
+                        }
+                    }
+                    else if (results[0].equals("back")){
+                        state = "town";
+                    }  
                 }
                 else if (results[0].equals("assay")){
                     System.out.println("Assay Office");
@@ -274,10 +295,11 @@ public class GameController {
                 }
 
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "town";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
                         System.out.println("Save");
@@ -291,20 +313,20 @@ public class GameController {
                     }
                 }
                 else if(results[0].equals("skip")) {
-                    System.out.println("Skip Turn.");
+                    output = "Player skipped turn.";
                     switchPlayer();
                 }
             }
 
             else if (state.equals("storeBuy")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store, numPlayers, roundNumber);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "buy", quantities, store, numPlayers, roundNumber, output);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
                 quantities[3] = results[4];
 
                 if (results[0].equals("time")) {
-                    System.out.println("Time's up, switching player");
+                    output = "Time's up, switching player";
                     switchPlayer();
                 }
 
@@ -341,7 +363,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyFoodMule");
                         if(wrongTile){
-                            System.out.println("Lost Mule. Should've placed on right tile, bitch.");
+                            output = "Lost Mule. Should've placed on right tile, bitch.";
                             state = "game";
                         }
                     }
@@ -356,7 +378,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyEnergyMule");
                         if(wrongTile){
-                            System.out.println("Lost Mule. Should've placed on right tile, bitch.");
+                            output = "Lost Mule. Should've placed on right tile, bitch.";
                             state = "game";
                         }
                     }
@@ -371,7 +393,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buySmithoreMule");
                         if(wrongTile){
-                            System.out.println("Lost Mule. Should've placed on right tile, bitch.");
+                            output = "Lost Mule. Should've placed on right tile, bitch.";
                             state = "game";
                         }
                     }
@@ -386,7 +408,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyCrystiteMule");
                         if(wrongTile){
-                            System.out.println("Lost Mule. Should've placed on right tile, bitch.");
+                            output = "Lost Mule. Should've placed on right tile, bitch.";
                             state = "game";
                         }
                     }
@@ -395,10 +417,11 @@ public class GameController {
                         System.out.println("Stop.");
                 }
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "storeBuy";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
                         System.out.println("Save");
@@ -412,7 +435,7 @@ public class GameController {
                     }
                 }
                 else if(results[0].equals("skip")) {
-                    System.out.println("Skip Turn.");
+                    output = "Player skipped turn.";
                     switchPlayer();
                 }
                 else {
@@ -421,14 +444,14 @@ public class GameController {
             }
 
             else if (state.equals("storeSell")) {
-                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store, numPlayers, roundNumber);
+                String[] results = renderer.drawStoreScreen(players, currPlayer, "sell", quantities, store, numPlayers, roundNumber, output);
                 quantities[0] = results[1];
                 quantities[1] = results[2];
                 quantities[2] = results[3];
                 quantities[3] = results[4];
 
                 if (results[0].equals("time")) {
-                    System.out.println("Time's up, switching player");
+                    output = "Time's up, switching player";
                     switchPlayer();
                 }
 
@@ -506,10 +529,11 @@ public class GameController {
                     System.out.println("Stop.");
                 }
                 else if(results[0].equals("pause")) {
-                    //pause timer
+                    renderer.pauseTimer();
                     results = renderer.drawMenuScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("resume")) {
                         state = "storeSell";
+                        renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
                         System.out.println("Save");
@@ -523,7 +547,7 @@ public class GameController {
                     }
                 }
                 else if(results[0].equals("skip")) {
-                    System.out.println("Skip Turn.");
+                    output = "Player skipped turn.";
                     switchPlayer();
                 }
             }
@@ -539,7 +563,8 @@ public class GameController {
      * switchPlayer switches player to determine currPlayer
      */
     private void switchPlayer() {
-        double chance = 25;//Math.random() * 100;
+        output = "5 ... 4 ... 3 ... 2 ... 1";
+        double chance = Math.random() * 100;
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
             gatherResources();
@@ -550,13 +575,13 @@ public class GameController {
         if((chance -= 27) < 0){
             RandomEvents randomEvent = new RandomEvents(roundNumber);
             if(numPlayers == 1){
-                renderer.drawStatusText(null, randomEvent.generate(players, currPlayer, 6));
+                output = randomEvent.generate(players, currPlayer, 6);
             }
             else if(players.get(currPlayer).equals(players.get(0))){
-                randomEvent.generate(players, currPlayer, 3);
+                output = randomEvent.generate(players, currPlayer, 3);
             }
             else{
-                randomEvent.generate(players, currPlayer, 6);
+                output = randomEvent.generate(players, currPlayer, 6);
             }
         }
         currPlayer = (currPlayer + 1) % numPlayers;
@@ -570,20 +595,14 @@ public class GameController {
      *                 from mules after each round
      */
     private void gatherResources() {
-        // make sure player has enough energy
-        int[] playerEnergy = new int[numPlayers];
-        for (int i = 0; i < numPlayers; i++) {
-            playerEnergy[i] = players.get(i).getEnergy();
-        }
-
         for (Tile t : map.getTiles()) {
             int ownerIndex = getPlayerIndex(t.getOwner());
             if (ownerIndex == -1) 
                 continue;
             Player player = players.get(ownerIndex);
-            if (playerEnergy[ownerIndex] > 0) { 
+            if (player.getEnergy() > 0) { 
                 t.collectResources();
-                playerEnergy[ownerIndex]--;
+                player.setEnergy(player.getEnergy() - 1);
             }
         }
     }
@@ -624,7 +643,6 @@ public class GameController {
      */
     private void reorderPlayers() {
         // insertion sort is the fastest sort for < 30
-        System.out.println("Reordering players");
         for (int i = 0; i < players.size(); i++) {
             Player playerToAdd = players.get(i);
             int index = i;
@@ -653,19 +671,37 @@ public class GameController {
      * @param tileSelection The tile current player selected
      * @param map Used to set owner of tile to currPlayer
      */
-    private String landSelection(int tileSelection, Map map) {
-        if(map.getOwnerOfTile(tileSelection) != null){
-            String prompt = "Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection);
-            System.out.println("Sorry, tile already owned by " + map.getOwnerOfTile(tileSelection));
-            return prompt;
-        }
-        else{
+    private void landSelection(int tileSelection, Map map, String choice) {
+        if(choice.equals("buy")){
+            if(map.getOwnerOfTile(tileSelection) != null){
+                output = "You cannot purchase land that is already owned by another player.";
+            }
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
             LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
             boolean bought = landOffice.buyProperty(tileSelection, players, currPlayer, map);
-            String prompt = "Successfully purchased land!";
+            if(bought){
+                output = "Successfully purchased land!";
+            }
+            else{
+                output = "Land not purchased. Player does not have sufficient funds.";
+            }
         }
-        return null;
+        else if(choice.equals("sell")){
+            if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
+                output = "You cannot sell land that you do not own.";
+                return;
+            }
+            int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
+            LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
+            boolean sold = landOffice.sellingProperty(tileSelection, players, currPlayer, map);
+            if(sold){
+                output = "Successfully sold land!";
+                map.getTiles()[tileSelection].sellProperty();
+            }
+            else{
+                output = "Land not sold. You cannot sell land that you do not own.";
+            }
+        }
     }
 
     /**
@@ -679,16 +715,15 @@ public class GameController {
         //Subtract money from player if placed on wrong tile and lose mulse
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
             if(store(choice, 1)){
-                System.out.println("Player does not own tile.");
+                output = "Player does not own tile.";
                 return true;
             }
         }
-        //else {
         else if(map.getTiles()[tileSelection].muleIsValid(type)) {
             if(store(choice, 1)){
                 Tile tile = map.getTiles()[tileSelection];
                 tile.addMule();
-                tile.setMuleType(type); // just get the type
+                tile.setMuleType(type);
             }
             else{
                 return false;
@@ -705,7 +740,7 @@ public class GameController {
      */
     private void muleRemoval(int tileSelection, Map map, String choice) {
         if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
-            System.out.println("You do not own this plot. Try again.");
+            output = "You do not own this plot. Try again.";
         }
         else{
             String type = choice.substring(4);
@@ -714,10 +749,8 @@ public class GameController {
                 map.getTiles()[tileSelection].removeMule();
             }
             else{
-                System.out.println("Player should have selected a: " + type);
-                System.out.println("Player selected a: " + map.getOwnerOfTile(tileSelection).getMuleType());
+                output = "Player should have selected a: " + type + " instead of a(n): " + map.getOwnerOfTile(tileSelection).getMuleType();
             }
-            
         }
     }
 
@@ -728,11 +761,9 @@ public class GameController {
         stopTime = System.currentTimeMillis();
         Integer elapsedTime = ((int)(long)(stopTime - startTime))/1000;
         int timeRemaining = 50 - elapsedTime;
-        System.out.println("Elapsed time was " + elapsedTime + " seconds.");
-        System.out.println("Player had " + timeRemaining + " seconds remaining.");
 
         Pub pub = new Pub(roundNumber, timeRemaining);
-        pub.gamble(players, currPlayer);
+        output = pub.gamble(players, currPlayer);
         switchPlayer();
     }
 
@@ -744,77 +775,85 @@ public class GameController {
     private boolean store(String choice, int quantities){
         //BUY
         if(choice.equals("buyFood")){
-            System.out.println("Buy " + quantities + " food");
-            store.buyItem(players, currPlayer, "food", quantities);
+            if(store.buyItem(players, currPlayer, "food", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Food.";
+            }
         }
         else if(choice.equals("buyEnergy")){
-            System.out.println("Buy " + quantities + " energy");
-            store.buyItem(players, currPlayer, "energy", quantities);
+            if(store.buyItem(players, currPlayer, "energy", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Energy.";
+            }
         }
         else if(choice.equals("buySmithore")){
-            System.out.println("Buy " + quantities + " smithore");
-            store.buyItem(players, currPlayer, "smithore", quantities);
+            if(store.buyItem(players, currPlayer, "smithore", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Smithore.";
+            }
         }
         else if(choice.equals("buyCrystite")){
-            System.out.println("Buy " + quantities + " crystite");
-            store.buyItem(players, currPlayer, "crystite", quantities);
+            if(store.buyItem(players, currPlayer, "crystite", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
+            }
+            else{
+                output = "Successfully purchased " + quantities + " Crysite.";
+            }
         }
         else if(choice.equals("buyFoodMule")){
-            System.out.println("Buy food mule");
-            if(store.buyItem(players, currPlayer, "foodMule", quantities)){
+            if(store.buyItem(players, currPlayer, "foodMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
         else if(choice.equals("buyEnergyMule")){
-            System.out.println("Buy energy mule");
-            if(store.buyItem(players, currPlayer, "energyMule", quantities)){
+            if(store.buyItem(players, currPlayer, "energyMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
         else if(choice.equals("buySmithoreMule")){
-            System.out.println("Buy smithore mule");
-            if(store.buyItem(players, currPlayer, "smithoreMule", quantities)){
+            if(store.buyItem(players, currPlayer, "smithoreMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
         else if(choice.equals("buyCrystiteMule")){
-            System.out.println("Buy crystite mule");
-            if(store.buyItem(players, currPlayer, "crystiteMule", quantities)){
+            if(store.buyItem(players, currPlayer, "crystiteMule", quantities).equals("noBuy")){
+                output = "Buying more than what store owns.";
                 return true;
             }
         }
 
         //SELL
         if(choice.equals("sellFood")){
-            System.out.println("Sell " + quantities + " food");
-            store.sellItem(players, currPlayer, "food", quantities);
+            output = store.sellItem(players, currPlayer, "food", quantities);
         }
         else if(choice.equals("sellEnergy")){
-            System.out.println("Sell " + quantities + " energy");
-            store.sellItem(players, currPlayer, "energy", quantities);
+            output = store.sellItem(players, currPlayer, "energy", quantities);
         }
         else if(choice.equals("sellSmithore")){
-            System.out.println("Sell " + quantities + " smithore");
-            store.sellItem(players, currPlayer, "smithore", quantities);
+            output = output = store.sellItem(players, currPlayer, "smithore", quantities);
         }
         else if(choice.equals("sellCrystite")){
-            System.out.println("Sell " + quantities + " crystite");
-            store.sellItem(players, currPlayer, "crystite", quantities);
+            output = store.sellItem(players, currPlayer, "crystite", quantities);
         }
         else if(choice.equals("sellFoodMule")){
-            System.out.println("Sell food mule");
-            store.sellItem(players, currPlayer, "foodMule", quantities);
+            output = store.sellItem(players, currPlayer, "foodMule", quantities);
         }
         else if(choice.equals("sellEnergyMule")){
-            System.out.println("Sell energy mule");
-            store.sellItem(players, currPlayer, "energyMule", quantities);
+            output = store.sellItem(players, currPlayer, "energyMule", quantities);
         }
         else if(choice.equals("sellSmithoreMule")){
-            System.out.println("Sell smithore mule");
-            store.sellItem(players, currPlayer, "smithoreMule", quantities);
+            output = store.sellItem(players, currPlayer, "smithoreMule", quantities);
         }
         else if(choice.equals("sellCrystiteMule")){
-            System.out.println("Sell crystite mule");
             store.sellItem(players, currPlayer, "crystiteMule", quantities);
         }
         return false;
@@ -837,7 +876,7 @@ public class GameController {
         Save[] savedGames = getSavedGames();
         LoadScreenModel model = new LoadScreenModel();
         model.setSavedGames(savedGames);
-        renderer.drawLoadScreen(model);
+        //renderer.drawLoadScreen(model);
     }
 
     /**
@@ -884,7 +923,6 @@ public class GameController {
             System.out.println("Failed to connect to database!");
             return;
         }
-
         Gson gson = new GsonBuilder().create();
         String difficultyJson = gson.toJson(difficulty);
         String roundNumberJson = gson.toJson(roundNumber);
@@ -931,8 +969,6 @@ public class GameController {
             System.out.println("Failed to write to database!");
         }
     }
-
-
 
     private void loadGame(String gameName) {
         DBCollection coll = db.getCollection(gameName);

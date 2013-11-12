@@ -66,7 +66,7 @@ public class Pub{
 	 * @param players ArrayList contaning all players
 	 * @param currPlayer The current player
 	 */
-	public void gamble(ArrayList<Player> players, int currPlayer){
+	public String gamble(ArrayList<Player> players, int currPlayer){
 		int abs = Math.abs(timeBonus);
 		int bonusRand = rand.nextInt(abs);
 		int playerValue = (int)players.get(currPlayer).getMoney();
@@ -74,12 +74,11 @@ public class Pub{
 		if(moneyBonus < 251){
 			players.get(currPlayer).setMoney(playerValue + moneyBonus);
 			int newPlayerValue = (int)players.get(currPlayer).getMoney();
-			System.out.println("Player made " + (newPlayerValue - playerValue) + " dollars gambling.");
+			return "Player made " + (newPlayerValue - playerValue) + " dollars gambling.";
 		}
 		else{
-			System.out.println("Money bonus: " + moneyBonus);
-			System.out.println("Money bonus exceeds 250");
 			players.get(currPlayer).setMoney(playerValue + 250);
+			return "Player made " + (250) + " dollars gambling.";
 		}
 	}
 

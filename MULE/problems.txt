@@ -1,23 +1,25 @@
 problems in game
 
-map selection screen
-    *game difficulty is shifted up too high as is the map preview thumbnail. when map thumbnail is updated, its position is corrected but the text position remains in the same place and is obstructed
-    *no red arrow under the selected map
 character selection screen
     *thumbnails and names of characters need to be implemented
-    *red arrows indicating selected player are not present
+    *occasionally, i will make a character and the game will just reset the player selection. the last time it happened, i tried every color of squirrel with the name "be" before it finally worked when i changed the name to "asdfjklaslk" 
+    *hover buttons
+    *when cat race is selected, the cat race graphic is shifted over to the left for some reason 
 map
     *store inventory is not displayed
-    *crystite quantity displayed as "false" or "true" 
-    *if no player is assigned, panels at bottom should not be present
     *font color is incorrect
-<<<<<<< HEAD
-    *menu button needs to be implemented
-=======
-    *menu button implementation
->>>>>>> 3ab62a4618579e090e64004e27d66a789c286e14
+    *energy and food cost must be deducted each round
+    *pause button needs to be correctly implemented (when pressed, map remains visible but bottom most panel changes to bp2 and "paused" message is displayed)
+    *stop button needs to be implemented
+    *game should pause when player turn ends with message at bottom indicating a change in player
+    *map 1 should always return the given standard map while maps 2-5 can have randomly generated terrains
+    *should the game pause when a random event happens? 
+    *hover buttons graphics and pop up text
 town
-    *back button implementation
+    *assay office graphic looks gross (jackson should fix)
+    *we might want to put in a confirmation message for the pub? not sure
+    *hover buttons
 store
 	*no quantities displayed
+    *hover buttons and active/inactive button graphics need to be implemented
 
