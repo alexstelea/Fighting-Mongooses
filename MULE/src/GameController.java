@@ -687,14 +687,16 @@ public class GameController {
             }
         }
         else if(choice.equals("sell")){
-            if(map.getOwnerOfTile(tileSelection) == null){
+            if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
                 output = "You cannot sell land that you do not own.";
+                return;
             }
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
             LandOffice landOffice = new LandOffice(propertyOwned, roundNumber);
             boolean sold = landOffice.sellingProperty(tileSelection, players, currPlayer, map);
             if(sold){
                 output = "Successfully sold land!";
+                map.getTiles()[tileSelection].sellProperty();
             }
             else{
                 output = "Land not sold. You cannot sell land that you do not own.";

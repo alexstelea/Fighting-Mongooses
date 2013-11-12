@@ -47,6 +47,10 @@ public abstract class Tile {
         return true;
     }
 
+    public void sellProperty() {
+        owner = null;
+    }
+
 
     public Player getOwner() {
         return owner;
