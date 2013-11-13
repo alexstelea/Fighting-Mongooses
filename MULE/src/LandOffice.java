@@ -67,9 +67,7 @@ public class LandOffice{
 			int sellingPrice = 400 + sellingRand;
 			playerValue = (int)players.get(currPlayer).getMoney();
 			propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
-			//Should remove flag from tile.
 			map.setOwnerOfTile(tileSelection, null);
-			System.out.println("owner: " + map.getOwnerOfTile(tileSelection));
 			players.get(currPlayer).setMoney(playerValue + sellingPrice);
 			players.get(currPlayer).setPropertyOwned(propertyOwned - 1);
 			if(map.getTiles()[tileSelection].hasMule = true){

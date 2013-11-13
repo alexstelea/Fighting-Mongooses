@@ -111,10 +111,15 @@ public class GameController {
                    state = "intro";
                }
                else {
-                   state = "okay";
-                   //loadGame(results[1]);
-                    System.exit(0);
-                    initializing = false;
+                    state = "intro";
+                    if (loadGame(results[1]))
+                    {
+                        initializing = false;
+                    }
+                    else
+                    {
+                        output = "Failed to load game!";
+                    }
                }
             }
 
@@ -218,9 +223,16 @@ public class GameController {
                 else if(results[0].equals("stop")) {
                     results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                 }
                 else if(results[0].equals("pause")) {
@@ -233,9 +245,16 @@ public class GameController {
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                     else if(results[0].equals("skip")) {
                     output = "Player skipped turn.";
@@ -302,9 +321,16 @@ public class GameController {
                 else if(results[0].equals("stop")) {
                     results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                 }
                 else if(results[0].equals("pause")) {
@@ -317,9 +343,16 @@ public class GameController {
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                     else if(results[0].equals("skip")) {
                     output = "Player skipped turn.";
@@ -430,9 +463,16 @@ public class GameController {
                 else if(results[0].equals("stop")) {
                     results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                 }
                 else if(results[0].equals("pause")) {
@@ -445,9 +485,16 @@ public class GameController {
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                     else if(results[0].equals("skip")) {
                     output = "Player skipped turn.";
@@ -548,9 +595,16 @@ public class GameController {
                 else if(results[0].equals("stop")) {
                     results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
                     if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                 }
                 else if(results[0].equals("pause")) {
@@ -563,9 +617,16 @@ public class GameController {
                         renderer.unpauseTimer();
                     }
                     else if(results[0].equals("save")) {
-                        //saveGame(results[1]);
-                        System.exit(0);
-                        initializing = false;
+                        if (!saveGame(results[1]))
+                        {
+                            output = "Failed to save game!";
+                            state = "game";
+                        }
+                        else
+                        {
+                            System.exit(0);
+                            initializing = false;
+                        }
                     }
                     else if(results[0].equals("skip")) {
                     output = "Player skipped turn.";
@@ -715,7 +776,7 @@ public class GameController {
             }
         }
         else if(choice.equals("sell")){
-            if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
+            if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).getName().equals(players.get(currPlayer).getName())){
                 output = "You cannot sell land that you do not own.";
                 return;
             }
@@ -741,14 +802,14 @@ public class GameController {
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
         String type = choice.substring(3);
         //Subtract money from player if placed on wrong tile and lose mulse
-        if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
+        if(!map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
             if(store(choice, 1)){
                 output = "Player does not own tile.";
                 return true;
             }
         }
         else if(map.getTiles()[tileSelection].muleIsValid(type)) {
-            if(store(choice, 1)){
+            if(!store(choice, 1)){
                 Tile tile = map.getTiles()[tileSelection];
                 tile.addMule();
                 tile.setMuleType(type);
@@ -756,6 +817,9 @@ public class GameController {
             else{
                 return false;
             }
+        }
+        else
+        {
         }
         return false;
     }
@@ -767,14 +831,15 @@ public class GameController {
      * @param choice The mule type the player wishes to remove from the map
      */
     private void muleRemoval(int tileSelection, Map map, String choice) {
-        if(map.getOwnerOfTile(tileSelection) != players.get(currPlayer)){
+        if(!map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
             output = "You do not own this plot. Try again.";
         }
         else{
             String type = choice.substring(4);
             if(map.getTiles()[tileSelection].muleIsValid(type)){
-                store(choice, 1);
-                map.getTiles()[tileSelection].removeMule();
+                if (map.getTiles()[tileSelection].removeMule()) {
+                    store(choice, 1);
+                }
             }
             else{
                 output = "Player should have selected a: " + type + " instead of a(n): " + map.getOwnerOfTile(tileSelection).getMuleType();
@@ -935,7 +1000,7 @@ public class GameController {
         return roundNumber;
     }
 
-    private void saveGame(String gameName) {
+    private boolean saveGame(String gameName) {
         DBCollection coll = db.getCollection(gameName);
         BasicDBObject doc = new BasicDBObject("name", gameName);
 
@@ -945,11 +1010,11 @@ public class GameController {
             DBCursor cursor = coll.find(query);
             if (cursor.hasNext()) {
                 System.out.println("That save game already exists!");
-                return;
+                return false;
             }
         } catch (Exception e) {
             System.out.println("Failed to connect to database!");
-            return;
+            return false;
         }
         Gson gson = new GsonBuilder().create();
         String difficultyJson = gson.toJson(difficulty);
@@ -995,10 +1060,12 @@ public class GameController {
         }
         catch (Exception e){
             System.out.println("Failed to write to database!");
+            return false;
         }
+        return true;
     }
 
-    private void loadGame(String gameName) {
+    private boolean loadGame(String gameName) {
         DBCollection coll = db.getCollection(gameName);
 
         // check if the name already exists
@@ -1007,11 +1074,11 @@ public class GameController {
             DBCursor cursor = coll.find(query);
             if (!cursor.hasNext()) {
                 System.out.println("That save game doesn't exists!");
-                return;
+                return false;
             }
         } catch (Exception e) {
             System.out.println("Failed to connect to database!");
-            return;
+            return false;
         }
 
         DBObject game = coll.findOne();
@@ -1034,8 +1101,10 @@ public class GameController {
 
             mainGame();
         } catch (Exception e) {
+            System.out.println("Exception in loadGame: " + e);
             System.out.println("Error loading game! Starting new game instead");
             playGame();
         }
+        return true;
     }
 }

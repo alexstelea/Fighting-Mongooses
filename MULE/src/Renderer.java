@@ -301,7 +301,7 @@ public class Renderer {
 
         JTextField nameBox = addTextToPanel(menuPanel, 420, 6, 225, 38); //480
 
-        blockForInputCharacter(panel, playerBox1, difficultyValue, map);
+        blockForInputCharacter(panel, playerBox1, difficultyValue, map, playerPanel, players);
         exitSafely();
         states[2] = nameBox.getText();
         return states;
@@ -366,7 +366,7 @@ public class Renderer {
         states[2] = quantities[1];
         states[3] = quantities[2];
         states[4] = quantities[3];
-    
+
         ImagePanel panel = new ImagePanel("/media/storecomponents/store" + transactionType + ".png");
         panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null);
@@ -376,10 +376,7 @@ public class Renderer {
         playerPanel.setLayout(null);
 
         drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
-
-        for(int x = 1; x < 4; x++){
-            drawStorePanelStatus(Integer.parseInt(quantities[x]), panel);
-        }
+        ArrayList<JLabel> storeLabels = drawStorePanelStatus(panel, null);
 
         ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
@@ -429,7 +426,7 @@ public class Renderer {
 
         drawStatusText(menuPanel, text);
 
-        blockForInputMain(menuPanel);
+        blockForInputStore(menuPanel, panel, storeLabels);
         exitSafely();
         return states;
     }
@@ -575,7 +572,7 @@ public class Renderer {
         changePanel(frame, panels);
 
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
+        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "save");
 
         JTextField textBox = addTextToPanel(panel, 113, 332, 225, 38);
 
@@ -608,7 +605,7 @@ public class Renderer {
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
         JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
 
-        JTextField textBox = addTextToPanel(panel, 110, 300, 225, 38);
+        JTextField textBox = addTextToPanel(panel, 110, 350, 225, 38);
 
         blockForInput();
         exitSafely();
@@ -795,21 +792,32 @@ public class Renderer {
         }
     }
 
-    private JLabel blockForInputCharacter(JPanel panel, ImagePanel infoPanel, String difficultyValue, Map map) {
+    private JLabel blockForInputCharacter(JPanel panel, ImagePanel infoPanel, String difficultyValue, Map map, JPanel playerPanel, ArrayList<Player> players) {
         try { Thread.sleep(100); } catch (Exception e) {}
         JLabel charArrow = addLabelToPanel(panel, 117, 210, 45, 24, "/media/uparrow.png");
         JLabel colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
         JLabel colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
-        
+
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
-        JLabel map1 = addLabelToPanel(infoPanel, 21, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
-             
+        JLabel map1 = addLabelToPanel(infoPanel, 21 , 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
+        
+        JLabel photo = addLabelToPanel(playerPanel, 200 + (players.size()*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
+
+        for (int i = 0; i < players.size(); i++)
+        {
+            Player player = players.get(i);
+            addLabelToPanel(playerPanel, 200 + (i * 160), 20, 100, 130, "/media/" + player.getRace().charAt(0) + player.getColor().charAt(0) + ".png");
+        }
         panel.repaint();
-        infoPanel.repaint();
+        playerPanel.repaint();
 
         String oldState = states[1];
+        System.out.println(states[2]);
         String oldState2 = states[3];
         
+
+        int currentPlayer = players.size();
+
         boolean waitingSafe = true; // used to avoid race condition
         while (waitingSafe) {
             if (!oldState.equals(states[1])){
@@ -817,6 +825,7 @@ public class Renderer {
                 colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
 
                 infoPanel.remove(map1);
+
                 map1 = addLabelToPanel(infoPanel, 21, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
 
                 infoPanel.remove(difficultyText);
@@ -847,6 +856,10 @@ public class Renderer {
                 oldState = states[1];
             }
             if (!oldState2.equals(states[3])) {
+                playerPanel.remove(photo);
+                photo = addLabelToPanel(playerPanel, 200 + (currentPlayer*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
+
+
                 if(states[3].equals("red")){
                     panel.remove(colorArrow);
                     colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
@@ -868,6 +881,7 @@ public class Renderer {
                     colorArrow = addLabelToPanel(panel, 787, 482, 45, 24, "/media/uparrow.png");
                 }
                 panel.repaint();
+                playerPanel.repaint();
                 oldState2 = states[3];
             }
             try {
@@ -917,6 +931,54 @@ public class Renderer {
         }
     }  
 
+    private void blockForInputStore(JPanel panel, JPanel storePanel, ArrayList<JLabel> storeLabels) {
+        Date date = new Date();
+        long currentTime = date.getTime();
+        int timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
+        int oldTimerNum = timerNum;
+        JLabel timerImage = addLabelToPanel(panel, 11, 4, 41, 41, "/media/t" + timerNum + ".png");
+        panel.repaint();
+        boolean waitingSafe = true;
+        String[] oldStates = new String[4];
+        oldStates[0] = states[1];
+        oldStates[1] = states[2];
+        oldStates[2] = states[3];
+        oldStates[3] = states[4];
+        
+        while (waitingSafe) {
+            date = new Date();
+            currentTime = date.getTime();
+            timerNum = (int)(((currentTime - timeWhenTimerSet) / 1000) / 7);
+
+            if (oldTimerNum != timerNum && !paused) {
+                try {
+                    panel.remove(timerImage);
+                }
+                catch (NullPointerException e) {
+
+                }
+                timerImage = addLabelToPanel(panel, 11, 4, 41, 41, "/media/t" + timerNum + ".png");
+                oldTimerNum = timerNum;
+                panel.repaint();
+            }
+            if (!oldStates[0].equals(states[1]) || !oldStates[1].equals(states[2]) || !oldStates[2].equals(states[3]) || !oldStates[3].equals(states[4])) {
+                storeLabels = drawStorePanelStatus(storePanel, storeLabels);
+                oldStates[0] = states[1];
+                oldStates[1] = states[2];
+                oldStates[2] = states[3];
+                oldStates[3] = states[4];
+                storePanel.repaint();
+            }
+            try {
+                lock.lock();
+                waitingSafe = waiting;
+            }
+            finally {
+                lock.unlock();
+            }
+        }
+    }  
+
     private void exitSafely() {
         try {
             lock.lock();
@@ -936,8 +998,10 @@ public class Renderer {
             public void mouseClicked(MouseEvent e) {
                 if (stateText.equals("+")) {
                     states[stateNum] = "" + (Integer.parseInt(states[stateNum]) + 1);
+                    System.out.println(stateNum + " is now: " + states[stateNum]);
                 }
                 else if (stateText.equals("-")) {
+                    System.out.println(stateNum + " is now: " + states[stateNum]);
                     states[stateNum] = "" + (Integer.parseInt(states[stateNum]) - 1);
                     if (states[stateNum].equals("-1")) {
                         states[stateNum] = "0";
@@ -945,9 +1009,9 @@ public class Renderer {
                 }
                 else {
                     states[stateNum] = stateText; // set the new state
+                    System.out.println(stateNum + " set to: " + stateText);
                 }
 
-                System.out.println(stateNum + " set to: " + stateText);
                 if (stateNum == 0) {
                     try {
                         lock.lock();
@@ -1076,6 +1140,9 @@ public class Renderer {
         if(round < 10){
             output = "0" + round;
         }
+        else if(round > 12){
+            output = "12";
+        }
         else{
             output = "" + round;
         }
@@ -1121,61 +1188,103 @@ public class Renderer {
         }
     }
 
-    private void drawStorePanelStatus(int quantities, JPanel panel){
+    private ArrayList<JLabel> drawStorePanelStatus(JPanel panel, ArrayList<JLabel> labels){
+        int[] quantities = new int[4];
+        if (labels != null) {
+            for (int i = 0; i < labels.size(); i++) {
+                System.out.println("Removing: " + i);
+                panel.remove(labels.get(i));
+            }
+        }
+        labels = new ArrayList<JLabel>();
+        quantities[0] = Integer.parseInt(states[1]);
+        quantities[1] = Integer.parseInt(states[2]);
+        quantities[2] = Integer.parseInt(states[3]);
+        quantities[3] = Integer.parseInt(states[4]);
+        System.out.println("Drawing store with quantities: " + quantities[0] + ", " + quantities[1] + ", " + quantities[2] + ", " + quantities[3]);
         String output;
         //food label
-        if(quantities < 10){
-            output = "0" + quantities;
+        if(quantities[0] < 10){
+            output = "0" + quantities[0];
         }
         else{
-            output = "" + quantities;
+            output = "" + quantities[0];
         }
+        System.out.println("output: " + output);
         JLabel foodLabel = new JLabel("" + output);
         foodLabel.setBounds(293, 135, 100, 20);
         foodLabel.setForeground(Color.WHITE);
         panel.add(foodLabel);
+        labels.add(foodLabel);
 
         //food price
-        JLabel foodPrice = new JLabel("$" + (quantities * 30));
+        JLabel foodPrice = new JLabel("$" + (quantities[0] * 30));
         foodPrice.setBounds(401, 135, 100, 20);
         foodPrice.setForeground(Color.WHITE);
         panel.add(foodPrice);
+        labels.add(foodPrice);
 
         //energy label
+        if(quantities[1] < 10){
+            output = "0" + quantities[1];
+        }
+        else{
+            output = "" + quantities[1];
+        }
         JLabel energyLabel = new JLabel("" + output);
         energyLabel.setBounds(293, 221, 100, 20);
         energyLabel.setForeground(Color.WHITE);
         panel.add(energyLabel);
+        labels.add(energyLabel);
 
         //energy price
-        JLabel energyPrice = new JLabel("$" + (quantities * 25));
+        JLabel energyPrice = new JLabel("$" + (quantities[1] * 25));
         energyPrice.setBounds(401, 221, 100, 20);
         energyPrice.setForeground(Color.WHITE);
         panel.add(energyPrice);
+        labels.add(energyPrice);
 
         //smithore label
+        if(quantities[2] < 10){
+            output = "0" + quantities[2];
+        }
+        else{
+            output = "" + quantities[2];
+        }
         JLabel smithoreLabel = new JLabel("" + output);
         smithoreLabel.setBounds(293, 307, 100, 20);
         smithoreLabel.setForeground(Color.WHITE);
         panel.add(smithoreLabel);
+        labels.add(smithoreLabel);
 
         //smithore price
-        JLabel smithorePrice = new JLabel("$" + (quantities * 50));
+        JLabel smithorePrice = new JLabel("$" + (quantities[2] * 50));
         smithorePrice.setBounds(401, 307, 100, 20);
         smithorePrice.setForeground(Color.WHITE);
         panel.add(smithorePrice);
+        labels.add(smithorePrice);
 
         //crystite label
+        if(quantities[3] < 10){
+            output = "0" + quantities[3];
+        }
+        else{
+            output = "" + quantities[3];
+        }
         JLabel crystiteLabel = new JLabel("" + output);
         crystiteLabel.setBounds(293, 393, 100, 20);
         crystiteLabel.setForeground(Color.WHITE);
         panel.add(crystiteLabel);
+        labels.add(crystiteLabel);
 
         //crystite price
-        JLabel crystitePrice = new JLabel("$" + (quantities * 100));
+        JLabel crystitePrice = new JLabel("$" + (quantities[3] * 100));
         crystitePrice.setBounds(401, 393, 100, 20);
         crystitePrice.setForeground(Color.WHITE);
         panel.add(crystitePrice);
+        labels.add(crystitePrice);
+
+        return labels;
     }
 
     private void drawStoreStatus(Store store, JPanel panel){
@@ -1245,7 +1354,7 @@ public class Renderer {
         panel.add(muleLabel);
 
         // money label
-        JLabel moneyLabel = new JLabel("" + player.getMoney());
+        JLabel moneyLabel = new JLabel("$" + player.getMoney());
         moneyLabel.setBounds((xBase + 158 * (number + 1) + 45), yBase + 95, 100, 20);
         panel.add(moneyLabel);
 
@@ -1364,10 +1473,10 @@ public class Renderer {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage muleImg;
         String mulePrefix = tile.getMuleType().substring(0, 1);
-        mulePrefix = mulePrefix.toUpperCase();
+        mulePrefix = mulePrefix.toLowerCase();
 
         try {
-        muleImg = ImageIO.read(getClass().getResourceAsStream("/media/storecomponents/mule" + mulePrefix + ".png"));
+        muleImg = ImageIO.read(getClass().getResourceAsStream("/media/mule" + mulePrefix + ".png"));
 
         }
         catch (Exception e) {
