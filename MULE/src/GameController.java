@@ -838,8 +838,9 @@ public class GameController {
         else{
             String type = choice.substring(4);
             if(map.getTiles()[tileSelection].muleIsValid(type)){
-                store(choice, 1);
-                map.getTiles()[tileSelection].removeMule();
+                if (map.getTiles()[tileSelection].removeMule()) {
+                    store(choice, 1);
+                }
             }
             else{
                 output = "Player should have selected a: " + type + " instead of a(n): " + map.getOwnerOfTile(tileSelection).getMuleType();

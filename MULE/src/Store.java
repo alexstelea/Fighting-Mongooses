@@ -279,6 +279,7 @@ public class Store {
      */
     public String sellItem(ArrayList<Player> players, int currPlayer, String item, int toSell){
         int playerValue = (int)players.get(currPlayer).getMoney();
+        Player player = players.get(currPlayer);
 
         if(toSell < 0){
             return "Store cannot sell a negative amount.";
@@ -294,6 +295,7 @@ public class Store {
                 int pFoodQuantity = players.get(currPlayer).getFood();
                 players.get(currPlayer).setFood(pFoodQuantity - toSell);
                 this.foodQuantity += toSell;
+                players.get(currPlayer).setMoney(playerValue + itemCost);
                 return "Player successfully sold " + toSell + " Food";
             }
         }
@@ -308,6 +310,7 @@ public class Store {
                 int pEnergyQuantity = players.get(currPlayer).getEnergy();
                 players.get(currPlayer).setEnergy(pEnergyQuantity - toSell);
                 this.energyQuantity += toSell;
+                players.get(currPlayer).setMoney(playerValue + itemCost);
                 return "Player successfully sold " + toSell + " Energy";
             }
         }
@@ -323,6 +326,7 @@ public class Store {
                 players.get(currPlayer).setSmithore(pSmithoreQuantity - toSell);
                 this.smithoreQuantity += toSell;
                 this.mulesQuantity += toSell; //Smithore increases store's mule supply
+                players.get(currPlayer).setMoney(playerValue + itemCost);
                 return "Player successfully sold " + toSell + " Smithore";
             }
         }
@@ -337,6 +341,7 @@ public class Store {
                 int pCrystiteQuantity = players.get(currPlayer).getCrystite();
                 players.get(currPlayer).setCrystite(pCrystiteQuantity - toSell);
                 this.crystiteQuantity += toSell;
+                players.get(currPlayer).setMoney(playerValue + itemCost);
                 return "Player successfully sold " + toSell + " Crystite";
             }
         }
@@ -346,6 +351,7 @@ public class Store {
             players.get(currPlayer).setMuleType(null);
             this.foodQuantity += toSell;
             this.mulesQuantity += toSell;
+            players.get(currPlayer).setMoney(playerValue + itemCost);
             return "Player successfully sold a Food Mule";
         }
         else if(item.equals("energyMule")){
@@ -354,6 +360,7 @@ public class Store {
             players.get(currPlayer).setMuleType(null);
             this.energyQuantity += toSell;
             this.mulesQuantity += toSell;
+            players.get(currPlayer).setMoney(playerValue + itemCost);
             return "Player successfully sold an Energy Mule";
         }
         else if(item.equals("smithoreMule")){
@@ -362,6 +369,7 @@ public class Store {
             players.get(currPlayer).setMuleType(null);
             this.smithoreQuantity += toSell;
             this.mulesQuantity += toSell;
+            players.get(currPlayer).setMoney(playerValue + itemCost);
             return "Player successfully sold a Smithore Mule";
         }
         else if(item.equals("crystiteMule")){
@@ -370,6 +378,7 @@ public class Store {
             players.get(currPlayer).setMuleType(null);
             this.crystiteQuantity += toSell;
             this.mulesQuantity += toSell;
+            players.get(currPlayer).setMoney(playerValue + itemCost);
             return "Player successfully sold Crystite Mule";
         }
         players.get(currPlayer).setMoney(playerValue + itemCost);

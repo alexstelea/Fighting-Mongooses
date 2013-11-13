@@ -111,7 +111,7 @@ public class Player {
              return false;
          }
 
-         if (name.equals(otherGuy.getName())) {
+         if (color.equals(otherGuy.getColor())) {
              return true;
          }
          return false;

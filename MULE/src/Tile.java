@@ -36,6 +36,7 @@ public class Tile {
             return false;
         }
         System.out.println("Mule removed!");
+        muleType = "";
         hasMule = false;
         return true;
     }
