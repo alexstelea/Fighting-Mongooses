@@ -1101,44 +1101,59 @@ public class Renderer {
     }
 
     private void drawStorePanelStatus(int quantities, JPanel panel){
+        String output;
         //food label
-        JLabel foodLabel = new JLabel("" + quantities);
-        foodLabel.setBounds(296, 143, 100, 20);
+        if(quantities < 10){
+            output = "0" + quantities;
+        }
+        else{
+            output = "" + quantities;
+        }
+        JLabel foodLabel = new JLabel("" + output);
+        foodLabel.setBounds(293, 135, 100, 20);
+        foodLabel.setForeground(Color.WHITE);
         panel.add(foodLabel);
 
         //food price
-        JLabel foodPrice = new JLabel("" + (quantities * 30));
-        foodPrice.setBounds(401, 143, 100, 20);
+        JLabel foodPrice = new JLabel("$" + (quantities * 30));
+        foodPrice.setBounds(401, 135, 100, 20);
+        foodPrice.setForeground(Color.WHITE);
         panel.add(foodPrice);
 
         //energy label
-        JLabel energyLabel = new JLabel("" + quantities);
-        energyLabel.setBounds(296, 229, 100, 20);
+        JLabel energyLabel = new JLabel("" + output);
+        energyLabel.setBounds(293, 221, 100, 20);
+        energyLabel.setForeground(Color.WHITE);
         panel.add(energyLabel);
 
         //energy price
-        JLabel energyPrice = new JLabel("" + (quantities * 25));
-        energyPrice.setBounds(401, 143, 100, 20);
+        JLabel energyPrice = new JLabel("$" + (quantities * 25));
+        energyPrice.setBounds(401, 221, 100, 20);
+        energyPrice.setForeground(Color.WHITE);
         panel.add(energyPrice);
 
         //smithore label
-        JLabel smithoreLabel = new JLabel("" + quantities);
-        smithoreLabel.setBounds(296, 315, 100, 20);
+        JLabel smithoreLabel = new JLabel("" + output);
+        smithoreLabel.setBounds(293, 307, 100, 20);
+        smithoreLabel.setForeground(Color.WHITE);
         panel.add(smithoreLabel);
 
         //smithore price
-        JLabel smithorePrice = new JLabel("" + (quantities * 50));
-        smithorePrice.setBounds(401, 143, 100, 20);
+        JLabel smithorePrice = new JLabel("$" + (quantities * 50));
+        smithorePrice.setBounds(401, 307, 100, 20);
+        smithorePrice.setForeground(Color.WHITE);
         panel.add(smithorePrice);
 
         //crystite label
-        JLabel crystiteLabel = new JLabel("" + quantities);
-        crystiteLabel.setBounds(296, 401, 100, 20);
+        JLabel crystiteLabel = new JLabel("" + output);
+        crystiteLabel.setBounds(293, 393, 100, 20);
+        crystiteLabel.setForeground(Color.WHITE);
         panel.add(crystiteLabel);
 
         //crystite price
-        JLabel crystitePrice = new JLabel("" + (quantities * 100));
-        crystitePrice.setBounds(401, 143, 100, 20);
+        JLabel crystitePrice = new JLabel("$" + (quantities * 100));
+        crystitePrice.setBounds(401, 393, 100, 20);
+        crystitePrice.setForeground(Color.WHITE);
         panel.add(crystitePrice);
     }
 
