@@ -549,7 +549,7 @@ public class Renderer {
         changePanel(frame, panels);
 
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
-        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
+        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "save");
 
         JTextField textBox = addTextToPanel(panel, 113, 332, 225, 38);
 
@@ -774,13 +774,6 @@ public class Renderer {
         JLabel charArrow = addLabelToPanel(panel, 117, 210, 45, 24, "/media/uparrow.png");
         JLabel colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
         JLabel colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
-<<<<<<< HEAD
-
-        JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
-        JLabel map1 = addLabelToPanel(infoPanel, 100, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
-             
-=======
-    
 
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
         JLabel map1 = addLabelToPanel(infoPanel, 21 , 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
@@ -793,8 +786,6 @@ public class Renderer {
         }
         JLabel photo = addLabelToPanel(playerPanel, 200 + (players.size()*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
 
-
->>>>>>> alexgui
         panel.repaint();
         playerPanel.repaint();
 
@@ -843,9 +834,6 @@ public class Renderer {
                 oldState = states[1];
             }
             if (!oldState2.equals(states[3])) {
-                
-
-                JLabel photo = addLabelToPanel(panel, 100, 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
 
                 playerPanel.remove(photo);
                 photo = addLabelToPanel(playerPanel, 200 + (currentPlayer*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
