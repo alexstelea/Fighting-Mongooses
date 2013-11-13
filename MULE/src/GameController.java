@@ -778,12 +778,6 @@ public class GameController {
         else if(choice.equals("sell")){
             if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).getName().equals(players.get(currPlayer).getName())){
                 output = "You cannot sell land that you do not own.";
-                if (!map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer)))
-                {
-                    System.out.println("HERE");
-                    System.out.println(map.getOwnerOfTile(tileSelection));
-                    System.out.println(players.get(currPlayer));
-                }
                 return;
             }
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
@@ -815,7 +809,7 @@ public class GameController {
             }
         }
         else if(map.getTiles()[tileSelection].muleIsValid(type)) {
-            if(store(choice, 1)){
+            if(!store(choice, 1)){
                 Tile tile = map.getTiles()[tileSelection];
                 tile.addMule();
                 tile.setMuleType(type);

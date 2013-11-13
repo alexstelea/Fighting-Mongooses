@@ -1358,10 +1358,10 @@ public class Renderer {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage muleImg;
         String mulePrefix = tile.getMuleType().substring(0, 1);
-        mulePrefix = mulePrefix.toUpperCase();
+        mulePrefix = mulePrefix.toLowerCase();
 
         try {
-        muleImg = ImageIO.read(getClass().getResourceAsStream("/media/storecomponents/mule" + mulePrefix + ".png"));
+        muleImg = ImageIO.read(getClass().getResourceAsStream("/media/mule" + mulePrefix + ".png"));
 
         }
         catch (Exception e) {

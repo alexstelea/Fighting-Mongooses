@@ -102,6 +102,21 @@ public class Player {
          return name + " is a " + color + " " + race + ".";
      }
 
+     public boolean Equals(Object player) {
+         Player otherGuy;
+         try {
+             otherGuy = (Player)player;
+         }
+         catch (Exception e) {
+             return false;
+         }
+
+         if (name.equals(otherGuy.getName())) {
+             return true;
+         }
+         return false;
+     }
+
 
     /**
      * Getter method for the player's name
