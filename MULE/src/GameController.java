@@ -803,7 +803,6 @@ public class GameController {
         String type = choice.substring(3);
         //Subtract money from player if placed on wrong tile and lose mulse
         if(!map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
-            System.out.println("OHAI");
             if(store(choice, 1)){
                 output = "Player does not own tile.";
                 return true;

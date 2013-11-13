@@ -218,7 +218,6 @@ public class Store {
                     this.mulesQuantity--;
                     players.get(currPlayer).setMule(true);
                     players.get(currPlayer).setMuleType("FoodMule");
-                    System.out.println("set mule type to food mule");
                 }
                 else{
                     buy = 0;
