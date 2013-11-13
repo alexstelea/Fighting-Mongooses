@@ -37,9 +37,10 @@ public class Map {
 
         // this will need to be changed, I'm just guessing
         Random rand = new Random();
-        int numMount1 = (rand.nextInt() % 3) + 2;
-        int numMount2 = (rand.nextInt() % 3) + 2;
-        int numMount3 = (rand.nextInt() % 3) + 2;
+        int numMount1 = (Math.abs(rand.nextInt()) % 3) + 2;
+        int numMount2 = (Math.abs(rand.nextInt()) % 3) + 2;
+        int numMount3 = (Math.abs(rand.nextInt()) % 3) + 2;
+        System.out.println("Generated mountains: " + numMount1 + ", " + numMount2 + ", " + numMount3);
 
         int numElementsToAdd = WIDTH * HEIGHT - numTiles; // enough mountains and plains to fill the rest of the map
         ArrayList<Tile> newTiles = new ArrayList<Tile>();
