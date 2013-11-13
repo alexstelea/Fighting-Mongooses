@@ -776,10 +776,14 @@ public class GameController {
             }
         }
         else if(choice.equals("sell")){
-            if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
+            if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).getName().equals(players.get(currPlayer).getName())){
                 output = "You cannot sell land that you do not own.";
-                System.out.println("owner: " + map.getOwnerOfTile(tileSelection));
-                System.out.println("player: " + players.get(currPlayer));
+                if (!map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer)))
+                {
+                    System.out.println("HERE");
+                    System.out.println(map.getOwnerOfTile(tileSelection));
+                    System.out.println(players.get(currPlayer));
+                }
                 return;
             }
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
