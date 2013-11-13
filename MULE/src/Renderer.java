@@ -676,6 +676,12 @@ public class Renderer {
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
         JLabel map1 = addLabelToPanel(infoPanel, 21 , 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
         
+        for (int i = 0; i < players.size(); i++)
+        {
+            Player player = players.get(i);
+            System.out.println("Looking for /media/" + player.getRace().charAt(0) + player.getColor().charAt(0) + ".png");
+            addLabelToPanel(playerPanel, 200 + (i * 160), 20, 100, 130, "/media/" + player.getRace().charAt(0) + player.getColor().charAt(0) + ".png");
+        }
         JLabel photo = addLabelToPanel(playerPanel, 200 + (players.size()*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
 
 
