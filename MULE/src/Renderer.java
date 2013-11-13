@@ -335,7 +335,7 @@ public class Renderer {
         addButtonToPanel(panel, 260, 60, 250, 400, 0, "store");
         addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub");
-        JButton backButton = addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+        JButton backButton = addButtonToPanel(panel, 39, 454, 100, 61, 0, "back");
 		addHoverIcon(backButton, "/media/hoverbuttons/backhover2.png");
 
         JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
@@ -389,16 +389,40 @@ public class Renderer {
         changePanel(frame, panels);
 
         // buttons
-        addButtonToPanel(panel, 40, 455, 98, 58, 0, "quit"); 
-        addButtonToPanel(panel, 166, 455, 98, 58, 0, "switchScreen"); 
-        addButtonToPanel(panel, 471, 135, 42, 25, 0, "food"); 
-        addButtonToPanel(panel, 471, 220, 42, 25, 0, "energy"); 
-        addButtonToPanel(panel, 471, 305, 42, 25, 0, "smithore"); 
-        addButtonToPanel(panel, 471, 391, 42, 25, 0, "crystite"); 
-        addButtonToPanel(panel, 693, 161, 42, 25, 0, "foodMule");
-        addButtonToPanel(panel, 693, 257, 42, 25, 0, "energyMule");
-        addButtonToPanel(panel, 853, 161, 42, 25, 0, "smithoreMule");
-        addButtonToPanel(panel, 853, 257, 42, 25, 0, "crystiteMule");
+        JButton backButton = addButtonToPanel(panel, 40, 455, 98, 58, 0, "quit"); 
+		addHoverIcon(backButton, "/media/hoverbuttons/backhover2.png");
+        JButton switchButton = addButtonToPanel(panel, 166, 455, 98, 58, 0, "switchScreen"); 
+        JButton foodButton = addButtonToPanel(panel, 471, 135, 42, 25, 0, "food"); 
+        JButton energyButton = addButtonToPanel(panel, 471, 220, 42, 25, 0, "energy"); 
+        JButton oreButton = addButtonToPanel(panel, 471, 305, 42, 25, 0, "smithore"); 
+        JButton crystiteButton = addButtonToPanel(panel, 471, 391, 42, 25, 0, "crystite"); 
+        JButton foodMuleButton = addButtonToPanel(panel, 693, 161, 42, 25, 0, "foodMule");
+        JButton energyMuleButton = addButtonToPanel(panel, 693, 257, 42, 25, 0, "energyMule");
+        JButton oreMuleButton = addButtonToPanel(panel, 853, 161, 42, 25, 0, "smithoreMule");
+        JButton crystiteMuleButton = addButtonToPanel(panel, 853, 257, 42, 25, 0, "crystiteMule");
+		
+		if(transactionType.equals("sell")) {
+			addHoverIcon(switchButton, "/media/hoverbuttons/buyswitchhover.png");
+			addHoverIcon(foodButton, "/media/hoverbuttons/sellhover.png");
+			addHoverIcon(energyButton, "/media/hoverbuttons/sellhover.png");
+			addHoverIcon(oreButton, "/media/hoverbuttons/sellhover.png");
+			addHoverIcon(crystiteButton, "/media/hoverbuttons/sellhover.png");
+			addHoverIcon(foodMuleButton, "/media/hoverbuttons/sellhover.png");
+			addHoverIcon(energyMuleButton, "/media/hoverbuttons/sellhover.png");
+			addHoverIcon(oreMuleButton, "/media/hoverbuttons/sellhover.png");
+			addHoverIcon(crystiteMuleButton, "/media/hoverbuttons/sellhover.png");
+		}
+		else {
+			addHoverIcon(switchButton, "/media/hoverbuttons/sellswitchhover.png");
+			addHoverIcon(foodButton, "/media/hoverbuttons/buyhover.png");
+			addHoverIcon(energyButton, "/media/hoverbuttons/buyhover.png");
+			addHoverIcon(oreButton, "/media/hoverbuttons/buyhover.png");
+			addHoverIcon(crystiteButton, "/media/hoverbuttons/buyhover.png");
+			addHoverIcon(foodMuleButton, "/media/hoverbuttons/buyhover.png");
+			addHoverIcon(energyMuleButton, "/media/hoverbuttons/buyhover.png");
+			addHoverIcon(oreMuleButton, "/media/hoverbuttons/buyhover.png");
+			addHoverIcon(crystiteMuleButton, "/media/hoverbuttons/buyhover.png");
+		}
 
         JButton plusButton1 = addButtonToPanel(panel, 290, 117, 22, 18, 1, "+");
 		addHoverIcon(plusButton1, "/media/hoverbuttons/plushover.png");
@@ -457,9 +481,12 @@ public class Renderer {
         panels.add(menuPanel);
         changePanel(frame, panels);
 
-        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
-        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "resume");
-        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+        JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
+		addHoverIcon(stopButton, "/media/hoverbuttons/stophover.png");
+        JButton pauseButton = addButtonToPanel(menuPanel, 839, 5, 40, 40, 0, "pause");
+		addHoverIcon(pauseButton, "/media/hoverbuttons/pausehover.png");
+        JButton skipButton = addButtonToPanel(menuPanel, 894, 5, 40, 40, 0, "skip");
+		addHoverIcon(skipButton, "/media/hoverbuttons/skiphover.png");
         drawStatusText(menuPanel, text);
 
         blockForInputMain(menuPanel);
@@ -491,9 +518,12 @@ public class Renderer {
         panels.add(menuPanel);
         changePanel(frame, panels);
 
-        addButtonToPanel(panel, 126, 198, 166, 35, 0, "buy");
-        addButtonToPanel(panel, 126, 283, 166, 35, 0, "sell");
-        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+        JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
+		addHoverIcon(stopButton, "/media/hoverbuttons/stophover.png");
+        JButton pauseButton = addButtonToPanel(menuPanel, 839, 5, 40, 40, 0, "pause");
+		addHoverIcon(pauseButton, "/media/hoverbuttons/pausehover.png");
+        JButton skipButton = addButtonToPanel(menuPanel, 894, 5, 40, 40, 0, "skip");
+		addHoverIcon(skipButton, "/media/hoverbuttons/skiphover.png");
 
         blockForInputMain(menuPanel);
         exitSafely();
@@ -536,9 +566,12 @@ public class Renderer {
             }
         }
 
-        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
-        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "pause");
-        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+        JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
+		addHoverIcon(stopButton, "/media/hoverbuttons/stophover.png");
+        JButton pauseButton = addButtonToPanel(menuPanel, 839, 5, 40, 40, 0, "pause");
+		addHoverIcon(pauseButton, "/media/hoverbuttons/pausehover.png");
+        JButton skipButton = addButtonToPanel(menuPanel, 894, 5, 40, 40, 0, "skip");
+		addHoverIcon(skipButton, "/media/hoverbuttons/skiphover.png");
         drawStatusText(menuPanel, text);
 
         blockForInputMain(menuPanel);
