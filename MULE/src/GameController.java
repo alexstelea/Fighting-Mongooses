@@ -917,7 +917,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought a Food Mule.";
             }
         }
         else if(choice.equals("buyEnergyMule")){
@@ -926,7 +926,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought an Energy Mule.";
             }
         }
         else if(choice.equals("buySmithoreMule")){
@@ -935,7 +935,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought a Smithore Mule.";
             }
         }
         else if(choice.equals("buyCrystiteMule")){
@@ -944,7 +944,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought a Crysite Mule.";
             }
         }
 
