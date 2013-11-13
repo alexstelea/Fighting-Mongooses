@@ -802,11 +802,12 @@ public class GameController {
     private boolean mulePlacement(int tileSelection, Map map, String choice) {
         String type = choice.substring(3);
         //Subtract money from player if placed on wrong tile and lose mulse
-        if(!map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
+        if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
             if(store(choice, 1)){
                 output = "Player does not own tile.";
                 return true;
             }
+            output = "Player does not own tile.";
         }
         else if(map.getTiles()[tileSelection].muleIsValid(type)) {
             if(!store(choice, 1)){
@@ -917,7 +918,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought a Food Mule.";
             }
         }
         else if(choice.equals("buyEnergyMule")){
@@ -926,7 +927,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought an Energy Mule.";
             }
         }
         else if(choice.equals("buySmithoreMule")){
@@ -935,7 +936,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought a Smithore Mule.";
             }
         }
         else if(choice.equals("buyCrystiteMule")){
@@ -944,7 +945,7 @@ public class GameController {
                 return true;
             }
             else{
-                output = "Player does not have sufficient funds.";
+                output = "Player successfully bought a Crysite Mule.";
             }
         }
 
