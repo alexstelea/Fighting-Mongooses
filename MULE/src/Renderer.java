@@ -1067,7 +1067,7 @@ public class Renderer {
         if(round < 10){
             output = "0" + round;
         }
-        if(round > 12){
+        else if(round > 12){
             output = "12";
         }
         else{
