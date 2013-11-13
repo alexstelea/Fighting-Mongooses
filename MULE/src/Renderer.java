@@ -582,7 +582,7 @@ public class Renderer {
         JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
         JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
 
-        JTextField textBox = addTextToPanel(panel, 110, 300, 225, 38);
+        JTextField textBox = addTextToPanel(panel, 110, 350, 225, 38);
 
         blockForInput();
         exitSafely();
@@ -1066,6 +1066,9 @@ public class Renderer {
         }
         if(round < 10){
             output = "0" + round;
+        }
+        if(round > 12){
+            output = "12";
         }
         else{
             output = "" + round;
