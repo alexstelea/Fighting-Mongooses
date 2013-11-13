@@ -216,9 +216,9 @@ public class Renderer {
 
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 5, 170, 40, 0, "back");
-		addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
+		//addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
         JButton okayButton = addButtonToPanel(menuPanel, 771, 5, 170, 40, 0, "okay");
-		addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
+		//addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
         JButton map1Button = addButtonToPanel(panel, 110, 162, 224, 126, 1, "1");
         JButton map2Button = addButtonToPanel(panel, 365, 162, 224, 126, 1, "2");
         JButton map3Button = addButtonToPanel(panel, 617, 162, 224, 126, 1, "3");
@@ -336,7 +336,7 @@ public class Renderer {
         addButtonToPanel(panel, 510, 60, 210, 400, 0, "land office");
         addButtonToPanel(panel, 720, 60, 200, 400, 0, "pub");
         JButton backButton = addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
-		addHoverIcon(backButton, "/media/hoverbuttons/backhover2.png");
+		//addHoverIcon(backButton, "/media/hoverbuttons/backhover2.png");
 
         JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
 		addHoverIcon(stopButton, "/media/hoverbuttons/stophover.png");
