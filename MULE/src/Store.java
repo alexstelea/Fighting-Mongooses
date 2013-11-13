@@ -263,8 +263,7 @@ public class Store {
             players.get(currPlayer).setMoney(playerValue - costOfPurchase);
         }
         else{
-            //return "Player does not have sufficient funds";
-            return "noBuy";
+            return "noFunds";
         }
         return "true";
     }

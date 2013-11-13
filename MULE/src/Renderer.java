@@ -285,9 +285,9 @@ public class Renderer {
 
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 5, 170, 40, 0, "back");
-		addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
+		//addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
         JButton okayButton = addButtonToPanel(menuPanel, 771, 5, 170, 40, 0, "okay");
-		addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
+		//addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
         JButton humanButton = addButtonToPanel(panel, 75, 78, 133, 115, 1, "human");
         JButton elephantButton = addButtonToPanel(panel, 232, 78, 133, 115, 1, "elephant");
         JButton squirrelButton = addButtonToPanel(panel, 413, 78, 123, 115, 1, "squirrel");
@@ -1218,7 +1218,7 @@ public class Renderer {
         labels.add(foodLabel);
 
         //food price
-        JLabel foodPrice = new JLabel("$" + (quantities[0] * 30));
+        JLabel foodPrice = new JLabel("" + (quantities[0] * 30));
         foodPrice.setBounds(401, 135, 100, 20);
         foodPrice.setForeground(Color.WHITE);
         panel.add(foodPrice);
@@ -1238,7 +1238,7 @@ public class Renderer {
         labels.add(energyLabel);
 
         //energy price
-        JLabel energyPrice = new JLabel("$" + (quantities[1] * 25));
+        JLabel energyPrice = new JLabel("" + (quantities[1] * 25));
         energyPrice.setBounds(401, 221, 100, 20);
         energyPrice.setForeground(Color.WHITE);
         panel.add(energyPrice);
@@ -1258,7 +1258,7 @@ public class Renderer {
         labels.add(smithoreLabel);
 
         //smithore price
-        JLabel smithorePrice = new JLabel("$" + (quantities[2] * 50));
+        JLabel smithorePrice = new JLabel("" + (quantities[2] * 50));
         smithorePrice.setBounds(401, 307, 100, 20);
         smithorePrice.setForeground(Color.WHITE);
         panel.add(smithorePrice);
@@ -1278,7 +1278,7 @@ public class Renderer {
         labels.add(crystiteLabel);
 
         //crystite price
-        JLabel crystitePrice = new JLabel("$" + (quantities[3] * 100));
+        JLabel crystitePrice = new JLabel("" + (quantities[3] * 100));
         crystitePrice.setBounds(401, 393, 100, 20);
         crystitePrice.setForeground(Color.WHITE);
         panel.add(crystitePrice);
@@ -1354,7 +1354,7 @@ public class Renderer {
         panel.add(muleLabel);
 
         // money label
-        JLabel moneyLabel = new JLabel("$" + player.getMoney());
+        JLabel moneyLabel = new JLabel("" + player.getMoney());
         moneyLabel.setBounds((xBase + 158 * (number + 1) + 45), yBase + 95, 100, 20);
         panel.add(moneyLabel);
 

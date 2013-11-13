@@ -410,7 +410,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyFoodMule");
                         if(wrongTile){
-                            output = "Lost Mule. Should've placed on right tile, bitch.";
+                            output = "Lost Mule. Player Mule on wrong tile.";
                             state = "game";
                         }
                     }
@@ -425,7 +425,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyEnergyMule");
                         if(wrongTile){
-                            output = "Lost Mule. Should've placed on right tile, bitch.";
+                            output = "Lost Mule. Player Mule on wrong tile.";
                             state = "game";
                         }
                     }
@@ -440,7 +440,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buySmithoreMule");
                         if(wrongTile){
-                            output = "Lost Mule. Should've placed on right tile, bitch.";
+                            output = "Lost Mule. Player Mule on wrong tile";
                             state = "game";
                         }
                     }
@@ -455,7 +455,7 @@ public class GameController {
                     if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
                         boolean wrongTile = mulePlacement(tileSelection, map, "buyCrystiteMule");
                         if(wrongTile){
-                            output = "Lost Mule. Should've placed on right tile, bitch.";
+                            output = "Lost Mule. Player Mule on wrong tile";
                             state = "game";
                         }
                     }
@@ -871,6 +871,9 @@ public class GameController {
             if(store.buyItem(players, currPlayer, "food", quantities).equals("noBuy")){
                 output = "Buying more than what store owns.";
             }
+            else if(store.buyItem(players, currPlayer, "food", quantities).equals("noFunds")){
+                output = "Player does not have sufficient funds";
+            }
             else{
                 output = "Successfully purchased " + quantities + " Food.";
             }
@@ -878,6 +881,9 @@ public class GameController {
         else if(choice.equals("buyEnergy")){
             if(store.buyItem(players, currPlayer, "energy", quantities).equals("noBuy")){
                 output = "Buying more than what store owns.";
+            }
+            else if(store.buyItem(players, currPlayer, "energy", quantities).equals("noFunds")){
+                output = "Player does not have sufficient funds";
             }
             else{
                 output = "Successfully purchased " + quantities + " Energy.";
@@ -887,6 +893,9 @@ public class GameController {
             if(store.buyItem(players, currPlayer, "smithore", quantities).equals("noBuy")){
                 output = "Buying more than what store owns.";
             }
+            else if(store.buyItem(players, currPlayer, "smithore", quantities).equals("noFunds")){
+                output = "Player does not have sufficient funds";
+            }
             else{
                 output = "Successfully purchased " + quantities + " Smithore.";
             }
@@ -894,6 +903,9 @@ public class GameController {
         else if(choice.equals("buyCrystite")){
             if(store.buyItem(players, currPlayer, "crystite", quantities).equals("noBuy")){
                 output = "Buying more than what store owns.";
+            }
+            else if(store.buyItem(players, currPlayer, "crystite", quantities).equals("noFunds")){
+                output = "Player does not have sufficient funds.";
             }
             else{
                 output = "Successfully purchased " + quantities + " Crysite.";
@@ -904,11 +916,17 @@ public class GameController {
                 output = "Buying more than what store owns.";
                 return true;
             }
+            else{
+                output = "Player does not have sufficient funds.";
+            }
         }
         else if(choice.equals("buyEnergyMule")){
             if(store.buyItem(players, currPlayer, "energyMule", quantities).equals("noBuy")){
                 output = "Buying more than what store owns.";
                 return true;
+            }
+            else{
+                output = "Player does not have sufficient funds.";
             }
         }
         else if(choice.equals("buySmithoreMule")){
@@ -916,11 +934,17 @@ public class GameController {
                 output = "Buying more than what store owns.";
                 return true;
             }
+            else{
+                output = "Player does not have sufficient funds.";
+            }
         }
         else if(choice.equals("buyCrystiteMule")){
             if(store.buyItem(players, currPlayer, "crystiteMule", quantities).equals("noBuy")){
                 output = "Buying more than what store owns.";
                 return true;
+            }
+            else{
+                output = "Player does not have sufficient funds.";
             }
         }
 
