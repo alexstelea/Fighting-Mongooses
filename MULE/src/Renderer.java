@@ -672,7 +672,6 @@ public class Renderer {
         JLabel colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
         JLabel colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
     
-        System.out.println("pLAYER SIZE " +players.size());
 
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
         JLabel map1 = addLabelToPanel(infoPanel, 21 , 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
