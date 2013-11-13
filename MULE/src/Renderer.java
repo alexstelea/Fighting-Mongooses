@@ -774,21 +774,18 @@ public class Renderer {
         JLabel charArrow = addLabelToPanel(panel, 117, 210, 45, 24, "/media/uparrow.png");
         JLabel colorArrow = addLabelToPanel(panel, 117, 482, 45, 24, "/media/uparrow.png");
         JLabel colors = addLabelToPanel(panel, 57, 247, 839, 226, "/media/" + states[1] + ".png");
-<<<<<<< HEAD
 
-        JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
-        JLabel map1 = addLabelToPanel(infoPanel, 100, 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
-             
-=======
-    
 
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
         JLabel map1 = addLabelToPanel(infoPanel, 21 , 37, 119, 66, "/media/m"+ map.getMapNum()+ ".png");
         
         JLabel photo = addLabelToPanel(playerPanel, 200 + (players.size()*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
 
-
->>>>>>> alexgui
+        for (int i = 0; i < players.size(); i++)
+        {
+            Player player = players.get(i);
+            addLabelToPanel(playerPanel, 200 + (i * 160), 20, 100, 130, "/media/" + player.getRace().charAt(0) + player.getColor().charAt(0) + ".png");
+        }
         panel.repaint();
         playerPanel.repaint();
 
@@ -838,9 +835,6 @@ public class Renderer {
             }
             if (!oldState2.equals(states[3])) {
                 
-
-                JLabel photo = addLabelToPanel(panel, 100, 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
-
                 playerPanel.remove(photo);
                 photo = addLabelToPanel(playerPanel, 200 + (currentPlayer*160), 20, 100, 130, "/media/" + states[1].charAt(0) + states[3].charAt(0) + ".png");
 
@@ -1121,59 +1115,44 @@ public class Renderer {
     }
 
     private void drawStorePanelStatus(int quantities, JPanel panel){
-        String output;
         //food label
-        if(quantities < 10){
-            output = "0" + quantities;
-        }
-        else{
-            output = "" + quantities;
-        }
-        JLabel foodLabel = new JLabel("" + output);
-        foodLabel.setBounds(293, 135, 100, 20);
-        foodLabel.setForeground(Color.WHITE);
+        JLabel foodLabel = new JLabel("" + quantities);
+        foodLabel.setBounds(296, 143, 100, 20);
         panel.add(foodLabel);
 
         //food price
-        JLabel foodPrice = new JLabel("$" + (quantities * 30));
-        foodPrice.setBounds(401, 135, 100, 20);
-        foodPrice.setForeground(Color.WHITE);
+        JLabel foodPrice = new JLabel("" + (quantities * 30));
+        foodPrice.setBounds(401, 143, 100, 20);
         panel.add(foodPrice);
 
         //energy label
-        JLabel energyLabel = new JLabel("" + output);
-        energyLabel.setBounds(293, 221, 100, 20);
-        energyLabel.setForeground(Color.WHITE);
+        JLabel energyLabel = new JLabel("" + quantities);
+        energyLabel.setBounds(296, 229, 100, 20);
         panel.add(energyLabel);
 
         //energy price
-        JLabel energyPrice = new JLabel("$" + (quantities * 25));
-        energyPrice.setBounds(401, 221, 100, 20);
-        energyPrice.setForeground(Color.WHITE);
+        JLabel energyPrice = new JLabel("" + (quantities * 25));
+        energyPrice.setBounds(401, 143, 100, 20);
         panel.add(energyPrice);
 
         //smithore label
-        JLabel smithoreLabel = new JLabel("" + output);
-        smithoreLabel.setBounds(293, 307, 100, 20);
-        smithoreLabel.setForeground(Color.WHITE);
+        JLabel smithoreLabel = new JLabel("" + quantities);
+        smithoreLabel.setBounds(296, 315, 100, 20);
         panel.add(smithoreLabel);
 
         //smithore price
-        JLabel smithorePrice = new JLabel("$" + (quantities * 50));
-        smithorePrice.setBounds(401, 307, 100, 20);
-        smithorePrice.setForeground(Color.WHITE);
+        JLabel smithorePrice = new JLabel("" + (quantities * 50));
+        smithorePrice.setBounds(401, 143, 100, 20);
         panel.add(smithorePrice);
 
         //crystite label
-        JLabel crystiteLabel = new JLabel("" + output);
-        crystiteLabel.setBounds(293, 393, 100, 20);
-        crystiteLabel.setForeground(Color.WHITE);
+        JLabel crystiteLabel = new JLabel("" + quantities);
+        crystiteLabel.setBounds(296, 401, 100, 20);
         panel.add(crystiteLabel);
 
         //crystite price
-        JLabel crystitePrice = new JLabel("$" + (quantities * 100));
-        crystitePrice.setBounds(401, 393, 100, 20);
-        crystitePrice.setForeground(Color.WHITE);
+        JLabel crystitePrice = new JLabel("" + (quantities * 100));
+        crystitePrice.setBounds(401, 143, 100, 20);
         panel.add(crystitePrice);
     }
 
