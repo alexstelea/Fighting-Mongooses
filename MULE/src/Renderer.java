@@ -1239,7 +1239,7 @@ public class Renderer {
         panel.add(muleLabel);
 
         // money label
-        JLabel moneyLabel = new JLabel("" + player.getMoney());
+        JLabel moneyLabel = new JLabel("$" + player.getMoney());
         moneyLabel.setBounds((xBase + 158 * (number + 1) + 45), yBase + 95, 100, 20);
         panel.add(moneyLabel);
 
