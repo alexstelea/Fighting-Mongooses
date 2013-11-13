@@ -102,7 +102,7 @@ public class Player {
          return name + " is a " + color + " " + race + ".";
      }
 
-     public boolean Equals(Object player) {
+     public boolean equals(Object player) {
          Player otherGuy;
          try {
              otherGuy = (Player)player;
