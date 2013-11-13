@@ -148,9 +148,9 @@ public class Renderer {
 
         // add buttons
         JButton backButton = addButtonToPanel(menuPanel, 11, 5, 171, 40, 0, "back");
-		addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
+		//addHoverIcon(backButton, "/media/hoverbuttons/backhover.png");
         JButton okayButton = addButtonToPanel(menuPanel, 771, 5, 171, 40, 0, "okay");
-		addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
+		//addHoverIcon(okayButton, "/media/hoverbuttons/okayhover.png");
         JButton easyButton = addButtonToPanel(panel, 160, 164, 77, 40, 1, "1");
         JButton mediumButton = addButtonToPanel(panel, 407, 164, 137, 38, 1, "2");
         JButton hardButton = addButtonToPanel(panel, 715, 164, 78, 38, 1, "3");
