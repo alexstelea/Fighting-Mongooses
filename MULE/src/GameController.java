@@ -778,6 +778,8 @@ public class GameController {
         else if(choice.equals("sell")){
             if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
                 output = "You cannot sell land that you do not own.";
+                System.out.println("owner: " + map.getOwnerOfTile(tileSelection));
+                System.out.println("player: " + players.get(currPlayer));
                 return;
             }
             int propertyOwned = (int)players.get(currPlayer).getPropertyOwned();
