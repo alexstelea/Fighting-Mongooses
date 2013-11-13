@@ -377,6 +377,10 @@ public class Renderer {
 
         drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
 
+        for(int x = 1; x < 4; x++){
+            drawStorePanelStatus(Integer.parseInt(quantities[x]), panel);
+        }
+
         ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
@@ -430,10 +434,10 @@ public class Renderer {
         return states;
     }
 
-    public String[] drawMenuScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+    public String[] drawMenuScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round, Map map, String text) {
         states = new String[2];
 
-        ImagePanel panel = new ImagePanel("/media/menu.png");
+        ImagePanel panel = new ImagePanel("/media/map"+map.getMapNum()+".png");
         panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null);
 
@@ -441,9 +445,12 @@ public class Renderer {
         playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(null);
 
+        drawPlayerFlags(map, panel);
+        drawPlayerMules(map, panel);
+        drawTerrain(map, panel);
         drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
-
-        ImagePanel menuPanel = new ImagePanel("/media/bp.png");
+        
+        ImagePanel menuPanel = new ImagePanel("/media/bp2.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
@@ -453,13 +460,14 @@ public class Renderer {
         panels.add(menuPanel);
         changePanel(frame, panels);
 
-        addButtonToPanel(panel, 390, 166, 170, 40, 0, "resume");
-        addButtonToPanel(panel, 390, 242, 170, 40, 0, "save");
-        addButtonToPanel(panel, 390, 316, 170, 40, 0, "load");
-        addButtonToPanel(panel, 390, 390, 170, 40, 0, "quit");
+        addButtonToPanel(menuPanel, 783, 7, 40, 40, 0, "stop");
+        addButtonToPanel(menuPanel, 837, 7, 40, 40, 0, "resume");
+        addButtonToPanel(menuPanel, 893, 7, 40, 40, 0, "skip");
+        drawStatusText(menuPanel, text);
 
         blockForInputMain(menuPanel);
         exitSafely();
+        states[1] = "" + timer.getDelay();
         return states;
     }
 
@@ -556,7 +564,7 @@ public class Renderer {
 
         drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
 
-        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
@@ -566,20 +574,52 @@ public class Renderer {
         panels.add(menuPanel);
         changePanel(frame, panels);
 
-        addButtonToPanel(panel, 126, 198, 166, 35, 0, "save");
-        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
 
-        JTextField textBox = addTextToPanel(panel, 420, 480, 225, 38);
+        JTextField textBox = addTextToPanel(panel, 113, 332, 225, 38);
 
-        blockForInputMain(menuPanel);
+        blockForInput();
         exitSafely();
+        states[1] = textBox.getText();
         return states;
     }
 
-    public String[] drawLoadScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+    public String[] drawLoadScreen() {
         states = new String[2];
 
         ImagePanel panel = new ImagePanel("/media/loadscreen.png");
+        panel.setPreferredSize(new Dimension(950, 700));
+        panel.setLayout(null);
+
+        JPanel playerPanel = new JPanel();
+        playerPanel.setPreferredSize(new Dimension(950, 175));
+        playerPanel.setLayout(null);
+
+        ImagePanel menuPanel = new ImagePanel("/media/bp0.png");
+        menuPanel.setPreferredSize(new Dimension(950, 50));
+        menuPanel.setLayout(null);
+
+        ArrayList<JPanel> panels = new ArrayList<JPanel>();
+        panels.add(panel);
+        panels.add(menuPanel);
+        changePanel(frame, panels);
+
+        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
+
+        JTextField textBox = addTextToPanel(panel, 110, 300, 225, 38);
+
+        blockForInput();
+        exitSafely();
+        states[1] = textBox.getText();
+        return states;
+    }
+
+        public String[] drawWinScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+        states = new String[2];
+
+        ImagePanel panel = new ImagePanel("/media/gameover.png");
         panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null);
 
@@ -589,7 +629,7 @@ public class Renderer {
 
         drawGameStatus(players, playerPanel, currPlayer, store, numPlayers, round);
 
-        ImagePanel menuPanel = new ImagePanel("/media/bp1.png");
+        ImagePanel menuPanel = new ImagePanel("/media/bp3.png");
         menuPanel.setPreferredSize(new Dimension(950, 50));
         menuPanel.setLayout(null);
 
@@ -599,12 +639,10 @@ public class Renderer {
         panels.add(menuPanel);
         changePanel(frame, panels);
 
-        addButtonToPanel(panel, 126, 198, 166, 35, 0, "load");
-        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
+        JButton backButton = addButtonToPanel(menuPanel, 11, 7, 170, 40, 0, "back");
+        JButton okayButton = addButtonToPanel(menuPanel, 770, 7, 170, 40, 0, "okay");
 
-        JTextField textBox = addTextToPanel(panel, 420, 480, 225, 38);
-
-        blockForInputMain(menuPanel);
+        blockForInput();
         exitSafely();
         return states;
     }
@@ -1083,10 +1121,64 @@ public class Renderer {
         }
     }
 
-    private void drawStoreStatus(Store store, JPanel panel){
-        int xBase = 0;
-        int yBase = 30;
+    private void drawStorePanelStatus(int quantities, JPanel panel){
+        String output;
+        //food label
+        if(quantities < 10){
+            output = "0" + quantities;
+        }
+        else{
+            output = "" + quantities;
+        }
+        JLabel foodLabel = new JLabel("" + output);
+        foodLabel.setBounds(293, 135, 100, 20);
+        foodLabel.setForeground(Color.WHITE);
+        panel.add(foodLabel);
 
+        //food price
+        JLabel foodPrice = new JLabel("$" + (quantities * 30));
+        foodPrice.setBounds(401, 135, 100, 20);
+        foodPrice.setForeground(Color.WHITE);
+        panel.add(foodPrice);
+
+        //energy label
+        JLabel energyLabel = new JLabel("" + output);
+        energyLabel.setBounds(293, 221, 100, 20);
+        energyLabel.setForeground(Color.WHITE);
+        panel.add(energyLabel);
+
+        //energy price
+        JLabel energyPrice = new JLabel("$" + (quantities * 25));
+        energyPrice.setBounds(401, 221, 100, 20);
+        energyPrice.setForeground(Color.WHITE);
+        panel.add(energyPrice);
+
+        //smithore label
+        JLabel smithoreLabel = new JLabel("" + output);
+        smithoreLabel.setBounds(293, 307, 100, 20);
+        smithoreLabel.setForeground(Color.WHITE);
+        panel.add(smithoreLabel);
+
+        //smithore price
+        JLabel smithorePrice = new JLabel("$" + (quantities * 50));
+        smithorePrice.setBounds(401, 307, 100, 20);
+        smithorePrice.setForeground(Color.WHITE);
+        panel.add(smithorePrice);
+
+        //crystite label
+        JLabel crystiteLabel = new JLabel("" + output);
+        crystiteLabel.setBounds(293, 393, 100, 20);
+        crystiteLabel.setForeground(Color.WHITE);
+        panel.add(crystiteLabel);
+
+        //crystite price
+        JLabel crystitePrice = new JLabel("$" + (quantities * 100));
+        crystitePrice.setBounds(401, 393, 100, 20);
+        crystitePrice.setForeground(Color.WHITE);
+        panel.add(crystitePrice);
+    }
+
+    private void drawStoreStatus(Store store, JPanel panel){
         //food label
         JLabel foodLabel = new JLabel("" + store.getFoodQuantity());
         foodLabel.setBounds(45, 53, 100, 20);
