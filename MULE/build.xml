@@ -8,9 +8,11 @@
         <property name="jar.dir" value="${build.dir}/jar"/>
         <property name="api.dir" value="apidoc"/>
         <property name="lib.dir" value="lib"/>
+        <property name="test.dir" value="test"/>
         <property name="main-class" value="GameController"/>
         <path id="classpath">
             <fileset dir="${lib.dir}" includes="**/*.jar"/>
+
         </path>
     </target>
 
@@ -60,6 +62,21 @@
             </classpath>
         </java>
     </target>
+    
+    <target name="test" depends="init">
+      <junit>
+        <classpath>
+          <pathelement location="lib/junit-4.11.jar"/>
+        </classpath>    
+        <batchtest>
+           <fileset dir="${src.dir}">
+                <include name="src/Test*" />
+           </fileset>
+        </batchtest>
+        <formatter type="brief" usefile="false"/>
+      </junit>
+    </target>   
+
     <!-- We removed the javadoc for faster builds -->
     <target name="all" depends="init,prepare,compile,jar,run"/>
 
