@@ -651,30 +651,58 @@ public class GameController {
      * switchPlayer switches player to determine currPlayer
      */
     private void switchPlayer() {
-        double chance = Math.random() * 100;
         if(currPlayer == (numPlayers-1)){
             this.roundNumber++;
             gatherResources();
             reorderPlayers();
             checkForEnd();
+            output = "Next round commencing in 5 seconds.";
+        }
+        renderer.pauseTimer();
+        renderer.startTimer(5000);
+        output = "Next turn commencing in 5 seconds.";
+        if(renderer.getElapsedTime() == 4000){
+            renderer.pauseTimer();
+            output = "Next turn commencing in 4 seconds.";
+            renderer.unpauseTimer();
+        }
+        else if(renderer.getElapsedTime() == 3000){
+            renderer.pauseTimer();
+            output = "Next turn commencing in 3 seconds.";
+            renderer.unpauseTimer();
+        }
+        else if(renderer.getElapsedTime() == 2000){
+            renderer.pauseTimer();
+            output = "Next turn commencing in 2 seconds.";
+            renderer.unpauseTimer();
+        }
+        else if(renderer.getElapsedTime() == 1000){
+            renderer.pauseTimer();
+            output = "Next turn commencing in 1 seconds.";
+            renderer.unpauseTimer();
+        }
+        else if(renderer.getElapsedTime() == 0){
+            double chance = Math.random() * 100;
+            output = "Next turn commencing now";
+            if((chance -= 27) < 0){
+                RandomEvents randomEvent = new RandomEvents(roundNumber);
+                if(numPlayers == 1){
+                    output = randomEvent.generate(players, currPlayer, 6);
+                }
+                else if(players.get(currPlayer).equals(players.get(0))){
+                    output = randomEvent.generate(players, currPlayer, 3);
+                }
+                else{
+                    output = randomEvent.generate(players, currPlayer, 6);
+                }
+            }
+            currPlayer = (currPlayer + 1) % numPlayers;
+            renderer.restartTimer(getTime());
+            startTime = System.currentTimeMillis();
+            state = "game";
         }
 
-        if((chance -= 27) < 0){
-            RandomEvents randomEvent = new RandomEvents(roundNumber);
-            if(numPlayers == 1){
-                output = randomEvent.generate(players, currPlayer, 6);
-            }
-            else if(players.get(currPlayer).equals(players.get(0))){
-                output = randomEvent.generate(players, currPlayer, 3);
-            }
-            else{
-                output = randomEvent.generate(players, currPlayer, 6);
-            }
-        }
-        currPlayer = (currPlayer + 1) % numPlayers;
-        renderer.restartTimer(getTime());
-        startTime = System.currentTimeMillis();
-        state = "game";
+
     }
 
     /**
