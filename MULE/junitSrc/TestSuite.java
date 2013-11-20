@@ -137,4 +137,13 @@ public class TestSuite {
 	    	assertNotNull("Gamble", pub1.gamble(player , 1));
 	    }
     }
+
+	/* done by Jackson Hair */
+	@Test
+    public void testPlayerCreation() {
+
+        
+    }
+
+
 }
