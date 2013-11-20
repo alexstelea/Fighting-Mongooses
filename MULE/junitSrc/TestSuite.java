@@ -120,4 +120,21 @@ public class TestSuite {
         assertEquals("num extra tiles", numExtraTiles, 0);
     }
 
+    /* done by Geoving Gerard */
+    @Test
+    public void testPub() {
+    	Player player = players.get(currPlayer);
+    	/* test Pub at beginning of all rounds */
+    	for(int x = 0; x < 13; x++){
+	    	Pub pub1 = new Pub(x, 50);
+	    	Pub pub2 = new Pub(x, 30);
+	    	Pub pub3 = new Pub(x, 5);
+	    	Pub pub4 = new Pub(x, 0);
+	    	assertNotNull("Pub w/ 50 seconds remaining: ", pub1);
+	    	assertNotNull("Pub w/ 30 seconds remaining: ", pub2);
+	    	assertNotNull("Pub w/ 5 seconds remaining: ", pub3);
+	    	assertNotNull("Pub w/ seconds remaining: ", pub4);
+	    	assertNotNull("Gamble", pub1.gamble(player , 1));
+	    }
+    }
 }
