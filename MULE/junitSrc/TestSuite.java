@@ -80,6 +80,44 @@ public class TestSuite {
         assertTrue("mountan num", ((MountainTile)tiles[38]).getMountainNum() == 2);
         assertTrue("mountain tile", tiles[44] instanceof MountainTile);
         assertTrue("mountan num", ((MountainTile)tiles[44]).getMountainNum() == 2);
+
+        /* test a random map */
+        map = new Map(2);
+        assertNotNull("Map object", map);
+        tiles = map.getTiles();
+        assertNotNull("Tiles in map", tiles);
+        int numTownTiles = 0;
+        int numPlainTiles = 0;
+        int numRiverTiles = 0;
+        int numMountain1Tiles = 0;
+        int numMountain2Tiles = 0;
+        int numMountain3Tiles = 0;
+        int numExtraTiles = 0;
+
+        for (Tile tile : tiles) {
+            if (tile instanceof TownTile) 
+                numTownTiles++;
+            else if (tile instanceof PlainTile)
+                numPlainTiles++;
+            else if (tile instanceof RiverTile)
+                numRiverTiles++;
+            else if (tile instanceof MountainTile && ((MountainTile)tile).getMountainNum() == 1)
+                numMountain1Tiles++;
+            else if (tile instanceof MountainTile && ((MountainTile)tile).getMountainNum() == 2)
+                numMountain2Tiles++;
+            else if (tile instanceof MountainTile && ((MountainTile)tile).getMountainNum() == 3)
+                numMountain3Tiles++;
+            else
+                numExtraTiles++;
+        }
+        
+        assertEquals("num town tiles", numTownTiles, 1);
+        assertTrue("num plain tiles", (numPlainTiles <= 33 && numPlainTiles >= 23));
+        assertTrue("num river tiles", (numRiverTiles >= 9 && numRiverTiles <= 13));
+        assertTrue("num mountain1 tiles", (numMountain1Tiles <= 4 && numMountain1Tiles >= 2));
+        assertTrue("num mountain2 tiles", (numMountain2Tiles <= 4 && numMountain2Tiles >= 2));
+        assertTrue("num mountain3 tiles", (numMountain3Tiles <= 4 && numMountain3Tiles >= 2));
+        assertEquals("num extra tiles", numExtraTiles, 0);
     }
 
 }
