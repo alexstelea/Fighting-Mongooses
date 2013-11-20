@@ -120,11 +120,11 @@ public class TestSuite {
         assertEquals("num extra tiles", numExtraTiles, 0);
     }
 
-    /* done by Geoving Gerard */
+    /* done by Geoving Gerard 
     @Test
     public void testPub() {
     	Player player = players.get(currPlayer);
-    	/* test Pub at beginning of all rounds */
+    	/* test Pub at beginning of all rounds 
     	for(int x = 0; x < 13; x++){
 	    	Pub pub1 = new Pub(x, 50);
 	    	Pub pub2 = new Pub(x, 30);
@@ -136,14 +136,72 @@ public class TestSuite {
 	    	assertNotNull("Pub w/ seconds remaining: ", pub4);
 	    	assertNotNull("Gamble", pub1.gamble(player , 1));
 	    }
-    }
+    }*/
 
 	/* done by Jackson Hair */
 	@Test
     public void testPlayerCreation() {
-
-        
+        Player p1 = new Player("Jackson", "elephant", "blue", 2);
+        assertNotNull("Normal Player Creation", p1);
+        //wrong color
+        p1 = null;
+        try {
+        p1 = new Player("Jackson", "elephant", "yellow", 2);
+        } catch (IllegalArgumentException e) {}
+        assertNull("Incorrect Color", p1);
+        //wrong race
+        p1 = null;
+        try {
+        p1 = new Player("Jackson", "dragon", "blue", 2);
+        } catch (IllegalArgumentException e) {}
+        assertNull("Incorrect Race", p1);
+        //short name
+        p1 = null;
+        try {
+        p1 = new Player("J", "elephant", "blue", 2);
+        } catch (IllegalArgumentException e) {}
+        assertNull("Name Too Short", p1);
+        //long name
+        p1 = null;
+        try {
+        p1 = new Player("Jacksonjacksonjacksonjackson", "elephant", "blue", 2);
+        } catch (IllegalArgumentException e) {}
+        assertNull("Name Too Long", p1);
+        //0 difficulty
+        p1 = null;
+        try {
+        p1 = new Player("Jackson", "elephant", "blue", 0);
+        } catch (IllegalArgumentException e) {}
+        assertNull("Incorrect difficulty", p1);
+        //4 difficulty
+        p1 = null;
+        try {
+        p1 = new Player("Jackson", "elephant", "blue", 4);
+        } catch (IllegalArgumentException e) {}
+        assertNull("Incorrect difficulty", p1);
+        //wrong color
+        p1 = null;
+        try {
+        p1 = new Player("Jackson", "elephant", null, 2);
+        } catch (NullPointerException e) {}
+        assertNull("Incorrect Color", p1);
+        //wrong race
+        p1 = null;
+        try {
+        p1 = new Player("Jackson", null, "blue", 2);
+        } catch (NullPointerException e) {}
+        assertNull("Incorrect Race", p1);
+        //short name
+        p1 = null;
+        try {
+        p1 = new Player(null, "elephant", "blue", 2);
+        } catch (NullPointerException e) {}
+        assertNull("Name Too Short", p1);
+        //long name
+        p1 = null;
+        try {
+        p1 = new Player(null, "elephant", "blue", 2);
+        } catch (NullPointerException e) {}
+        assertNull("Name Too Long", p1);
     }
-
-
 }
