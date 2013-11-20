@@ -21,6 +21,65 @@ public class TestSuite {
         assertNotNull("Map object", map);
         Tile[] tiles = map.getTiles();
         assertNotNull("Tiles in map", tiles);
+        /* plain tiles */
+        assertTrue("plain tile", tiles[0] instanceof PlainTile);
+        assertTrue("plain tile", tiles[1] instanceof PlainTile);
+        assertTrue("plain tile", tiles[3] instanceof PlainTile);
+        assertTrue("plain tile", tiles[5] instanceof PlainTile);
+        assertTrue("plain tile", tiles[7] instanceof PlainTile);
+        assertTrue("plain tile", tiles[8] instanceof PlainTile);
+        assertTrue("plain tile", tiles[9] instanceof PlainTile);
+        assertTrue("plain tile", tiles[11] instanceof PlainTile);
+        assertTrue("plain tile", tiles[12] instanceof PlainTile);
+        assertTrue("plain tile", tiles[14] instanceof PlainTile);
+        assertTrue("plain tile", tiles[15] instanceof PlainTile);
+        assertTrue("plain tile", tiles[16] instanceof PlainTile);
+        assertTrue("plain tile", tiles[19] instanceof PlainTile);
+        assertTrue("plain tile", tiles[20] instanceof PlainTile);
+        assertTrue("plain tile", tiles[21] instanceof PlainTile);
+        assertTrue("plain tile", tiles[23] instanceof PlainTile);
+        assertTrue("plain tile", tiles[24] instanceof PlainTile);
+        assertTrue("plain tile", tiles[25] instanceof PlainTile);
+        assertTrue("plain tile", tiles[27] instanceof PlainTile);
+        assertTrue("plain tile", tiles[29] instanceof PlainTile);
+        assertTrue("plain tile", tiles[30] instanceof PlainTile);
+        assertTrue("plain tile", tiles[32] instanceof PlainTile);
+        assertTrue("plain tile", tiles[34] instanceof PlainTile);
+        assertTrue("plain tile", tiles[35] instanceof PlainTile);
+        assertTrue("plain tile", tiles[36] instanceof PlainTile);
+        assertTrue("plain tile", tiles[37] instanceof PlainTile);
+        assertTrue("plain tile", tiles[39] instanceof PlainTile);
+        assertTrue("plain tile", tiles[41] instanceof PlainTile);
+        assertTrue("plain tile", tiles[42] instanceof PlainTile);
+        assertTrue("plain tile", tiles[43] instanceof PlainTile);
+        /* river tiles */
+        assertTrue("river tile", tiles[4] instanceof RiverTile);
+        assertTrue("river tile", tiles[13] instanceof RiverTile);
+        assertTrue("river tile", tiles[31] instanceof RiverTile);
+        assertTrue("river tile", tiles[40] instanceof RiverTile);
+        /* town tile */
+        assertTrue("town tile", tiles[22] instanceof TownTile);
+        /* mountain tiles */
+        assertTrue("mountain tile", tiles[2] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[2]).getMountainNum() == 1);
+        assertTrue("mountain tile", tiles[6] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[6]).getMountainNum() == 3);
+        assertTrue("mountain tile", tiles[10] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[10]).getMountainNum() == 1);
+        assertTrue("mountain tile", tiles[17] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[17]).getMountainNum() == 3);
+        assertTrue("mountain tile", tiles[18] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[18]).getMountainNum() == 3);
+        assertTrue("mountain tile", tiles[26] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[26]).getMountainNum() == 1);
+        assertTrue("mountain tile", tiles[28] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[28]).getMountainNum() == 2);
+        assertTrue("mountain tile", tiles[33] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[33]).getMountainNum() == 2);
+        assertTrue("mountain tile", tiles[38] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[38]).getMountainNum() == 2);
+        assertTrue("mountain tile", tiles[44] instanceof MountainTile);
+        assertTrue("mountan num", ((MountainTile)tiles[44]).getMountainNum() == 2);
     }
 
 }
