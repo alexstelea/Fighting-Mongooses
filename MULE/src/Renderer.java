@@ -1354,6 +1354,8 @@ public class Renderer {
      * @param y The initial y position of the JTextField.
      * @param width The width of the JTextField.
      * @param height The height of the JTextField.
+     *
+     * @return Intial text to display on JTextField.
      */
     private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
         final JTextField text = new JTextField("Enter Name");
@@ -1386,6 +1388,8 @@ public class Renderer {
      * @param width The width of the JLabel.
      * @param height The height of the JLabel.
      * @param image Image name to be drawn on pabel.
+     *
+     * @return Label to draw on panel.
      */
     private JLabel addLabelToPanel(JPanel panel, int x, int y, int width, int height, String image) {
         BufferedImage img;
@@ -1752,7 +1756,7 @@ public class Renderer {
      * @param width The width of the JTextField.
      * @param height The height of the JTextField.
      *
-     * @return Difficulty
+     * @return Difficulty string to be displayed on the JTextField.
      */
     private JTextField drawDifficulty(JPanel panel, String textString, int x, int y, int width, int height) {
         JTextField text = new JTextField(textString);
@@ -1774,7 +1778,7 @@ public class Renderer {
      * @param panel Panel to draw on.
      * @param textString Text to be drawn on JTextField.
      *
-     * @return Difficulty
+     * @return Various status information.
      */
     public JTextField drawStatusText(JPanel panel, String textString) {
         if(panel == null){
@@ -1805,7 +1809,7 @@ public class Renderer {
      *
      * @param row Row to draw flag on.
      * @param column Column to draw flag on.
-     * @param title flag type to draw.
+     * @param player Current player.
      * @param panel Panel to draw on.
      */
     private void drawPlayerFlag(int row, int column, Player player, JPanel panel) {
@@ -1889,6 +1893,7 @@ public class Renderer {
      * Gets current difficulty number and returns a string.
      *
      * @param num Current difficulty int.
+     *
      * @return Current difficulty string.
      */
     private String getDifficultyValueString(int num){
