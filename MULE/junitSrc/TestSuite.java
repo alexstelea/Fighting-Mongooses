@@ -125,6 +125,7 @@ public class TestSuite {
     /* done by Geoving Gerard */
     @Test
     public void testPub() {
+<<<<<<< HEAD
     	// Player player = players.get(currPlayer);
     	// /* test Pub at beginning of all rounds */
     	// for(int x = 0; x < 13; x++){
