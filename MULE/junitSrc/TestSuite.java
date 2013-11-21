@@ -204,4 +204,23 @@ public class TestSuite {
         } catch (NullPointerException e) {}
         assertNull("Name Too Long", p1);
     }
+	
+	/* done by Tyler MacGrogan */
+	@Test
+	public void testBuyItem() {
+		Player p1 = new Player("p1", "human", "red", 2);
+		Player p2 = new Player("p1", "elephant", "blue", 2);
+		ArrayList<Player> pList;
+		pList.add(p1);
+		pList.add(p2);
+		Store store = new Store(2);
+		String result = store.buyItem(pList, 0, "food", 2);
+		assertEquals("P1 food", pList.get(0).getFood(), 6);
+		assertEquals("P1 money", pList.get(0).getMoney(), 540);
+		result = store.buyItem(pList, 0, "food", 7);
+		assertEquals("not enough food in stock", result, "noBuy");
+		pList.get(0).setMoney(0);
+		result = store.buyItem(pList, 0, "food", 1);
+		assertEquals("not enough money for food", result, "noFunds");
+	}
 }
