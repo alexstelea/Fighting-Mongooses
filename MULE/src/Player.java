@@ -55,9 +55,12 @@ public class Player {
             this.food = 8;
             this.energy = 4;
         }
-        if ((getDifficulty == 2) || (getDifficulty == 3)) {
+        else if ((getDifficulty == 2) || (getDifficulty == 3)) {
             this.food = 4;
             this.energy = 2;   
+        }
+        else {
+            throw new IllegalArgumentException("Invalid difficulty: " + getDifficulty);
         }
 
         if (race.equals("human")) {

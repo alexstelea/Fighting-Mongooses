@@ -25,5 +25,9 @@ public class MountainTile extends Tile {
     public String image() {
         return "mount" + mountainNum + ".png";
     }
+
+    public int getMountainNum() {
+        return mountainNum;
+    }
 }
 
