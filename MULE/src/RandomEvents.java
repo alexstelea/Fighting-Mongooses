@@ -57,6 +57,7 @@ public class RandomEvents{
 	 * @return prompt The string to be outputted unto the menuPanel.
 	 */
 	public String generate(ArrayList<Player> players, int currPlayer, int limit){
+		int playerCrystite = (int)players.get(currPlayer).getCrystite();
 		int playerSmithore = (int)players.get(currPlayer).getSmithore();
 		int playerEnergy = (int)players.get(currPlayer).getEnergy();
 		int playerValue = (int)players.get(currPlayer).getMoney();
@@ -79,8 +80,8 @@ public class RandomEvents{
 			return prompt;
 		}
 		else if(eventRand == 2){
-			prompt = "The museum bought your antique laptop for $" + pcBonus + ".";
-			players.get(currPlayer).setMoney(playerValue + pcBonus);
+			prompt = "Your uncle Heisenberg gave you 4 shards of crystite.";
+			players.get(currPlayer).setCrystite(playerCrystite + 4);
 			return prompt;
 		}
 		else if(eventRand == 3){

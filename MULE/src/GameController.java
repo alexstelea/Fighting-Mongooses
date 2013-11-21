@@ -669,6 +669,7 @@ public class GameController {
             checkForEnd();
             output = "Next round commencing in 5 seconds.";
         }
+        /*
         renderer.pauseTimer();
         renderer.startTimer(5000);
         output = "Next turn commencing in 5 seconds.";
@@ -693,8 +694,9 @@ public class GameController {
             renderer.unpauseTimer();
         }
         else if(renderer.getElapsedTime() == 0){
+        */
             double chance = Math.random() * 100;
-            output = "Next turn commencing now";
+            //output = "Next turn commencing now";
             if((chance -= 27) < 0){
                 RandomEvents randomEvent = new RandomEvents(roundNumber);
                 if(numPlayers == 1){
@@ -711,9 +713,6 @@ public class GameController {
             renderer.restartTimer(getTime());
             startTime = System.currentTimeMillis();
             state = "game";
-        }
-
-
     }
 
     /**

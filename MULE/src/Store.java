@@ -30,16 +30,16 @@ public class Store {
     private int crystiteQuantity;
 	private int mulesQuantity;
 
-	private int foodPrice = 30;
-	private int energyPrice = 25;
-	private	int smithorePrice = 50;
-	private	int crystitePrice = 100; 
-	private int mulesPrice = 100;
+	private final int FOODPRICE = 30;
+	private final int ENERGYPRICE = 25;
+	private	final int SMITHOREPRICE = 50;
+	private	final int CRYSTITEPRICE = 100; 
+	private final int MULESPRICE = 100;
 
-	private int foodMule = 125;
-	private int energyMule = 150;
-	private	int smithoreMule = 175;
-    private int crystiteMule = 200;
+	private final int FOODMULE = 125;
+	private final int ENERGYMULE = 150;
+	private	final int SMITHOREMULE = 175;
+    private final int CRYSTITEMULE = 200;
 
     private int costOfPurchase;
     private int playerQuantity;
@@ -85,7 +85,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = foodPrice * buy;
+                costOfPurchase = FOODPRICE * buy;
             }
         }
         else if(item.equals("energy")){
@@ -94,7 +94,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = energyPrice * buy;
+                costOfPurchase = ENERGYPRICE * buy;
             }
         }
         else if(item.equals("smithore")){
@@ -103,7 +103,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = smithorePrice * buy;
+                costOfPurchase = SMITHOREPRICE * buy;
             }
         }
         else if(item.equals("crystite")){
@@ -112,7 +112,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = crystitePrice * buy;
+                costOfPurchase = CRYSTITEPRICE * buy;
             }
         }
         else if(item.equals("foodMule")){
@@ -121,7 +121,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = foodMule;
+                costOfPurchase = FOODMULE;
             }
         }
         else if(item.equals("energyMule")){
@@ -130,7 +130,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = energyMule;
+                costOfPurchase = ENERGYMULE;
             }
         }
         else if(item.equals("smithoreMule")){
@@ -139,7 +139,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = smithoreMule;
+                costOfPurchase = SMITHOREMULE;
             }
         }
         else if(item.equals("crystiteMule")){
@@ -148,7 +148,7 @@ public class Store {
                 return "noBuy";
             }
             else{
-                costOfPurchase = crystiteMule;
+                costOfPurchase = SMITHOREMULE;
             }
         }
         if((playerValue - costOfPurchase) >= 0){
@@ -292,7 +292,7 @@ public class Store {
         }
         else if(item.equals("food")){
             playerQuantity = (int)players.get(currPlayer).getFood();
-            itemCost = foodPrice * toSell;
+            itemCost = FOODPRICE * toSell;
             if(toSell > playerQuantity){
                 return "Player selling more than what they own";
             }
@@ -307,7 +307,7 @@ public class Store {
         }
         else if(item.equals("energy")){
             playerQuantity = (int)players.get(currPlayer).getEnergy();
-            itemCost = energyPrice * toSell;
+            itemCost = ENERGYPRICE * toSell;
             if(toSell > playerQuantity){
                 return "Player selling more than what they own";
             }
@@ -322,7 +322,7 @@ public class Store {
         }
         else if(item.equals("smithore")){
             playerQuantity = (int)players.get(currPlayer).getSmithore();
-            itemCost = smithorePrice * toSell;
+            itemCost = SMITHOREPRICE * toSell;
             if(toSell > playerQuantity){
                 return "Player selling more than what they own";
             }
@@ -338,7 +338,7 @@ public class Store {
         }
         else if(item.equals("crystite")){
             costOfPurchase = (int)players.get(currPlayer).getCrystite();
-            itemCost = crystitePrice * toSell;
+            itemCost = CRYSTITEPRICE * toSell;
             if(toSell > playerQuantity){
                 return "Player selling more than what they own";
             }
@@ -352,7 +352,7 @@ public class Store {
             }
         }
         else if(item.equals("foodMule")){
-            itemCost = (foodMule - 10); //no rules for selling mule. liken to selling used car so you get less than msrp
+            itemCost = (FOODMULE - 10); //no rules for selling mule. liken to selling used car so you get less than msrp
             players.get(currPlayer).setMule(false);
             players.get(currPlayer).setMuleType(null);
             this.foodQuantity += toSell;
@@ -361,7 +361,7 @@ public class Store {
             return "Player successfully sold a Food Mule";
         }
         else if(item.equals("energyMule")){
-            itemCost = (energyMule - 20); //no rules for selling mule. liken to selling used car so you get less than msrp
+            itemCost = (ENERGYMULE - 20); //no rules for selling mule. liken to selling used car so you get less than msrp
             players.get(currPlayer).setMule(false);
             players.get(currPlayer).setMuleType(null);
             this.energyQuantity += toSell;
@@ -370,7 +370,7 @@ public class Store {
             return "Player successfully sold an Energy Mule";
         }
         else if(item.equals("smithoreMule")){
-            itemCost = (smithoreMule - 30); //no rules for selling mule. liken to selling used car so you get less than msrp
+            itemCost = (SMITHOREMULE - 30); //no rules for selling mule. liken to selling used car so you get less than msrp
             players.get(currPlayer).setMule(false);
             players.get(currPlayer).setMuleType(null);
             this.smithoreQuantity += toSell;
@@ -379,7 +379,7 @@ public class Store {
             return "Player successfully sold a Smithore Mule";
         }
         else if(item.equals("crystiteMule")){
-            itemCost = (crystiteMule - 40); //no rules for selling mule. liken to selling used car so you get less than msrp
+            itemCost = (SMITHOREMULE - 40); //no rules for selling mule. liken to selling used car so you get less than msrp
             players.get(currPlayer).setMule(false);
             players.get(currPlayer).setMuleType(null);
             this.crystiteQuantity += toSell;
@@ -443,7 +443,7 @@ public class Store {
      * @return The store's food price
      */
     public int getFoodPrice() {
-        return foodPrice;
+        return FOODPRICE;
     }
 
     /**
@@ -452,7 +452,7 @@ public class Store {
      * @return The store's energy price
      */
     public int getEnergyPrice() {
-        return energyPrice;
+        return ENERGYPRICE;
     }
 
     /**
@@ -461,7 +461,7 @@ public class Store {
      * @return The store's smithore price
      */
     public int getSmithorePrice() {
-        return smithorePrice;
+        return SMITHOREPRICE;
     }
 
    	/**
@@ -470,7 +470,7 @@ public class Store {
      * @return The store's crystite price
      */
     public int getCrystitePrice() {
-        return crystitePrice;
+        return CRYSTITEPRICE;
     }
 
     /**
@@ -479,7 +479,7 @@ public class Store {
      * @return The store's mules price
      */
     public int getMulesPrice() {
-        return mulesPrice;
+        return MULESPRICE;
     }
 
     /**
@@ -488,7 +488,7 @@ public class Store {
      * @return The store's food fee
      */
     public int getFoodMule() {
-        return foodMule;
+        return FOODMULE;
     }
 
     /**
@@ -497,7 +497,7 @@ public class Store {
      * @return The store's energy fee
      */
     public int getEnergyMule() {
-        return energyMule;
+        return ENERGYMULE;
     }
 
     /**
@@ -506,7 +506,7 @@ public class Store {
      * @return The store's smithore fee
      */
     public int getSmithoreMule() {
-        return smithoreMule;
+        return SMITHOREMULE;
     }
 
    	/**
@@ -515,7 +515,7 @@ public class Store {
      * @return The store's crystite fee
      */
     public int getCrystiteMule() {
-        return crystiteMule;
+        return SMITHOREMULE;
     }
 
     /**
