@@ -1,7 +1,10 @@
 /**
  * A class representing a tile object
  * This would be abstract, but our serialization library complains
- **/
+ *
+ * @author Kennon Bittick
+ * @version 11 | 21 | 2013
+ */
 public class Tile {
 
     protected boolean hasMule;

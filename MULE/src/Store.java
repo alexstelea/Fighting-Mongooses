@@ -18,8 +18,10 @@ import java.lang.Math;
  * following fees are added to the base price.
  *
  * So an energy mule would cost 100 + 50 = 150.
-*/
-
+ *
+ * @author Geoving Gerard II
+ * @version 11 | 21 | 2013
+ */
 public class Store {
 
 	private int foodQuantity;
@@ -66,10 +68,13 @@ public class Store {
 
     /**
      * Player buys. Subtracts purchase from player's money.
+     *
      * @param players ArrayList contaning all players
-     * @param currPlayer The current player
-     * @param item Item currPlayer is purchasing
-     * @param toBuy number of items currPlayer is purchasing
+     * @param currPlayer The current player.
+     * @param item Item currPlayer is purchasing.
+     * @param toBuy Number of items currPlayer is purchasing.
+     *
+     * @return String The string to be outputted unto the menuPanel.
      */
     public String buyItem(ArrayList<Player> players, int currPlayer, String item, int toBuy){
         int buy = toBuy;
@@ -270,10 +275,13 @@ public class Store {
 
     /**
      * Player sells. Adds value of sale to player's money.
-     * @param players ArrayList contaning all players
-     * @param currPlayer The current player
-     * @param item Item currPlayer is selling
-     * @param toSell number of items currPlayer is selling
+     *
+     * @param players ArrayList contaning all players.
+     * @param currPlayer The current player.
+     * @param item Item currPlayer is selling.
+     * @param toSell number of items currPlayer is selling.
+     *
+     * @return String The string to be outputted unto the menuPanel.
      */
     public String sellItem(ArrayList<Player> players, int currPlayer, String item, int toSell){
         int playerValue = (int)players.get(currPlayer).getMoney();

@@ -1,4 +1,3 @@
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -22,9 +21,16 @@ import java.util.ArrayList;
  * The main GameController class
  *
  * Contains the information directly related to the state of the current game,
- * and the state machine that controls the game 
- **/
+ * and the state machine that controls the game
+ *
+ * @author Alex Stelea
+ * @author Geoving Gerard II
+ * @author Kennon Bittick
+ * @author Tyler MacGrogan
+ * @version 11 | 21 | 2013
+ */
 public class GameController {
+
     /**
      * Main method of the MULE game
      * Initializes the environment and starts the game

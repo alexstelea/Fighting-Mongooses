@@ -17,8 +17,10 @@ import java.util.ArrayList;
  * 0-12 seconds left : 50
  * 
  * You cannot earn more than 250 by gambling.
-*/
-
+ *
+ * @author Geoving Gerard II
+ * @version 11 | 21 | 2013
+ */
 public class Pub{
 
 	private Random rand = new Random();
@@ -28,8 +30,8 @@ public class Pub{
 	
 	/**
 	 * Pub sets roundBonus and timeBonus
-	 * @param getRoundNumber gets current round number
-	 * @param time gets current time
+	 * @param getRoundNumber Gets current round number
+	 * @param time Gets current time
 	 */
 	public Pub(int getRoundNumber, int timeRemaining){
 		if(getRoundNumber < 4){
@@ -63,8 +65,10 @@ public class Pub{
 
 	/**
 	 * Player gambles. Adds winnings to player's money.
-	 * @param players ArrayList contaning all players
-	 * @param currPlayer The current player
+	 * @param players ArrayList contaning all players.
+	 * @param currPlayer The current player.
+	 *
+	 * @return String The string to be outputted unto the menuPanel.
 	 */
 	public String gamble(ArrayList<Player> players, int currPlayer){
 		int abs = Math.abs(timeBonus);

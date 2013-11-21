@@ -34,7 +34,13 @@ import java.util.Date;
 
 /**
  * A class that handles all IO with the user
- **/
+ *
+ * @author Alex Stelea
+ * @author Geoving Gerard II
+ * @author Kennon Bittick
+ * @author Tyler MacGrogan
+ * @version 11 | 21 | 2013
+ */
 public class Renderer {
 
     private JFrame frame;
@@ -253,8 +259,6 @@ public class Renderer {
         exitSafely();
         return states;
     }
-
-    // REFACTOR THIS BIT TO MAKE PANELS MORE STATIC -ALex
 
     // States[0] - Action to perform: {"new", "load", "quit"}
     // States[1] - Race: {"human", "elephant", "squirrel", "frog", "cat"}
@@ -577,7 +581,7 @@ public class Renderer {
      * @param numPlayers the number of players
      * @param round the round number
      *
-     * @return the array of states selected by the player
+     * @return The array of states selected by the player
      **/
     public String[] drawLandOfficeScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
         states = new String[2];
@@ -616,8 +620,20 @@ public class Renderer {
 
     // State[0] = {"town", "time"}
     // State[1] = time left on timer
+    /**
+     * Draws the Main Game Screen
+     *
+     * @param map The current map type.
+     * @param players The list of players playing.
+     * @param currPlayer The index of the current player.
+     * @param store The store instance.
+     * @param numPlayers The number of players playing.
+     * @param round The current round number.
+     * @param text The text to be outputted on the menuPanel.
+     *
+     * @return The array of states selected by the player.
+     */
     public String[] drawMainGameScreen(Map map, ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round, String text) {
-
         states = new String[2];
 
         ImagePanel panel = new ImagePanel("/media/map"+map.getMapNum()+".png");
@@ -664,6 +680,17 @@ public class Renderer {
         return states;
     }
 
+    /**
+     * Draws the Save Screen
+     *
+     * @param players The list of players playing.
+     * @param currPlayer The index of the current player.
+     * @param store The store instance.
+     * @param numPlayers The number of players playing.
+     * @param round The current round number.
+     *
+     * @return The array of states selected by the player.
+     */
     public String[] drawSaveScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
         states = new String[2];
         states[1] = "DefaultSave";
@@ -699,6 +726,11 @@ public class Renderer {
         return states;
     }
 
+    /**
+     * Draws the Load Screen
+     *
+     * @return The array of states selected by the player.
+     */
     public String[] drawLoadScreen() {
         states = new String[2];
 
@@ -730,7 +762,18 @@ public class Renderer {
         return states;
     }
 
-        public String[] drawWinScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
+    /**
+     * Draws the Win Screen
+     *
+     * @param players The list of players playing.
+     * @param currPlayer The index of the current player.
+     * @param store The store instance.
+     * @param numPlayers The number of players playing.
+     * @param round The current round number.
+     *
+     * @return The array of states selected by the player.
+     */
+    public String[] drawWinScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
         states = new String[2];
 
         ImagePanel panel = new ImagePanel("/media/gameover.png");
@@ -761,8 +804,14 @@ public class Renderer {
         return states;
     }
     
-    // helper methods
+//Helper Methods
 
+    /**
+     * Changes the various panels.
+     *
+     * @param frame The frame to display the panels on.
+     * @param panels ArrayList of panels to display.
+     */
     private void changePanel(JFrame frame, ArrayList<JPanel> panels) {
         frame.getContentPane().removeAll();        
         for (JPanel panel : panels) {
@@ -773,6 +822,9 @@ public class Renderer {
         return;
     }
 
+    /**
+     * Ensures that player selects only "okay" or "back" to move on to next panel.
+     */
     private void blockForInput() {
         // wait for a button to be clicked
         boolean waitingSafe = true; // used to avoid race condition
@@ -787,6 +839,13 @@ public class Renderer {
         }
     }
 
+    /**
+     * Allows player to select various maps and have indicator arrows drawn underneath them.
+     *
+     * @param panel The current panel to draw on.
+     * @param infoPanel The panel that displays the selected map and game difficulty selected.
+     * @param difficultyValue The current game difficulty.
+     */
     private void blockForMapScreen(JPanel panel, ImagePanel infoPanel, String difficultyValue){ 
         try { Thread.sleep(100); } catch (Exception e) {}
         JTextField difficultyText = drawDifficulty(infoPanel, difficultyValue, 0, 125, 162, 25);
@@ -853,6 +912,19 @@ public class Renderer {
         }
     }
 
+    /**
+     * Allows player to select various difficulties/number of players 
+     * and have indicator arrows drawn underneath them.
+     *
+     * @param panel The current panel to draw on.
+     * @param infoPanel The panel that displays the selected map and game difficulty selected.
+     * @param x The initial x position
+     * @param y The initial y position
+     * @param xMargin The margin between each option on screen.
+     * @param numPlayers The number of players playing.
+     * @param difficultyValue The current game difficulty.
+     * @param playerPanel The panel where player stats are displayed.
+     */
     private void blockForSetupScreen(JPanel panel, ImagePanel infoPanel, int x, int y, int xMargin, int numPlayers, String difficultyValue, JPanel playerPanel){
         try { Thread.sleep(100); } catch (Exception e) {}
         JLabel difficultyArrow = addLabelToPanel(panel, (Integer.parseInt(states[1])-1)*xMargin + x, y, 804, 200, "/media/uparrow.png");
@@ -909,6 +981,19 @@ public class Renderer {
         }
     }
 
+    /**
+     * Allows player to select various character types/colors
+     * and have indicator arrows drawn underneath them.
+     *
+     * @param panel The current panel to draw on.
+     * @param infoPanel The panel that displays the selected map and game difficulty selected.
+     * @param difficultyValue The current game difficulty.
+     * @param map The current map type.
+     * @param playerPanel The panel where player stats are displayed.
+     * @param players ArrayList of players currently playing.
+     *
+     * @return Image of races and colors already selected on infoPanel.
+     */
     private JLabel blockForInputCharacter(JPanel panel, ImagePanel infoPanel, String difficultyValue, Map map, JPanel playerPanel, ArrayList<Player> players) {
         try { Thread.sleep(100); } catch (Exception e) {}
         JLabel charArrow = addLabelToPanel(panel, 117, 210, 45, 24, "/media/uparrow.png");
@@ -931,7 +1016,6 @@ public class Renderer {
         String oldState = states[1];
         System.out.println(states[2]);
         String oldState2 = states[3];
-        
 
         int currentPlayer = players.size();
 
@@ -1012,6 +1096,12 @@ public class Renderer {
         return colors;
     }
 
+    /**
+     * Allows player to select various difficulties/number of players 
+     * and have indicator arrows drawn underneath them.
+     *
+     * @param panel The current panel to draw on.
+     */
     private void blockForInputMain(JPanel panel) {
         Date date = new Date();
         long currentTime = date.getTime();
@@ -1048,6 +1138,15 @@ public class Renderer {
         }
     }  
 
+    /**
+     * Allows player to switch between "buy" and "sell" options within the store
+     * as well as go back to the Town.
+     *
+     * @param panel The current panel to draw on.
+     * @param storePanel The panel that displays the various store quantities.
+     * @param storeLabels The labels drawn throughout the store that indicate how of a 
+     *                    particular item the current player is purchasing.
+     */
     private void blockForInputStore(JPanel panel, JPanel storePanel, ArrayList<JLabel> storeLabels) {
         Date date = new Date();
         long currentTime = date.getTime();
@@ -1096,6 +1195,9 @@ public class Renderer {
         }
     }  
 
+    /**
+     * Exit current panel safely to go to next panel.
+     */
     private void exitSafely() {
         try {
             lock.lock();
@@ -1106,6 +1208,17 @@ public class Renderer {
         }
     }
 
+    /**
+     * Draws all buttons used in game to appropriate panel.
+     *
+     * @param panel Panel to draw on.
+     * @param x The initial x position of the button.
+     * @param y The initial y position of the button.
+     * @param width The width of the button.
+     * @param height The height of the button.
+     * @param stateNum The current state.
+     * @param stateText The string associated with current state.
+     */
     private JButton addButtonToPanel(JPanel panel, int x, int y, int width, int height, 
         final int stateNum, final String stateText) {
         final JButton button = new JButton();
@@ -1140,13 +1253,17 @@ public class Renderer {
                 }
             }
         });
-        ///////
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
         return button;
     }
 
+    /**
+     * Creates game timer.
+     *
+     * @param time Intiial time to count down from.
+     */
     private Timer createTimer(int time) {
         ActionListener timerListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -1164,6 +1281,9 @@ public class Renderer {
         return timer;
     }
 
+    /**
+     * Pauses game timer.
+     */
     public void pauseTimer() {
         if (paused)
             return;
@@ -1173,6 +1293,9 @@ public class Renderer {
         paused = true;
     }
 
+    /**
+     * Unpauses game timer.
+     */
     public void unpauseTimer() {
         if (!paused)
             return;
@@ -1184,10 +1307,18 @@ public class Renderer {
         paused = false;
     }
     
+    /**
+     * Stops game timer.
+     */
     public void stopTimer() {
         timer.stop();
     }
 
+    /**
+     * Starts game timer.
+     *
+     * @param time Intiial time to put on timer.
+     */
     public void startTimer(int time) {
         Date date = new Date();
         timeWhenTimerSet = date.getTime();
@@ -1195,6 +1326,11 @@ public class Renderer {
         timer.start();
     }
 
+    /**
+     * Restarts game timer.
+     *
+     * @param time Intiial time to put on timer.
+     */
     public void restartTimer(int time) {
         Date date = new Date();
         timeWhenTimerSet = date.getTime();
@@ -1202,11 +1338,23 @@ public class Renderer {
         timer.restart();
     }
 
+    /**
+     * Gets how much time has passed since timer last started.
+     */
     public int getElapsedTime() {
         Date date = new Date();
         return (int)(date.getTime() - timeWhenTimerSet);
     }
 
+    /**
+     * Draws JTextField on Save, Load, and Character Selection screen.
+     *
+     * @param panel Panel to draw on.
+     * @param x The initial x position of the JTextField.
+     * @param y The initial y position of the JTextField.
+     * @param width The width of the JTextField.
+     * @param height The height of the JTextField.
+     */
     private JTextField addTextToPanel(JPanel panel, int x, int y, int width, int height) {
         final JTextField text = new JTextField("Enter Name");
         text.addMouseListener(new MouseAdapter(){
@@ -1229,6 +1377,16 @@ public class Renderer {
         return text;
     }
 
+    /**
+     * Draws all JLabels for game.
+     *
+     * @param panel Panel to draw on.
+     * @param x The initial x position of the JLabel.
+     * @param y The initial y position of the JLabel.
+     * @param width The width of the JLabel.
+     * @param height The height of the JLabel.
+     * @param image Image name to be drawn on pabel.
+     */
     private JLabel addLabelToPanel(JPanel panel, int x, int y, int width, int height, String image) {
         BufferedImage img;
         try {
@@ -1247,6 +1405,16 @@ public class Renderer {
         return label;
     }
 
+    /**
+     * Draws Player and Store Stats on bottom panel throughout game.
+     *
+     * @param players The list of players playing.
+     * @param panel Panel to draw on.
+     * @param currPlayer The index of the current player.
+     * @param store The store instance.
+     * @param numPlayers The number of players playing.
+     * @param round The current round number.
+     */
     private void drawGameStatus(ArrayList<Player> players, JPanel panel, int currPlayer, Store store, int numPlayers, int round) {
         System.out.println("Size: " + players.size());
         String output;
@@ -1305,6 +1473,14 @@ public class Renderer {
         }
     }
 
+    /**
+     * Draws Store Stats within the Store.
+     *
+     * @param panel Panel to draw on.
+     * @param labels Labels to be drawn on panel.
+     *
+     * @return ArrayList of JLabels to be drawn on panel.
+     */
     private ArrayList<JLabel> drawStorePanelStatus(JPanel panel, ArrayList<JLabel> labels){
         int[] quantities = new int[4];
         if (labels != null) {
@@ -1404,6 +1580,12 @@ public class Renderer {
         return labels;
     }
 
+    /**
+     * Draws Store Stats throughout game.
+     *
+     * @param store The store instance.
+     * @param panel Panel to draw on.
+     */
     private void drawStoreStatus(Store store, JPanel panel){
         //food label
         JLabel foodLabel = new JLabel("" + store.getFoodQuantity());
@@ -1431,6 +1613,13 @@ public class Renderer {
         panel.add(muleLabel);
     }
 
+    /**
+     * Draws player character on playerPanel during Character Selection phase.
+     *
+     * @param player The current player
+     * @param number The margin between players.
+     * @param playerPanel Panel to draw on.
+     */
     private void drawPlayerCharacter(Player player, int number, JPanel playerPanel){
         int xBase = 0;
         int yBase = 30;
@@ -1441,6 +1630,13 @@ public class Renderer {
         playerPanel.add(playerLabel);
     }
 
+    /**
+     * Draws player stats throughout the game.
+     *
+     * @param player The current player
+     * @param number The margin between players.
+     * @param playerPanel Panel to draw on.
+     */
     private void drawPlayerStatus(Player player, int number, JPanel panel) {
         int xBase = 0;
         int yBase = 30;
@@ -1493,6 +1689,12 @@ public class Renderer {
         panel.add(colorLabel);
     }
 
+    /**
+     * Draws all player flags on map.
+     *
+     * @param map The current map type.
+     * @param panel Panel to draw on.
+     */
     private void drawPlayerFlags(Map map, JPanel panel) {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
@@ -1504,6 +1706,12 @@ public class Renderer {
         }
     }
 
+    /**
+     * Draws all player Mules on map.
+     *
+     * @param map The current map type.
+     * @param panel Panel to draw on.
+     */
     private void drawPlayerMules(Map map, JPanel panel) {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
@@ -1516,6 +1724,12 @@ public class Renderer {
         }
     }
 
+    /**
+     * Draws M1, M2, M3.
+     *
+     * @param map The current map type.
+     * @param panel Panel to draw on.
+     */
     private void drawTerrain(Map map, JPanel panel) {
         for (int i = 0; i < Map.HEIGHT; i++) {
             for (int j = 0; j < Map.WIDTH; j++) {
@@ -1528,6 +1742,18 @@ public class Renderer {
         }
     }
 
+    /**
+     * Draws current difficulty on Player Panel.
+     *
+     * @param panel Panel to draw on.
+     * @param textString Text to be drawn in JTextField.
+     * @param x The initial x position of the JTextField.
+     * @param y The initial y position of the JTextField.
+     * @param width The width of the JTextField.
+     * @param height The height of the JTextField.
+     *
+     * @return Difficulty
+     */
     private JTextField drawDifficulty(JPanel panel, String textString, int x, int y, int width, int height) {
         JTextField text = new JTextField(textString);
         text.setBounds(x, y, width, height);
@@ -1542,6 +1768,14 @@ public class Renderer {
         return text;
     }
 
+    /**
+     * Draws various status information to menuPanel.
+     *
+     * @param panel Panel to draw on.
+     * @param textString Text to be drawn on JTextField.
+     *
+     * @return Difficulty
+     */
     public JTextField drawStatusText(JPanel panel, String textString) {
         if(panel == null){
             panel = new ImagePanel("/media/bp1.png");
@@ -1566,6 +1800,14 @@ public class Renderer {
         return text;
     }
 
+    /**
+     * Draws player flags to indicate that property is owned.
+     *
+     * @param row Row to draw flag on.
+     * @param column Column to draw flag on.
+     * @param title flag type to draw.
+     * @param panel Panel to draw on.
+     */
     private void drawPlayerFlag(int row, int column, Player player, JPanel panel) {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage flagImg;
@@ -1586,6 +1828,14 @@ public class Renderer {
         panel.add(flagLabel);
     }
 
+    /**
+     * Draws player Mule to indicate that property has a Mule.
+     *
+     * @param row Row to draw Mule on.
+     * @param column Column to draw Mule on.
+     * @param title Mule type to draw.
+     * @param panel Panel to draw on.
+     */
     private void drawPlayerMule(int row, int column, Tile tile, JPanel panel) {
         System.out.println("Drawing at location " + row + ", " + column);
         BufferedImage muleImg;
@@ -1609,6 +1859,14 @@ public class Renderer {
         panel.add(muleLabel);
     }
 
+    /**
+     * Draws mountains on map.
+     *
+     * @param row Row to draw mountain on.
+     * @param column Column to draw mountain on.
+     * @param type Type of mountain to draw.
+     * @param panel Panel to draw on.
+     */
     private void drawMountain(int row, int column, String type, JPanel panel) {
         BufferedImage mountImg;
 
@@ -1627,6 +1885,12 @@ public class Renderer {
         panel.add(mountLabel);
     }
 
+    /**
+     * Gets current difficulty number and returns a string.
+     *
+     * @param num Current difficulty int.
+     * @return Current difficulty string.
+     */
     private String getDifficultyValueString(int num){
         String returnString = "";
         if (num == 1){
@@ -1641,6 +1905,12 @@ public class Renderer {
         return returnString;
     }
 	
+    /**
+     * Draws hover buttons throughout game.
+     *
+     * @param button Button draw hover image over.
+     * @param image Image to draw.
+     */
 	private void addHoverIcon(final JButton button, String image) {
 		BufferedImage img;
 		BufferedImage defaultImg;

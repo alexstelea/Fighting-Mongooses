@@ -1,6 +1,9 @@
 /**
  * A subclass of Tile representing a plain
- **/
+ *
+ * @author Kennon Bittick
+ * @version 11 | 21 | 2013
+ */
 public class PlainTile extends Tile {
 
     /**

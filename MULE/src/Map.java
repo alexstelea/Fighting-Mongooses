@@ -5,7 +5,10 @@ import java.util.Random;
 
 /**
  * The class represents the map.  It contains all the tiles and is responsible for initializing the maps
- **/
+ *
+ * @author Kennon Bittick
+ * @version 11 | 21 | 2013
+ */
 public class Map {
 
     private Tile[] tiles;

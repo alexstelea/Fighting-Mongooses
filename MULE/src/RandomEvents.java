@@ -20,8 +20,10 @@ import java.util.Random;
  * FLYING CAT-BUGS ATE THE ROOF OFF YOUR HOUSE. REPAIRS COST $4*m.
  * MISCHIEVOUS UGA STUDENTS BROKE INTO YOUR STORAGE SHED AND STOLE HALF YOUR FOOD.
  * YOUR SPACE GYPSY INLAWS MADE A MESS OF THE TOWN. IT COST YOU $6*m TO CLEAN IT UP.
+ *
+ * @author Geoving Gerard II
+ * @version 11 | 21 | 2013
  */
-
 public class RandomEvents{
 
 	private Random rand = new Random();
@@ -51,6 +53,8 @@ public class RandomEvents{
 	 * @param players ArrayList contaning all players
 	 * @param currPlayer The current player
 	 * @param limit Determines if event good or good/bad.
+	 * 
+	 * @return prompt The string to be outputted unto the menuPanel.
 	 */
 	public String generate(ArrayList<Player> players, int currPlayer, int limit){
 		int playerSmithore = (int)players.get(currPlayer).getSmithore();

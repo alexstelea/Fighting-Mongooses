@@ -1,6 +1,9 @@
 /**
  * A subclass of Tile representing a mountain
- **/
+ *
+ * @author Kennon Bittick
+ * @version 11 | 21 | 2013
+ */
 public class MountainTile extends Tile {
 
     private int mountainNum;

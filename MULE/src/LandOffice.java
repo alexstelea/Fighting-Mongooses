@@ -10,8 +10,9 @@ import java.util.ArrayList;
  * You may also buy property if any is available from the land office. 
  * The buying price is 300 + round * random(0-100).
  *
-*/
-
+ * @author Geoving Gerard II
+ * @version 11 | 21 | 2013
+ */
 public class LandOffice{
 
 	private Random rand = new Random();
@@ -37,6 +38,8 @@ public class LandOffice{
 	 * @param currPlayer The current player
 	 * @param tileSelection The tile current player selected
 	 * @param map Used to set owner of tile to currPlayer
+	 *
+	 * @return boolean Used to decide if player can purchase land or not.
 	 */
 	public boolean buyProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
 		playerValue = (int)players.get(currPlayer).getMoney();
@@ -60,6 +63,8 @@ public class LandOffice{
 	 * @param currPlayer The current player
 	 * @param tileSelection The tile current player selected
 	 * @param map Used to set owner of tile to currPlayer
+	 *
+	 * @return boolean Used to decide if player can sell land or not.
 	 */
 	public boolean sellingProperty(int tileSelection, ArrayList<Player> players, int currPlayer, Map map){
 		if(map.getOwnerOfTile(tileSelection) != null){

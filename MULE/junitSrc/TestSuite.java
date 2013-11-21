@@ -12,6 +12,16 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+/**
+ * JUnit tests for the Map, the Pub, Random Events, Player Creation, and Buy Item.
+ *
+ * @author Alex Stelea
+ * @author Geoving Gerard II
+ * @aurhor Jackson Hair
+ * @author Kennon Bittick
+ * @author Tyler MacGrogan
+ * @version 11 | 21 | 2013
+ */
 @RunWith(JUnit4.class)
 public class TestSuite {
 

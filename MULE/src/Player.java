@@ -4,7 +4,12 @@ import java.util.ArrayList;
 
 /**
  * A class representing the Player
- **/
+ *
+ * @author Alex Stelea
+ * @author Geoving Gerard II
+ * @author Kennon Bittick
+ * @version 11 | 21 | 2013
+ */
 public class Player {
 
     // instance variables
