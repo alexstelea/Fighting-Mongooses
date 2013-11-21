@@ -10,6 +10,8 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.notification.Failure;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 @RunWith(JUnit4.class)
 public class TestSuite {
 
@@ -123,17 +125,16 @@ public class TestSuite {
     /* done by Geoving Gerard */
     @Test
     public void testPub() {
-    	ArrayList<Player> players;
+    	ArrayList<Player> players = new ArrayList<Player>();
     	Player p1 = new Player("Player 1", "cat", "red", 1);
-    	Player p2 = new Player("Player 2", "frog", "blue", 1);
-    	Player p3 = new Player("Player 3", "human", "orange", 1);
-    	Player p4 = new Player("Player 4", "squirrel", "pink", 1);
-    	Player p5 = new Player("Player 5", "elephant", "green", 1);
-
     	players.add(p1);
+    	Player p2 = new Player("Player 2", "frog", "blue", 1);
     	players.add(p2);
+    	Player p3 = new Player("Player 3", "human", "orange", 1);
     	players.add(p3);
+    	Player p4 = new Player("Player 4", "squirrel", "pink", 1);
     	players.add(p4);
+    	Player p5 = new Player("Player 5", "elephant", "green", 1);
     	players.add(p5);
     	
     	/* test Pub at beginning of all rounds for various time remaining */
@@ -142,14 +143,18 @@ public class TestSuite {
 	    	Pub pub2 = new Pub(x, 30);
 	    	Pub pub3 = new Pub(x, 5);
 	    	Pub pub4 = new Pub(x, 0);
+	    	Pub pub5 = new Pub(x, -5);
 	    	assertNotNull("Pub w/ 50 seconds remaining: ", pub1);
 	    	assertNotNull("Pub w/ 30 seconds remaining: ", pub2);
 	    	assertNotNull("Pub w/ 5 seconds remaining: ", pub3);
-	    	assertNotNull("Pub w/ seconds remaining: ", pub4);
+	    	assertNotNull("Pub w/ 0 seconds remaining: ", pub4);
 
 	    	/* test Gamble for all players */
 	    	for(int y = 1; y < 6; y++){
-	    		assertNotNull("Gamble", pub1.gamble(players , y));
+	    		assertNotNull("Gamble w/ 50 seconds remaining: ", pub1.gamble(players, y));
+	    		assertNotNull("Gamble w/ 30 seconds remaining: ", pub2.gamble(players, y));
+	    		assertNotNull("Gamble w/ 5 seconds remaining: ", pub3.gamble(players, y));
+	    		assertNotNull("Gamble w/ 0 seconds remaining: ", pub4.gamble(players, y));
 	    	}
 	    }
     }
