@@ -125,6 +125,7 @@ public class TestSuite {
     /* done by Geoving Gerard */
     @Test
     public void testPub() {
+<<<<<<< HEAD
     	ArrayList<Player> players = new ArrayList<Player>();
     	Player p1 = new Player("Player 1", "cat", "red", 1);
     	players.add(p1);
@@ -157,7 +158,48 @@ public class TestSuite {
 	    		assertNotNull("Gamble w/ 0 seconds remaining: ", pub4.gamble(players, y));
 	    	}
 	    }
+=======
+    	// Player player = players.get(currPlayer);
+    	// /* test Pub at beginning of all rounds */
+    	// for(int x = 0; x < 13; x++){
+	    // 	Pub pub1 = new Pub(x, 50);
+	    // 	Pub pub2 = new Pub(x, 30);
+	    // 	Pub pub3 = new Pub(x, 5);
+	    // 	Pub pub4 = new Pub(x, 0);
+	    // 	assertNotNull("Pub w/ 50 seconds remaining: ", pub1);
+	    // 	assertNotNull("Pub w/ 30 seconds remaining: ", pub2);
+	    // 	assertNotNull("Pub w/ 5 seconds remaining: ", pub3);
+	    // 	assertNotNull("Pub w/ seconds remaining: ", pub4);
+	    // 	assertNotNull("Gamble", pub1.gamble(player , 1));
+	    // }
     }
+
+    /* Done by Alex Stelea */
+   @Test
+   public void testRandomEvent(){
+    Player player = new Player("Alex", "elephant", "blue", 2);
+    Player player2 = new Player("John", "elephant", "red", 2);
+
+    ArrayList<Player> players = new ArrayList<Player>();
+    players.add(player);
+    players.add(player2);
+
+    Boolean randomEventOccured = false;
+    for (int i = 0; i < 13; i++){
+        
+        RandomEvents r1 = new RandomEvents(i);
+        String returnString = r1.generate(players, 1, 10);
+        if (returnString != null){
+            assertNotNull("Random event after round" +i, returnString);
+            randomEventOccured = true;
+        }
+
+>>>>>>> 2b22441cf7c3bb9a60225c23b489f6a816045fbd
+    }
+    assertTrue("A random event occured in the game", randomEventOccured);
+
+   }
+
 
 	/* done by Jackson Hair */
 	@Test
