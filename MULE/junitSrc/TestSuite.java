@@ -123,8 +123,20 @@ public class TestSuite {
     /* done by Geoving Gerard */
     @Test
     public void testPub() {
-    	Player player = players.get(currPlayer);
-    	/* test Pub at beginning of all rounds */
+    	ArrayList<Player> players;
+    	Player p1 = new Player("Player 1", "cat", "red", 1);
+    	Player p2 = new Player("Player 2", "frog", "blue", 1);
+    	Player p3 = new Player("Player 3", "human", "orange", 1);
+    	Player p4 = new Player("Player 4", "squirrel", "pink", 1);
+    	Player p5 = new Player("Player 5", "elephant", "green", 1);
+
+    	players.add(p1);
+    	players.add(p2);
+    	players.add(p3);
+    	players.add(p4);
+    	players.add(p5);
+    	
+    	/* test Pub at beginning of all rounds for various time remaining */
     	for(int x = 0; x < 13; x++){
 	    	Pub pub1 = new Pub(x, 50);
 	    	Pub pub2 = new Pub(x, 30);
@@ -134,7 +146,11 @@ public class TestSuite {
 	    	assertNotNull("Pub w/ 30 seconds remaining: ", pub2);
 	    	assertNotNull("Pub w/ 5 seconds remaining: ", pub3);
 	    	assertNotNull("Pub w/ seconds remaining: ", pub4);
-	    	assertNotNull("Gamble", pub1.gamble(player , 1));
+
+	    	/* test Gamble for all players */
+	    	for(int y = 1; y < 6; y++){
+	    		assertNotNull("Gamble", pub1.gamble(players , y));
+	    	}
 	    }
     }
 
