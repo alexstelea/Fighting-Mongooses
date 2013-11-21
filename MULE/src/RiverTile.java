@@ -31,7 +31,11 @@ public class RiverTile extends Tile {
      * return a string representing the image string
      *
      * @return always null - uses the background of the map
+<<<<<<< HEAD
      */
+=======
+     **/
+>>>>>>> 9c97b2714310fbe52c94ee7445730bfa9f0e68df
     public String image() {
         return null;
     }

@@ -26,7 +26,11 @@ public class TownTile extends Tile {
      * Return the image string for the tile
      *
      * @return null, just use the background of the map
+<<<<<<< HEAD
      */
+=======
+     **/
+>>>>>>> 9c97b2714310fbe52c94ee7445730bfa9f0e68df
     public String image() {
         return null;
     }
