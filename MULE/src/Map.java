@@ -76,6 +76,7 @@ public class Map {
                 newTiles.remove(0);
             }
         }
+        newTiles = null;
     }
 
 
