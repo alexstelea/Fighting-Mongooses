@@ -150,7 +150,7 @@ public class TestSuite {
 	    	assertNotNull("Pub w/ 0 seconds remaining: ", pub4);
 
 	    	/* test Gamble for all players */
-	    	for(int y = 1; y < 6; y++){
+	    	for(int y = 0; y < 5; y++){
 	    		assertNotNull("Gamble w/ 50 seconds remaining: ", pub1.gamble(players, y));
 	    		assertNotNull("Gamble w/ 30 seconds remaining: ", pub2.gamble(players, y));
 	    		assertNotNull("Gamble w/ 5 seconds remaining: ", pub3.gamble(players, y));
@@ -253,9 +253,9 @@ public class TestSuite {
 	/* done by Tyler MacGrogan */
 	@Test
 	public void testBuyItem() {
-		Player p1 = new Player("p1", "human", "red", 2);
-		Player p2 = new Player("p1", "elephant", "blue", 2);
-		ArrayList<Player> pList;
+		Player p1 = new Player("player1", "human", "red", 2);
+		Player p2 = new Player("player2", "elephant", "blue", 2);
+		ArrayList<Player> pList = new ArrayList<Player>();
 		pList.add(p1);
 		pList.add(p2);
 		Store store = new Store(2);
