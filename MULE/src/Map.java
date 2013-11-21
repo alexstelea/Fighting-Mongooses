@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * The class represents the map.  It contains all the tiles and is responsible for initializing the maps
+ **/
 public class Map {
 
     private Tile[] tiles;
@@ -10,12 +13,20 @@ public class Map {
     public static final int WIDTH = 9;
     public static final int HEIGHT = 5;
 
+    /**
+     * Basic constructor, takes in a map num to specify the initial configuration
+     *
+     * @param mapNum the number of the map to generate
+     **/
     public Map(int mapNum) {
         tiles = new Tile[WIDTH * HEIGHT];
         this.mapNum = mapNum;
         initializeMap();
     }
 
+    /**
+     * Initialize the map based on the mapNum supplied
+     **/
     private void initializeMap() {
         int numTiles;
         if (mapNum == 1) {
@@ -65,14 +76,30 @@ public class Map {
     }
 
 
+    /**
+     * Getter method for the array of tiles
+     * @return the array of tiles in the Map
+     **/
     public Tile[] getTiles() {
         return tiles;
     }
 
+    /**
+     * Getter method for the map number
+     * @return the map number
+     **/
     public int getMapNum() {
         return mapNum;
     }
 
+    /**
+     * Getter method for a specific tile
+     *
+     * @param row the row of the tile to retrieve
+     * @param column the column of the tile to retrieve
+     *
+     * @return the tile at the supplied location, or null if the arguments were invalid
+     **/
     public Tile getTile(int row, int column) {
         if (row < 0 || row >= HEIGHT || column < 0 || column >= WIDTH) {
             return null;
@@ -81,6 +108,13 @@ public class Map {
         return tiles[coordToLinear(row, column)];
     }
 
+    /**
+     * Set the tile at the given location to the supplied tile
+     *
+     * @param row the row of the tile to retrieve
+     * @param column the column of the tile to retrieve
+     * @param Tile the tile which will be inserted into the provided location
+     **/
     public void setTile(int row, int column, Tile tile) {
         if (row < 0 || row >= HEIGHT || column < 0 || column >= WIDTH) {
             return;
@@ -88,22 +122,55 @@ public class Map {
         tiles[coordToLinear(row, column)] = tile;
     }
 
+    /**
+     * a getter method to get the owner of a tile at the specified index
+     * 
+     * @return the Player who owns the tile
+     **/
     public Player getOwnerOfTile(int index) {
         return tiles[index].getOwner();
     }
 
+    /**
+     * Set the owner of the provided tile to the provided player
+     *
+     * @param index the index of the tile to modify
+     * @param player the player who will now own the tile
+     **/
     public void setOwnerOfTile(int index, Player player) {
         tiles[index].buyProperty(player);
     }
 
+    /**
+     * Get the type of the tile at the specified index
+     *
+     * @param index the index to look at
+     *
+     * @return the type of the tile provided
+     **/
     public String getTileType(int index) {
         return tiles[index].getType();
     }
 
+    /**
+     * convert the coordinates provided to a single number
+     *
+     * @param row the row 
+     * @param column the column
+     *
+     * @return the linearized index of the provided row and column
+     **/
     private int coordToLinear(int row, int column) {
         return row * WIDTH + column;
     }
 
+    /**
+     * Add mountain tiles to the temporary list of tiles, used internally when generating the maps
+     *
+     * @param mountainNum the type of mountain to add
+     * @param numToAdd how many mountains we're adding
+     * @param tiles the internal list of the tiles 
+     **/
     private void addMountains(int mountainNum, int numToAdd, ArrayList<Tile> tiles) {
         while (numToAdd > 0) {
             tiles.add(new MountainTile(mountainNum));
@@ -112,6 +179,11 @@ public class Map {
         return;
     }
 
+    /**
+     * Deterministically set the map to the default configuration
+     *
+     * @return the number of river tiles created
+     **/
     private int setMap1() {
         tiles[coordToLinear(0, 0)] = new PlainTile();
         tiles[coordToLinear(0, 1)] = new PlainTile();
@@ -165,6 +237,12 @@ public class Map {
         return 5;
     }
 
+    /**
+     * Set the river and town to the locations in default configuration 2
+     * Procedurally generate the mountain and plain locations
+     *
+     * @return the number of river tiles created
+     **/
     private int setMap2() {
         tiles[coordToLinear(0, 2)] = new RiverTile();
         tiles[coordToLinear(1, 2)] = new RiverTile();
@@ -179,6 +257,12 @@ public class Map {
         return 10;
     }
 
+    /**
+     * Set the river and town to the locations in default configuration 3
+     * Procedurally generate the mountain and plain locations
+     *
+     * @return the number of river tiles created
+     **/
     private int setMap3() {
         tiles[coordToLinear(0, 6)] = new RiverTile();
         tiles[coordToLinear(1, 6)] = new RiverTile();
@@ -196,6 +280,12 @@ public class Map {
         return 13;
     }
 
+    /**
+     * Set the river and town to the locations in default configuration 4
+     * Procedurally generate the mountain and plain locations
+     *
+     * @return the number of river tiles created
+     **/
     private int setMap4() {
         tiles[coordToLinear(4, 2)] = new RiverTile();
         tiles[coordToLinear(3, 2)] = new RiverTile();
@@ -211,6 +301,12 @@ public class Map {
         return 11;
     }
 
+    /**
+     * Set the river and town to the locations in default configuration 5
+     * Procedurally generate the mountain and plain locations
+     *
+     * @return the number of river tiles created
+     **/
     private int setMap5() {
         tiles[coordToLinear(1, 0)] = new RiverTile();
         tiles[coordToLinear(1, 1)] = new RiverTile();

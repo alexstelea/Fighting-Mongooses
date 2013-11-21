@@ -18,7 +18,12 @@ import com.mongodb.ServerAddress;
 
 import java.util.ArrayList;
 
-
+/**
+ * The main GameController class
+ *
+ * Contains the information directly related to the state of the current game,
+ * and the state machine that controls the game 
+ **/
 public class GameController {
     /**
      * Main method of the MULE game
@@ -1007,26 +1012,6 @@ public class GameController {
     }
 
     /**
-     * ---Work In Progress----
-     * showLoadGameSavePartial
-     * @param savedGame 
-     */
-    private void showLoadGameSavePartial(Save savedGame){
-
-    }
-        
-    /**
-     * ---Work In Progress----
-     * showLoadScreen shows load screen for game
-     */
-    private void showLoadScreen(){
-        Save[] savedGames = getSavedGames();
-        LoadScreenModel model = new LoadScreenModel();
-        model.setSavedGames(savedGames);
-        renderer.drawLoadScreen();
-    }
-
-    /**
      * Getter method for the game save
      *
      * @return null
@@ -1054,6 +1039,13 @@ public class GameController {
         return roundNumber;
     }
 
+    /**
+     * Save the game to the mongo database
+     *
+     * @param gameName the name of the save file
+     *
+     * @return whether or not the game was successfully saved
+     **/
     private boolean saveGame(String gameName) {
         DBCollection coll = db.getCollection(gameName);
         BasicDBObject doc = new BasicDBObject("name", gameName);
@@ -1119,6 +1111,13 @@ public class GameController {
         return true;
     }
 
+    /**
+     * load the game from the database and start playing
+     *
+     * @param gameName the name of the save file to load
+     *
+     * @param whether or not the game was successfully loaded
+     **/
     private boolean loadGame(String gameName) {
         DBCollection coll = db.getCollection(gameName);
 

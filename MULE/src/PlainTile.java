@@ -1,9 +1,18 @@
+/**
+ * A subclass of Tile representing a plain
+ **/
 public class PlainTile extends Tile {
 
+    /**
+     * A constructor, just calls the super constructor
+     **/
     public PlainTile() {
         super("plain");
     }
 
+    /**
+     * Collect resources from this tile
+     **/
     public void collectResources() {
         if (hasMule) {
             if (muleType.equals("FoodMule")) {
@@ -18,6 +27,11 @@ public class PlainTile extends Tile {
         }
     }
 
+    /**
+     * return a string representing the image string
+     *
+     * @return always null - uses the background of the map
+     **/
     public String image() {
         return null;
     }

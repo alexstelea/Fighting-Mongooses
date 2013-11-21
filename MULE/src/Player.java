@@ -2,6 +2,9 @@
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * A class representing the Player
+ **/
 public class Player {
 
     // instance variables
@@ -89,11 +92,19 @@ public class Player {
         tiles = new ArrayList<Tile>();
     }
 
+    /**
+     * Increase the number of mules placed
+     **/
     public void placeMule() {
         mules = false;
         mulesPlaced++;
     }
 
+    /** 
+     * Getter method for the number of mules the player has placed
+     *
+     * @return the number of mules the player has placed
+     **/
     public int getMulesPlaced() {
         return mulesPlaced;
     }
@@ -105,6 +116,13 @@ public class Player {
          return name + " is a " + color + " " + race + ".";
      }
 
+     /**
+      * Check whether two players are equal
+      * 
+      * @param player the player we're comparing this instance to
+      *
+      * @return whether or not the two players are the same
+      **/
      public boolean equals(Object player) {
          Player otherGuy;
          try {
@@ -202,6 +220,11 @@ public class Player {
         return mules;
     }
 
+    /**
+     * Getter method for the current mule type the player has
+     *
+     * @return the mule type of the mule the player currently has
+     **/
     public String getMuleType() {
         return muleType;
     }
@@ -336,18 +359,38 @@ public class Player {
         tiles.add(tile);
     }
 
+    /**
+     * Increase the food by the provided amount
+     *
+     * @param amount how much to increase the resource by
+     **/
     public void changeFood(int amount) {
         food += amount;
     }
 
+    /**
+     * Increase the money by the provided amount
+     *
+     * @param amount how much to increase the resource by
+     **/
     public void changeMoney(int amount) {
         money += amount;
     }
 
+    /**
+     * Increase the smithore by the provided amount
+     *
+     * @param amount how much to increase the resource by
+     **/
     public void changeSmithore(int amount) {
         smithore += amount;
     }
 
+    /**
+     * Increase the energy by the provided amount
+     *
+     * @param amount how much to increase the resource by
+     **/
     public void changeEnergy(int amount) {
         energy += amount;
     }

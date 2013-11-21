@@ -32,6 +32,9 @@ import java.util.concurrent.locks.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * A class that handles all IO with the user
+ **/
 public class Renderer {
 
     private JFrame frame;
@@ -66,6 +69,11 @@ public class Renderer {
         paused = false;
     }
 
+    /**
+     * Draw the introduction screen
+     *
+     * @return an array of the states selected by the user
+     **/
     public String[] drawIntroScreen() {
         
         // declare initial variables
@@ -103,6 +111,14 @@ public class Renderer {
     // States[0] - Action to perform: {"back", "okay"}
     // States[1] - Difficulty: {"1", "2", "3"}
     // States[2] - Number of Players: {"1", "2", "3", "4", "5"}
+    /**
+     * Draw the setup screen
+     *
+     * @param numPlayers how many players to draw
+     * @param difficulty the current difficulty to draw
+     *
+     * @return an arary of the states selected by the player
+     **/
     public String[] drawSetupScreen(int numPlayers, int difficulty) {
 
         // declare initial variables
@@ -172,6 +188,14 @@ public class Renderer {
 
     // States[0] - Action to perform: {"new", "load", "quit"}
     // States[1] - Map Number: {"1", "2", "3", "4", "5"}
+    /**
+     * Draw the amp selection screen to the player
+     *
+     * @param numPlayers the number of players to draw
+     * @param difficulty the difficulty to draw
+     *
+     * @return an array of the states selected by the player
+     **/
     public String[] drawMapScreen(int numPlayers, int difficulty) {
 
         // declare initial variables
@@ -236,6 +260,16 @@ public class Renderer {
     // States[1] - Race: {"human", "elephant", "squirrel", "frog", "cat"}
     // States[2] - Player Name
     // States[3] - Color: {"red", "blue", "pink", "green", "orange"}
+    /**
+     * Draw the character selection screen 
+     *
+     * @param players the current players that have been created
+     * @param difficulty the current difficulty to draw
+     * @param map the map that was selected
+     * @param size the number of players we have
+     *
+     * @return an array of the states selected by the player
+     **/
     public String[] drawCharacterScreen(ArrayList<Player> players, int difficulty, Map map, int size) {
 
         // declare initial variables
@@ -307,6 +341,17 @@ public class Renderer {
         return states;
     }
 
+    /**
+     * draw the town screen
+     *
+     * @param players the current players
+     * @param currPlayer the index of the currently active player
+     * @param store the store, used to get its quantities
+     * @param numPlayers the number of players playing
+     * @param round the round number
+     *
+     * @return an array of the states selected by the player
+     **/
     public String[] drawTownScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
         states = new String[2];
     
@@ -357,6 +402,20 @@ public class Renderer {
     // state[2] = quantityEnergy
     // state[3] = quantitySmithore
     // state[4] = quantityCrystite
+    /**
+     * draw the store screen
+     *
+     * @param players the list of players
+     * @param currPlayer the index of the current player
+     * @param transactionType buying or selling
+     * @param quantities the quantities the player is purchasing or selling
+     * @param store used to get the store quantities
+     * @param numPlayers the total number of players
+     * @param round the round number
+     * @param text the text to print at the bottom of the screen
+     *
+     * @return an array of the states selected by the player
+     **/
     public String[] drawStoreScreen(ArrayList<Player> players, int currPlayer, String transactionType, String[] quantities, 
         Store store, int numPlayers, int round, String text) {
 
@@ -456,6 +515,19 @@ public class Renderer {
         return states;
     }
 
+    /**
+     * draw the menu screen
+     *
+     * @param players the list of players
+     * @param currPlayer the index of the current player
+     * @param store the store instance
+     * @param numPlayers the number of players
+     * @param round the current round number
+     * @param map the current map
+     * @param text the text to display at the bottom of the screen
+     *
+     * @return the array of states selected by the player
+     **/
     public String[] drawMenuScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round, Map map, String text) {
         states = new String[2];
 
@@ -496,6 +568,17 @@ public class Renderer {
         return states;
     }
 
+    /**
+     * draw the land office screen
+     *
+     * @param players the list of players
+     * @param currPlayer the index of the current player
+     * @param store the store instance
+     * @param numPlayers the number of players
+     * @param round the round number
+     *
+     * @return the array of states selected by the player
+     **/
     public String[] drawLandOfficeScreen(ArrayList<Player> players, int currPlayer, Store store, int numPlayers, int round) {
         states = new String[2];
 
