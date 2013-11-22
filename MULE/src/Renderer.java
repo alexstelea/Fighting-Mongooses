@@ -606,6 +606,9 @@ public class Renderer {
         panels.add(menuPanel);
         changePanel(frame, panels);
 
+        addButtonToPanel(panel, 126, 198, 166, 35, 0, "buy");
+        addButtonToPanel(panel, 126, 293, 166, 35, 0, "sell");
+        addButtonToPanel(panel, 81, 456, 100, 61, 0, "back");
         JButton stopButton = addButtonToPanel(menuPanel, 783, 5, 40, 40, 0, "stop");
 		addHoverIcon(stopButton, "/media/hoverbuttons/stophover.png");
         JButton pauseButton = addButtonToPanel(menuPanel, 839, 5, 40, 40, 0, "pause");
