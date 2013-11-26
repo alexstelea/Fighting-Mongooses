@@ -170,6 +170,7 @@ public class GameController {
                 int counter = 5;
                 if (action.equals("back")) {
                     state = "map";
+                    players = new ArrayList<Player>();
                 }
                 else {
                     if (takenColors.contains(results[3])) {

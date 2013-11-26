@@ -782,7 +782,14 @@ public class Renderer {
         ImagePanel panel = new ImagePanel("/media/gameover.png");
         panel.setPreferredSize(new Dimension(950, 525));
         panel.setLayout(null);
-
+        
+        for (int i = 0; i < players.size(); i++)
+        {
+            Player player = players.get(i);
+            String imageString = "/media/" + player.getRace().charAt(0) + player.getColor().charAt(0) + ".png";
+            addLabelToPanel(panel, (120 + 100 * i), (310 + 20 * i), 64, 94, imageString);
+        }
+        
         JPanel playerPanel = new JPanel();
         playerPanel.setPreferredSize(new Dimension(950, 175));
         playerPanel.setLayout(null);
