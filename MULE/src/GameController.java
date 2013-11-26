@@ -64,7 +64,7 @@ public class GameController {
      * GameController handles all input related actions for game.
      */
     public GameController() {
-        renderer = new Renderer();
+        renderer = Renderer.getInstance();
         currPlayer = 0;
         numPlayers = 1;
         state = "";

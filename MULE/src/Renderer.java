@@ -40,6 +40,7 @@ import java.util.Date;
  */
 public class Renderer {
 
+    private static Renderer instance = null;
     private JFrame frame;
     private boolean waiting;
     private String[] states; // keeps track of the state of the GUI
@@ -58,7 +59,7 @@ public class Renderer {
     /**
      * Renderer handles all graphics related actions for game.
      */
-    public Renderer() {
+    private Renderer() {
         frame = new JFrame("M.U.L.E.");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -70,6 +71,18 @@ public class Renderer {
         frame.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
         timer = createTimer(50000);
         paused = false;
+    }
+    
+    /**
+      * Singleton getter for the instance of Renderer
+      * 
+      * @return the instance of renderer
+      */
+    public static Renderer getInstance() {
+        if (instance == null) {
+            instance = new Renderer();
+        }
+        return instance;
     }
 
     /**
