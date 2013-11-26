@@ -171,6 +171,7 @@ public class GameController {
                 if (action.equals("back")) {
                     state = "map";
                     players = new ArrayList<Player>();
+                    takenColors = new ArrayList<String>(); 
                 }
                 else {
                     if (takenColors.contains(results[3])) {
@@ -187,7 +188,7 @@ public class GameController {
                     }
 
                     // only move on if we have all the players
-                    if (--numPlayers == 0) {
+                    if (players.size() == numPlayers) {
                         state = "game";
                     }   
                 }
@@ -789,8 +790,11 @@ public class GameController {
         }
         String[] results = renderer.drawWinScreen(players, currPlayer, store, numPlayers, roundNumber);
         if(results[0].equals("okay")) {
-            String winningPlayer = players.get(numPlayers - 1).getName();
-            System.out.println(winningPlayer + " is the winner!");
+            System.exit(0);
+        }
+        else
+        {
+            System.out.println("results[0]: " + results[0]);
             System.exit(0);
         }
     }
