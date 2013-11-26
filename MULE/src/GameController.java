@@ -420,59 +420,68 @@ public class GameController {
                 else if (results[0].equals("foodMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        boolean wrongTile = mulePlacement(tileSelection, map, "buyFoodMule");
-                        if(wrongTile){
-                            output = "Lost Mule. Player Mule on wrong tile.";
-                            state = "game";
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            boolean wrongTile = mulePlacement(tileSelection, map, "buyFoodMule");
+                            if(wrongTile){
+                                output = "Lost Mule. Player Mule on wrong tile.";
+                                state = "game";
+                            }
+                            else {
+                                state = "town";
+                            }
                         }
-                    }
-                    else {
-                        state = "town";
-                    }
+                    } catch (Exception e) {}
                 }
                 else if (results[0].equals("energyMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        boolean wrongTile = mulePlacement(tileSelection, map, "buyEnergyMule");
-                        if(wrongTile){
-                            output = "Lost Mule. Player Mule on wrong tile.";
-                            state = "game";
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            boolean wrongTile = mulePlacement(tileSelection, map, "buyEnergyMule");
+                            if(wrongTile){
+                                output = "Lost Mule. Player Mule on wrong tile.";
+                                state = "game";
+                            }
+                        }
+                        else {
+                            state = "town";
                         }
                     }
-                    else {
-                        state = "town";
-                    }
+                    catch (Exception e){}
                 }
                 else if (results[0].equals("smithoreMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        boolean wrongTile = mulePlacement(tileSelection, map, "buySmithoreMule");
-                        if(wrongTile){
-                            output = "Lost Mule. Player Mule on wrong tile";
-                            state = "game";
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            boolean wrongTile = mulePlacement(tileSelection, map, "buySmithoreMule");
+                            if(wrongTile){
+                                output = "Lost Mule. Player Mule on wrong tile";
+                                state = "game";
+                            }
                         }
-                    }
-                    else {
-                        state = "town";
-                    }
+                        else {
+                            state = "town";
+                        }
+                    } catch (Exception e) {}
                 }
                 else if (results[0].equals("crystiteMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        boolean wrongTile = mulePlacement(tileSelection, map, "buyCrystiteMule");
-                        if(wrongTile){
-                            output = "Lost Mule. Player Mule on wrong tile";
-                            state = "game";
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            boolean wrongTile = mulePlacement(tileSelection, map, "buyCrystiteMule");
+                            if(wrongTile){
+                                output = "Lost Mule. Player Mule on wrong tile";
+                                state = "game";
+                            }
                         }
-                    }
+                    } catch (Exception e) {}
                 }
                 else if(results[0].equals("stop")) {
                     results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
@@ -565,46 +574,54 @@ public class GameController {
                 else if (results[0].equals("foodMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        muleRemoval(tileSelection, map, "sellFoodMule");
-                    }
-                    else {
-                        state = "town";
-                    }
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            muleRemoval(tileSelection, map, "sellFoodMule");
+                        }
+                        else {
+                            state = "town";
+                        }
+                    } catch (Exception e) {}
                 }
                 else if (results[0].equals("energyMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        muleRemoval(tileSelection, map, "sellEnergyMule");
-                    }
-                    else {
-                        state = "town";
-                    }
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            muleRemoval(tileSelection, map, "sellEnergyMule");
+                        }
+                        else {
+                            state = "town";
+                        }
+                    } catch (Exception e) {}
                 }
                 else if (results[0].equals("smithoreMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        muleRemoval(tileSelection, map, "sellSmithoreMule");
-                    }
-                    else {
-                        state = "town";
-                    }
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            muleRemoval(tileSelection, map, "sellSmithoreMule");
+                        }
+                        else {
+                            state = "town";
+                        }
+                    } catch (Exception e) {}
                 }
                 else if (results[0].equals("crystiteMule")) {
                     state = "game";
                     results = renderer.drawMainGameScreen(map, players, currPlayer, store, numPlayers, roundNumber, null);
-                    int tileSelection = Integer.parseInt(results[0]);
-                    if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
-                        muleRemoval(tileSelection, map, "sellCrystiteMule");
-                    }
-                    else {
-                        state = "town";
-                    }
+                    try {
+                        int tileSelection = Integer.parseInt(results[0]);
+                        if (!(map.getTiles()[tileSelection].getType().equals("town"))) {
+                            muleRemoval(tileSelection, map, "sellCrystiteMule");
+                        }
+                        else {
+                            state = "town";
+                        }
+                    } catch (Exception e) {}
                 }
                 else if(results[0].equals("stop")) {
                     results = renderer.drawSaveScreen(players, currPlayer, store, numPlayers, roundNumber);
@@ -876,7 +893,7 @@ public class GameController {
      * @param choice The mule type the player wishes to remove from the map
      */
     private void muleRemoval(int tileSelection, Map map, String choice) {
-        if(!map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
+        if(map.getOwnerOfTile(tileSelection) == null || !map.getOwnerOfTile(tileSelection).equals(players.get(currPlayer))){
             output = "You do not own this plot. Try again.";
         }
         else{
